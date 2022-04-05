@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:WeightControl.Views"
+       Title="NavigationProject"
+       x:Class="WeightControl.AppShell">
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="Blue" />
+                <Setter Property="Shell.ForegroundColor" Value="Blue" />
+                <Setter Property="Shell.TitleColor" Value="Blue" />
+                <Setter Property="Shell.DisabledColor" Value="Blue" />
+                <Setter Property="Shell.UnselectedColor" Value="Blue" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="Blue" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="Black"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="Blue"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="Blue"/>
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <TabBar>
+        <ShellContent Title="Home" Icon="icon_about.png"  Route="HomeView" ContentTemplate="{DataTemplate local:HomeView}" />
+        <ShellContent Title="Statistics" Icon="icon_about.png" ContentTemplate="{DataTemplate local:StatsView}" />
+        <ShellContent Title="Products" Icon="icon_about.png"  ContentTemplate="{DataTemplate local:ProductsView}" />
+    </TabBar>
+
+    <TabBar>
+        <ShellContent Route="SignInView" ContentTemplate="{DataTemplate local:SignInView}" />
+    </TabBar>
+    <!--<ShellContent Route="PlayView" ContentTemplate="{DataTemplate local:PlayView}" />
+    <ShellContent Route="FinishGameView" ContentTemplate="{DataTemplate local:FinishGameView}" />-->
+
+
+</Shell>
