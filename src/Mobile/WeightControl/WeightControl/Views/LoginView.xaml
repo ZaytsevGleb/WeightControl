@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WeightControl.Views.LoginView">
+    <ContentPage.Content>
+        <Grid
+            RowDefinitions="3*,*,*,*,2*,*,*,5*"
+            ColumnDefinitions="*,5*,*">
+            
+            <Button
+                Grid.Row="5"
+                Grid.Column="1"
+                Command="{Binding SignInCommand}"
+                BackgroundColor="LightGray"
+                Text="Sign in"/>
+
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                BackgroundColor="LightGray"
+                Text="{Binding Name}"/>
+
+            <Entry
+                Grid.Row="3"
+                Grid.Column="1"
+                BackgroundColor="LightGray"
+                Text="{Binding Password}"
+                />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="Login is empty"
+                VerticalTextAlignment="Start"
+                TextColor="Red"
+                IsVisible="{Binding LoginNameEmpty}"/>
+
+            <Label
+                Grid.Row="4"
+                Grid.Column="1"
+                Text="Password is empty"
+                VerticalTextAlignment="Start"
+                TextColor="Red"
+                IsVisible="{Binding LoginPassEmpty}"/>
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="Login:"
+                VerticalTextAlignment="End"/>
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="Password:"
+                VerticalTextAlignment="End"/>
+            
+            <Label
+                Grid.Row="6"
+                Grid.Column="1"
+                Text="You have an account Sign up"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"/>
+                
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

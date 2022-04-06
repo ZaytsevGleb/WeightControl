@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="WeightControl.Views.RegisterView">
+    <ContentPage.Content>
+        <Grid
+            RowDefinitions="3*,*,*,*,*,*,2*,*,5*"
+            ColumnDefinitions="*,5*,*">
+
+        <Entry
+            Grid.Row="1"
+            Grid.Column="1"
+            BackgroundColor="LightGray"
+            Text="{Binding Name}"/>
+        <Entry
+            Grid.Row="3"
+            Grid.Column="1"
+            BackgroundColor="LightGray"
+            Text="{Binding Email}"/>
+
+        <Entry
+            Grid.Row="5"
+            Grid.Column="1"
+            BackgroundColor="LightGray"
+            Text="{Binding Password}"/>
+        <Button
+            Grid.Row="7"
+            Grid.Column="1"
+            BackgroundColor="LightGray"
+            Text="Sign Up"
+            Command="{Binding SignUpCommand}"/>
+
+        <Label
+            Grid.Row="0"
+            Grid.Column="1"
+            Text="Name:"
+            VerticalTextAlignment="End"/>
+
+        <Label
+            Grid.Row="2"
+            Grid.Column="1"
+            Text="E-mail:"
+            VerticalTextAlignment="End"/>
+
+        <Label
+            Grid.Row="4"
+            Grid.Column="1"
+            Text="Password:"
+            VerticalTextAlignment="End"/>
+
+        <Label
+            Grid.Row="2"
+            Grid.Column="1"
+            Text="Name is empty"
+            TextColor="Red"
+            VerticalTextAlignment="Start"
+            IsVisible="{Binding RegisterNameEmpty}"/>
+
+        <Label
+            Grid.Row="4"
+            Grid.Column="1"
+            Text="E-mail is empty"
+            TextColor="Red"
+            VerticalTextAlignment="Start"
+            IsVisible="{Binding RegisterEmailEmpty}"/>
+
+        <Label
+            Grid.Row="6"
+            Grid.Column="1"
+            Text="Password is empty"
+            TextColor="Red"
+            VerticalTextAlignment="Start"
+            IsVisible="{Binding RegisterPasswordEmpty}"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
