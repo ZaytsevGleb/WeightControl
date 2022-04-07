@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using WeightControl.Services;
 using Xamarin.Forms;
 
 namespace WeightControl.ViewModels
