@@ -30,7 +30,7 @@
     </TabBar>
 
     <TabBar>
-        <ShellContent Route="LoginView" ContentTemplate="{DataTemplate local:LoginView}" />
+        <ShellContent Route="SignInView" ContentTemplate="{DataTemplate local:SignInView}" />
     </TabBar>
     <!--<ShellContent Route="PlayView" ContentTemplate="{DataTemplate local:PlayView}" />
     <ShellContent Route="FinishGameView" ContentTemplate="{DataTemplate local:FinishGameView}" />-->

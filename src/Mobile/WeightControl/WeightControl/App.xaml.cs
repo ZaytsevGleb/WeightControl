@@ -31,7 +31,7 @@ namespace WeightControl
             }
             else
             {
-                await navigationService.NavigateToLoginAsync();
+                await navigationService.NavigateToSignInAsync();
             }  
         }
 
