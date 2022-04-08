@@ -34,7 +34,7 @@
                 Text="Login is empty"
                 VerticalTextAlignment="Start"
                 TextColor="Red"
-                IsVisible="{Binding LoginNameEmpty}"/>
+                IsVisible="{Binding NameEmpty}"/>
 
             <Label
                 Grid.Row="4"
@@ -42,7 +42,7 @@
                 Text="Password is empty"
                 VerticalTextAlignment="Start"
                 TextColor="Red"
-                IsVisible="{Binding LoginPassEmpty}"/>
+                IsVisible="{Binding PasswordEmpty}"/>
 
             <Label
                 Grid.Row="0"
@@ -59,10 +59,19 @@
             <Label
                 Grid.Row="6"
                 Grid.Column="1"
-                Text="You have an account Sign up"
+                Text="You have an account"
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"/>
-                
+
+            <Label
+                Margin="0,0"
+                TextColor="Blue"
+                Text="Sign up">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToSignUpCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

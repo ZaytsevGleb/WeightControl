@@ -1,34 +1,43 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using WeightControl.Services;
 using Xamarin.Forms;
 
 namespace WeightControl.ViewModels
 {
     public class LoginViewModel: BaseViewModel
     {
+        private readonly NavigationService navigationService;
         public string Name { get; set; }
         public string Password { get; set; }
-        public bool LoginNameEmpty { get; set; }
-        public bool LoginPasswordEmpty { get; set; }
+        public bool NameEmpty { get; set; }
+        public bool PasswordEmpty { get; set; }
 
         public Command SignInCommand { get; set; }
 
         public LoginViewModel()
         {
-            SignInCommand = new Command(SignIn);
+            navigationService = new NavigationService();
+            SignInCommand = new Command(async () => await SignInAsync());
 
-            LoginNameEmpty = false;
-            RisePropertyChanged(nameof(LoginNameEmpty));
+            NameEmpty = false;
+            
 
-            LoginPasswordEmpty = false;
-            RisePropertyChanged(nameof(LoginPasswordEmpty));
+            PasswordEmpty = false;
+            
         }
 
-        public void SignIn()
+        public async Task SignInAsync()
         {
             if (Validate())
             {
-
+                await navigationService.NavigateToHomeAsync();
+            }
+            else
+            {
+                RisePropertyChanged(nameof(PasswordEmpty));
+                RisePropertyChanged(nameof(NameEmpty));
             }
         }
 
@@ -36,24 +45,24 @@ namespace WeightControl.ViewModels
         {
             var isValid = true;
 
-            if (string.IsNullOrEmpty(Name))
+            if (string.IsNullOrWhiteSpace(Name))
             {
-                LoginNameEmpty = true;
+                NameEmpty = true;
                 isValid = false;
             }
             else
             {
-                LoginNameEmpty = false;
+                NameEmpty = false;
             }
 
-            if (string.IsNullOrEmpty(Password))
+            if (string.IsNullOrWhiteSpace(Password))
             {
-                LoginPasswordEmpty = true;
+                PasswordEmpty = true;
                 isValid = false;
             }
             else
             {
-                LoginPasswordEmpty = false;
+                PasswordEmpty = false;
             }
 
             return isValid;

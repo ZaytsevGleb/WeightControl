@@ -9,9 +9,9 @@ namespace WeightControl.ViewModels
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public bool RegisterNameEmpty { get; set; }
-        public bool RegisterEmailEmpty { get; set; }
-        public bool RegisterPasswordEmpty { get; set; }
+        public bool NameEmpty { get; set; }
+        public bool EmailEmpty { get; set; }
+        public bool PasswordEmpty { get; set; }
 
         public Command SignUpCommand { get; set; }
 
@@ -19,14 +19,14 @@ namespace WeightControl.ViewModels
         {
             SignUpCommand = new Command(SignUp);
 
-            RegisterNameEmpty = false;
-            RisePropertyChanged(nameof(RegisterNameEmpty));
+            NameEmpty = false;
+            RisePropertyChanged(nameof(NameEmpty));
 
-            RegisterEmailEmpty = false;
-            RisePropertyChanged(nameof(RegisterEmailEmpty));
+            EmailEmpty = false;
+            RisePropertyChanged(nameof(EmailEmpty));
 
-            RegisterPasswordEmpty = false;
-            RisePropertyChanged(nameof(RegisterPasswordEmpty));
+            PasswordEmpty = false;
+            RisePropertyChanged(nameof(PasswordEmpty));
         }
 
         public void SignUp()
@@ -43,32 +43,32 @@ namespace WeightControl.ViewModels
 
             if (string.IsNullOrEmpty(Name))
             {
-                RegisterNameEmpty = true;
+                NameEmpty = true;
                 isValid = false;
             }
             else
             {
-                RegisterNameEmpty = false;
+                NameEmpty = false;
             }
 
             if (string.IsNullOrEmpty(Email))
             {
-                RegisterEmailEmpty = true;
+                EmailEmpty = true;
                 isValid = false;
             }
             else
             {
-                RegisterEmailEmpty = false;
+                EmailEmpty = false;
             }
 
             if (string.IsNullOrEmpty(Password))
             {
-                RegisterPasswordEmpty = true;
+                PasswordEmpty = true;
                 isValid = false;
             }
             else
             {
-                RegisterPasswordEmpty = false;
+                PasswordEmpty = false;
             }
 
             return isValid;

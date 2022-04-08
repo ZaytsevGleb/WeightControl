@@ -55,7 +55,7 @@
             Text="Name is empty"
             TextColor="Red"
             VerticalTextAlignment="Start"
-            IsVisible="{Binding RegisterNameEmpty}"/>
+            IsVisible="{Binding NameEmpty}"/>
 
         <Label
             Grid.Row="4"
@@ -63,7 +63,7 @@
             Text="E-mail is empty"
             TextColor="Red"
             VerticalTextAlignment="Start"
-            IsVisible="{Binding RegisterEmailEmpty}"/>
+            IsVisible="{Binding EmailEmpty}"/>
 
         <Label
             Grid.Row="6"
@@ -71,7 +71,7 @@
             Text="Password is empty"
             TextColor="Red"
             VerticalTextAlignment="Start"
-            IsVisible="{Binding RegisterPasswordEmpty}"/>
+            IsVisible="{Binding PasswordEmpty}"/>
 
         </Grid>
     </ContentPage.Content>
