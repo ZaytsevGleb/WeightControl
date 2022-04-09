@@ -73,6 +73,18 @@
             VerticalTextAlignment="Start"
             IsVisible="{Binding PasswordEmpty}"/>
 
+            <Label
+                Grid.Row="0"
+                Grid.Column="2"
+                VerticalTextAlignment="Start"
+                HorizontalOptions="Center"
+                TextColor="#0F59C9"
+                Text="Back"
+                >
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

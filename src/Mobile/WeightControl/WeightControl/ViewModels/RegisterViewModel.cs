@@ -19,16 +19,24 @@ namespace WeightControl.ViewModels
         public bool PasswordEmpty { get; set; }
 
         public Command SignUpCommand { get; set; }
+        public Command GoBackCommand { get; set; }
 
         public RegisterViewModel()
         {
             navigationService = new NavigationService();
             currentUserService = new CurrentUserService();
+
             SignUpCommand = new Command(async () => await SignUpAsync());
+            GoBackCommand = new Command(async () => await GoBack());
 
             NameEmpty = false;
             EmailEmpty = false;
             PasswordEmpty = false;
+        }
+
+        public async Task GoBack()
+        {
+            await navigationService.NavigateToLoginAsync();
         }
 
         public async Task SignUpAsync()
@@ -36,7 +44,7 @@ namespace WeightControl.ViewModels
             if (Validate())
             {
                 currentUserService.IsRegistered = true;
-                await navigationService.NavigateToHomeAsync();
+                await navigationService.NavigateToLoginAsync();
             }
             else
             {

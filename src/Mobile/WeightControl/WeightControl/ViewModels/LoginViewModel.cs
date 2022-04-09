@@ -28,7 +28,7 @@ namespace WeightControl.ViewModels
             GoToSignUpCommand = new Command(async () => await GoToSignUp());
 
             NameEmpty = false;
-            PasswordEmpty = false;            
+            PasswordEmpty = false;
         }
 
         public async Task GoToSignUp()
