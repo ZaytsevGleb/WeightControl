@@ -1,11 +1,16 @@
-﻿using System;
+﻿    using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using WeightControl.Services;
 using Xamarin.Forms;
 
 namespace WeightControl.ViewModels
 {
     public class RegisterViewModel:BaseViewModel
     {
+        private readonly NavigationService navigationService;
+        private readonly CurrentUserService currentUserService;
+
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -17,23 +22,27 @@ namespace WeightControl.ViewModels
 
         public RegisterViewModel()
         {
-            SignUpCommand = new Command(SignUp);
+            navigationService = new NavigationService();
+            currentUserService = new CurrentUserService();
+            SignUpCommand = new Command(async () => await SignUpAsync());
 
             NameEmpty = false;
-            RisePropertyChanged(nameof(NameEmpty));
-
             EmailEmpty = false;
-            RisePropertyChanged(nameof(EmailEmpty));
-
             PasswordEmpty = false;
-            RisePropertyChanged(nameof(PasswordEmpty));
         }
 
-        public void SignUp()
+        public async Task SignUpAsync()
         {
             if (Validate())
             {
-                
+                currentUserService.IsRegistered = true;
+                await navigationService.NavigateToHomeAsync();
+            }
+            else
+            {
+                RisePropertyChanged(nameof(NameEmpty));
+                RisePropertyChanged(nameof(EmailEmpty));
+                RisePropertyChanged(nameof(PasswordEmpty));
             }
         }
 

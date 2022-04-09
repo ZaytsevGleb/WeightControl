@@ -9,29 +9,38 @@ namespace WeightControl.ViewModels
     public class LoginViewModel: BaseViewModel
     {
         private readonly NavigationService navigationService;
+        private readonly CurrentUserService currentUserService;
+
         public string Name { get; set; }
         public string Password { get; set; }
         public bool NameEmpty { get; set; }
         public bool PasswordEmpty { get; set; }
 
         public Command SignInCommand { get; set; }
+        public Command GoToSignUpCommand { get; set; }
 
         public LoginViewModel()
         {
             navigationService = new NavigationService();
+            currentUserService = new CurrentUserService();
+
             SignInCommand = new Command(async () => await SignInAsync());
+            GoToSignUpCommand = new Command(async () => await GoToSignUp());
 
             NameEmpty = false;
-            
+            PasswordEmpty = false;            
+        }
 
-            PasswordEmpty = false;
-            
+        public async Task GoToSignUp()
+        {
+            await navigationService.NavigateToRegisterAsync();
         }
 
         public async Task SignInAsync()
         {
             if (Validate())
             {
+                currentUserService.IsRegistered = true;
                 await navigationService.NavigateToHomeAsync();
             }
             else

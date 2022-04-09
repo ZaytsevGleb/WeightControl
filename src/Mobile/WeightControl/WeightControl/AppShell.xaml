@@ -31,6 +31,7 @@
 
     <TabBar>
         <ShellContent Route="LoginView" ContentTemplate="{DataTemplate local:LoginView}" />
+        <ShellContent Route="RegisterView" ContentTemplate="{DataTemplate local:RegisterView}" />
     </TabBar>
     <!--<ShellContent Route="PlayView" ContentTemplate="{DataTemplate local:PlayView}" />
     <ShellContent Route="FinishGameView" ContentTemplate="{DataTemplate local:FinishGameView}" />-->

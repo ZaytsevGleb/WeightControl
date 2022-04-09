@@ -60,13 +60,17 @@
                 Grid.Row="6"
                 Grid.Column="1"
                 Text="You have an account"
-                HorizontalTextAlignment="Center"
+                HorizontalTextAlignment="Start"
                 VerticalTextAlignment="Center"/>
 
             <Label
-                Margin="0,0"
-                TextColor="Blue"
-                Text="Sign up">
+                Grid.Row="6"
+                Grid.Column="1"
+                VerticalTextAlignment="Center"
+                HorizontalOptions="End"
+                TextColor="#0F59C9"
+                Text="Sign up"
+                >
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToSignUpCommand}"/>
                 </Label.GestureRecognizers>
