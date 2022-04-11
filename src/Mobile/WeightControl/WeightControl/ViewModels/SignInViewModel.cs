@@ -8,21 +8,21 @@ namespace WeightControl.ViewModels
 {
     public class SignInviewModel: BaseViewModel
     {
-        private readonly NavigationService navigationService;
+        //private readonly NavigationService navigationService;
         
-        public Command SignInCommand { get; set; }
+        //public Command SignInCommand { get; set; }
 
-        public SignInviewModel()
-        {
-            navigationService = new NavigationService();
+        //public SignInviewModel()
+        //{
+        //    navigationService = new NavigationService();
 
-            SignInCommand = new Command(async () => await SignInAsync());
-        }
+        //    SignInCommand = new Command(async () => await SignInAsync());
+        //}
 
-        public async Task SignInAsync()
-        {
-           await navigationService.NavigateToHomeAsync();
-        }
+        //public async Task SignInAsync()
+        //{
+        //   await navigationService.NavigateToHomeAsync();
+        //}
 
     }
 }

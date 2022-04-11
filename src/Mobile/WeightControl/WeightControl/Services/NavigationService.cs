@@ -13,16 +13,24 @@ namespace WeightControl.Services
             Routing.RegisterRoute(nameof(StatsView), typeof(StatsView));
             Routing.RegisterRoute(nameof(ProductsView), typeof(ProductsView));
             Routing.RegisterRoute(nameof(SignInView), typeof(SignInView));
+            Routing.RegisterRoute(nameof(LoginView), typeof(SignInView));
+            Routing.RegisterRoute(nameof(RegisterView), typeof(RegisterView));
         }
 
-        public async Task NavigateToSignInAsync()
+        public async Task NavigateToLoginAsync()
         {
-            await Shell.Current.GoToAsync($"//{nameof(SignInView)}");
+            await Shell.Current.GoToAsync($"//{nameof(LoginView)}");
+        }
+
+        public async Task NavigateToRegisterAsync()
+        {
+            await Shell.Current.GoToAsync($"//{nameof(RegisterView)}");
         }
 
         public async Task NavigateToHomeAsync()
         {
             await Shell.Current.GoToAsync($"//{nameof(HomeView)}");
         }
+        
     }
 }
