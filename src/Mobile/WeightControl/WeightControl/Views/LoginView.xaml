@@ -11,8 +11,9 @@
             <Button
                 Grid.Row="5"
                 Grid.Column="1"
-                Command="{Binding SignInCommand}"
+                Command="{Binding GoToLoginCommand}"
                 BackgroundColor="LightGray"
+                TextColor="DodgerBlue"
                 Text="Sign in"/>
 
             <Entry
@@ -55,24 +56,22 @@
                 Grid.Column="1"
                 Text="Password:"
                 VerticalTextAlignment="End"/>
-            
-            <Label
-                Grid.Row="6"
-                Grid.Column="1"
-                Text="You have an account"
-                HorizontalTextAlignment="Start"
-                VerticalTextAlignment="Center"/>
-
+    
             <Label
                 Grid.Row="6"
                 Grid.Column="1"
                 VerticalTextAlignment="Center"
-                HorizontalOptions="End"
-                TextColor="#0F59C9"
-                Text="Sign up"
-                >
+                HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span
+                            Text="You have an account "/>
+                        <Span
+                            Text="Sign up" TextColor="DodgerBlue"/>
+                    </FormattedString>
+                </Label.FormattedText>
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToSignUpCommand}"/>
+                    <TapGestureRecognizer Command="{Binding GoToRegisterCommand}"/>
                 </Label.GestureRecognizers>
             </Label>
 

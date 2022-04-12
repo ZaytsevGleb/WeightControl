@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using WeightControl.ViewModels;
 using WeightControl.Views;
 using Xamarin.Forms;
 
@@ -17,14 +18,14 @@ namespace WeightControl.Services
             Routing.RegisterRoute(nameof(RegisterView), typeof(RegisterView));
         }
 
-        public async Task NavigateToLoginAsync()
+        public async Task NavigateToLoginAsync(string login = "", string password = "")
         {
-            await Shell.Current.GoToAsync($"//{nameof(LoginView)}");
+            await Shell.Current.GoToAsync($"//{nameof(LoginView)}?{nameof(LoginViewModel.Name)}={login}&{nameof(LoginViewModel.Password)}={password}");
         }
 
-        public async Task NavigateToRegisterAsync()
+        public async Task NavigateToRegisterAsync(string login = "", string password = "")
         {
-            await Shell.Current.GoToAsync($"//{nameof(RegisterView)}");
+            await Shell.Current.GoToAsync($"//{nameof(LoginView)}/{nameof(RegisterView)}?{nameof(RegisterViewModel.Name)}={login}&{nameof(RegisterViewModel.Password)}={password}");
         }
 
         public async Task NavigateToHomeAsync()

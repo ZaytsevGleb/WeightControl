@@ -2,12 +2,11 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="WeightControl.Views.RegisterView">
+    x:Class="WeightControl.Views.RegisterView">    
     <ContentPage.Content>
         <Grid
             RowDefinitions="3*,*,*,*,*,*,2*,*,5*"
             ColumnDefinitions="*,5*,*">
-
         <Entry
             Grid.Row="1"
             Grid.Column="1"
@@ -77,14 +76,13 @@
                 Grid.Row="0"
                 Grid.Column="2"
                 VerticalTextAlignment="Start"
-                HorizontalOptions="Center"
-                TextColor="#0F59C9"
-                Text="Back"
-                >
+                TextColor="DodgerBlue"
+                Text="Back">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
                 </Label.GestureRecognizers>
             </Label>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>
