@@ -6,6 +6,8 @@ using Xamarin.Forms;
 
 namespace WeightControl.ViewModels
 {
+    [QueryProperty(nameof(Name),nameof(Name))]
+    [QueryProperty(nameof(Password), nameof(Password))]
     public class RegisterViewModel:BaseViewModel
     {
         private readonly NavigationService navigationService;
@@ -19,7 +21,6 @@ namespace WeightControl.ViewModels
         public bool PasswordEmpty { get; set; }
 
         public Command SignUpCommand { get; set; }
-        public Command GoBackCommand { get; set; }
 
         public RegisterViewModel()
         {
@@ -27,16 +28,6 @@ namespace WeightControl.ViewModels
             currentUserService = new CurrentUserService();
 
             SignUpCommand = new Command(async () => await SignUpAsync());
-            GoBackCommand = new Command(async () => await GoBack());
-
-            NameEmpty = false;
-            EmailEmpty = false;
-            PasswordEmpty = false;
-        }
-
-        public async Task GoBack()
-        {
-            await navigationService.NavigateToLoginAsync();
         }
 
         public async Task SignUpAsync()
@@ -44,13 +35,7 @@ namespace WeightControl.ViewModels
             if (Validate())
             {
                 currentUserService.IsRegistered = true;
-                await navigationService.NavigateToLoginAsync();
-            }
-            else
-            {
-                RisePropertyChanged(nameof(NameEmpty));
-                RisePropertyChanged(nameof(EmailEmpty));
-                RisePropertyChanged(nameof(PasswordEmpty));
+                await navigationService.NavigateToLoginAsync(Name,Password);
             }
         }
 

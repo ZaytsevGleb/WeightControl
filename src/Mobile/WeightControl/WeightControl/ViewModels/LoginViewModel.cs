@@ -6,7 +6,9 @@ using Xamarin.Forms;
 
 namespace WeightControl.ViewModels
 {
-    public class LoginViewModel: BaseViewModel
+    [QueryProperty(nameof(Name), nameof(Name))]
+    [QueryProperty(nameof(Password), nameof(Password))]
+    public class LoginViewModel : BaseViewModel
     {
         private readonly NavigationService navigationService;
         private readonly CurrentUserService currentUserService;
@@ -16,37 +18,29 @@ namespace WeightControl.ViewModels
         public bool NameEmpty { get; set; }
         public bool PasswordEmpty { get; set; }
 
-        public Command SignInCommand { get; set; }
-        public Command GoToSignUpCommand { get; set; }
+        public Command GoToLoginCommand { get; set; }
+        public Command GoToRegisterCommand { get; set; }
 
         public LoginViewModel()
         {
             navigationService = new NavigationService();
             currentUserService = new CurrentUserService();
 
-            SignInCommand = new Command(async () => await SignInAsync());
-            GoToSignUpCommand = new Command(async () => await GoToSignUp());
-
-            NameEmpty = false;
-            PasswordEmpty = false;
+            GoToLoginCommand = new Command(async () => await GoToLoginAsync());
+            GoToRegisterCommand = new Command(async () => await GoToRegisterAsync());
         }
 
-        public async Task GoToSignUp()
+        public async Task GoToRegisterAsync()
         {
-            await navigationService.NavigateToRegisterAsync();
+            await navigationService.NavigateToRegisterAsync(Name, Password);
         }
 
-        public async Task SignInAsync()
+        public async Task GoToLoginAsync()
         {
             if (Validate())
             {
                 currentUserService.IsRegistered = true;
                 await navigationService.NavigateToHomeAsync();
-            }
-            else
-            {
-                RisePropertyChanged(nameof(PasswordEmpty));
-                RisePropertyChanged(nameof(NameEmpty));
             }
         }
 
