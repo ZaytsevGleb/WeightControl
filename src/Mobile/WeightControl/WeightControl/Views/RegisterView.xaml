@@ -11,7 +11,7 @@
             Grid.Row="1"
             Grid.Column="1"
             BackgroundColor="LightGray"
-            Text="{Binding Name}"/>
+            Text="{Binding Login}"/>
         <Entry
             Grid.Row="3"
             Grid.Column="1"
@@ -54,7 +54,7 @@
             Text="Name is empty"
             TextColor="Red"
             VerticalTextAlignment="Start"
-            IsVisible="{Binding NameEmpty}"/>
+            IsVisible="{Binding LoginEmpty}"/>
 
         <Label
             Grid.Row="4"
@@ -71,17 +71,6 @@
             TextColor="Red"
             VerticalTextAlignment="Start"
             IsVisible="{Binding PasswordEmpty}"/>
-
-            <Label
-                Grid.Row="0"
-                Grid.Column="2"
-                VerticalTextAlignment="Start"
-                TextColor="DodgerBlue"
-                Text="Back">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
-                </Label.GestureRecognizers>
-            </Label>
 
         </Grid>
     </ContentPage.Content>

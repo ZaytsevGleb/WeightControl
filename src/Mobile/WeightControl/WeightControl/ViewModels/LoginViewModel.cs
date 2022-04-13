@@ -6,16 +6,16 @@ using Xamarin.Forms;
 
 namespace WeightControl.ViewModels
 {
-    [QueryProperty(nameof(Name), nameof(Name))]
+    [QueryProperty(nameof(Login), nameof(Login))]
     [QueryProperty(nameof(Password), nameof(Password))]
     public class LoginViewModel : BaseViewModel
     {
         private readonly NavigationService navigationService;
         private readonly CurrentUserService currentUserService;
 
-        public string Name { get; set; }
+        public string Login { get; set; }
         public string Password { get; set; }
-        public bool NameEmpty { get; set; }
+        public bool LoginEmpty { get; set; }
         public bool PasswordEmpty { get; set; }
 
         public Command GoToLoginCommand { get; set; }
@@ -32,7 +32,7 @@ namespace WeightControl.ViewModels
 
         public async Task GoToRegisterAsync()
         {
-            await navigationService.NavigateToRegisterAsync(Name, Password);
+            await navigationService.NavigateToRegisterAsync(Login, Password);
         }
 
         public async Task GoToLoginAsync()
@@ -48,14 +48,14 @@ namespace WeightControl.ViewModels
         {
             var isValid = true;
 
-            if (string.IsNullOrWhiteSpace(Name))
+            if (string.IsNullOrWhiteSpace(Login))
             {
-                NameEmpty = true;
+                LoginEmpty = true;
                 isValid = false;
             }
             else
             {
-                NameEmpty = false;
+                LoginEmpty = false;
             }
 
             if (string.IsNullOrWhiteSpace(Password))

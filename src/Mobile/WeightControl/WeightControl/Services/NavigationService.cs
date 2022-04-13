@@ -20,12 +20,12 @@ namespace WeightControl.Services
 
         public async Task NavigateToLoginAsync(string login = "", string password = "")
         {
-            await Shell.Current.GoToAsync($"//{nameof(LoginView)}?{nameof(LoginViewModel.Name)}={login}&{nameof(LoginViewModel.Password)}={password}");
+            await Shell.Current.GoToAsync($"//{nameof(LoginView)}?{nameof(LoginViewModel.Login)}={login}&{nameof(LoginViewModel.Password)}={password}");
         }
 
         public async Task NavigateToRegisterAsync(string login = "", string password = "")
         {
-            await Shell.Current.GoToAsync($"//{nameof(LoginView)}/{nameof(RegisterView)}?{nameof(RegisterViewModel.Name)}={login}&{nameof(RegisterViewModel.Password)}={password}");
+            await Shell.Current.GoToAsync($"//{nameof(LoginView)}/{nameof(RegisterView)}?{nameof(RegisterViewModel.Login)}={login}&{nameof(RegisterViewModel.Password)}={password}");
         }
 
         public async Task NavigateToHomeAsync()

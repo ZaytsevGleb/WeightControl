@@ -20,7 +20,7 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 BackgroundColor="LightGray"
-                Text="{Binding Name}"/>
+                Text="{Binding Login}"/>
 
             <Entry
                 Grid.Row="3"
@@ -35,7 +35,7 @@
                 Text="Login is empty"
                 VerticalTextAlignment="Start"
                 TextColor="Red"
-                IsVisible="{Binding NameEmpty}"/>
+                IsVisible="{Binding LoginEmpty}"/>
 
             <Label
                 Grid.Row="4"
