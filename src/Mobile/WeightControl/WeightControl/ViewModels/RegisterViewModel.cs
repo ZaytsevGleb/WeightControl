@@ -13,6 +13,7 @@ namespace WeightControl.ViewModels
     {
         private readonly INavigationService navigationService;
         private readonly ICurrentUserService currentUserService;
+        private readonly IAuthenticationService authenticationService;
 
         public string Login { get; set; }
         public string Email { get; set; }
@@ -25,10 +26,12 @@ namespace WeightControl.ViewModels
 
         public RegisterViewModel(
             INavigationService navigationService,
-            ICurrentUserService currentUserService)
+            ICurrentUserService currentUserService,
+            IAuthenticationService authenticationService)
         {
             this.navigationService = navigationService;
             this.currentUserService = currentUserService;
+            this.authenticationService = authenticationService;
 
             SignUpCommand = new Command(async () => await SignUpAsync());
         }

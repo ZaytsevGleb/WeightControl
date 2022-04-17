@@ -17,6 +17,7 @@ namespace WeightControl
             var services = new ServiceCollection();
             services.AddTransient<INavigationService,NavigationService>();
             services.AddTransient<ICurrentUserService,CurrentUserService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
 
             services.AddTransient<LoginViewModel>();
             services.AddTransient<RegisterViewModel>();
@@ -34,7 +35,8 @@ namespace WeightControl
         {
             var currentUserService = ServiceProvider.GetRequiredService<ICurrentUserService>();
             var navigationService = ServiceProvider.GetRequiredService<INavigationService>();
-            if(currentUserService.IsSignedIn)
+            //var authenticationService = ServiceProvider.GetRequiredService<IAuthenticationService>();
+            if (currentUserService.IsSignedIn)
             {
                 await navigationService.NavigateToHomeAsync();
             }

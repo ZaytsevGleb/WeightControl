@@ -12,6 +12,7 @@ namespace WeightControl.ViewModels
     {
         private readonly INavigationService navigationService;
         private readonly ICurrentUserService currentUserService;
+        private readonly IAuthenticationService authenticationService;
         
         public string Login { get; set; }
         public string Password { get; set; }
@@ -23,10 +24,12 @@ namespace WeightControl.ViewModels
 
         public LoginViewModel(
             INavigationService navigationService,
-            ICurrentUserService currentUserService)
+            ICurrentUserService currentUserService,
+            IAuthenticationService authenticationService)
         {
             this.navigationService = navigationService;
             this.currentUserService = currentUserService;
+            this.authenticationService = authenticationService;
 
             GoToLoginCommand = new Command(async () => await GoToLoginAsync());
             GoToRegisterCommand = new Command(async () => await GoToRegisterAsync());
@@ -42,6 +45,7 @@ namespace WeightControl.ViewModels
             if (Validate())
             {
                 currentUserService.IsRegistered = true;
+
                 await navigationService.NavigateToHomeAsync();
             }
         }
