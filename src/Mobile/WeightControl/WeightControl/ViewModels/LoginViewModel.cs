@@ -11,7 +11,7 @@ namespace WeightControl.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         private readonly INavigationService navigationService;
-        private readonly CurrentUserService currentUserService;
+        private readonly ICurrentUserService currentUserService;
         
         public string Login { get; set; }
         public string Password { get; set; }
@@ -23,7 +23,7 @@ namespace WeightControl.ViewModels
 
         public LoginViewModel(
             INavigationService navigationService,
-            CurrentUserService currentUserService)
+            ICurrentUserService currentUserService)
         {
             this.navigationService = navigationService;
             this.currentUserService = currentUserService;

@@ -1,6 +1,7 @@
 ﻿    using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
+    using System.Security;
+    using System.Threading.Tasks;
 using WeightControl.Services;
 using Xamarin.Forms;
 
@@ -10,8 +11,8 @@ namespace WeightControl.ViewModels
     [QueryProperty(nameof(Password), nameof(Password))]
     public class RegisterViewModel:BaseViewModel
     {
-        private readonly NavigationService navigationService;
-        private readonly CurrentUserService currentUserService;
+        private readonly INavigationService navigationService;
+        private readonly ICurrentUserService currentUserService;
 
         public string Login { get; set; }
         public string Email { get; set; }
@@ -22,10 +23,12 @@ namespace WeightControl.ViewModels
 
         public Command SignUpCommand { get; set; }
 
-        public RegisterViewModel()
+        public RegisterViewModel(
+            INavigationService navigationService,
+            ICurrentUserService currentUserService)
         {
-            navigationService = new NavigationService();
-            currentUserService = new CurrentUserService();
+            this.navigationService = navigationService;
+            this.currentUserService = currentUserService;
 
             SignUpCommand = new Command(async () => await SignUpAsync());
         }

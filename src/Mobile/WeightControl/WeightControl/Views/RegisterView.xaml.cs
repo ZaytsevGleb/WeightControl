@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using Microsoft.Extensions.DependencyInjection;
 using WeightControl.ViewModels;
 using Xamarin.Forms;
 
@@ -10,7 +12,7 @@ namespace WeightControl.Views
         public RegisterView()
         {
             InitializeComponent();
-            BindingContext = new RegisterViewModel();
+            BindingContext = App.ServiceProvider.GetRequiredService<RegisterViewModel>();
         }
     }
 }

@@ -27,4 +27,11 @@
     <Folder Include="ViewModels\" />
     <Folder Include="Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ViewModels\SignInViewModel.cs" />
+    <Compile Remove="Views\SignInView.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\SignInView.xaml" />
+  </ItemGroup>
 </Project>

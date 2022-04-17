@@ -15,10 +15,15 @@ namespace WeightControl
         public App()
         {
             var services = new ServiceCollection();
-            services.AddTransient<INavigationService,NavigationService>();
-            services.AddTransient<CurrentUserService>();
+            services.AddSingleton<INavigationService,NavigationService>();
+            services.AddTransient<ICurrentUserService,CurrentUserService>();
 
             services.AddTransient<LoginViewModel>();
+            services.AddTransient<RegisterViewModel>();
+            services.AddTransient<HomeViewModel>();
+            services.AddTransient<ProductsViewModel>();
+            services.AddTransient<StatsViewModel>();
+            
             ServiceProvider = services.BuildServiceProvider();
 
             InitializeComponent();

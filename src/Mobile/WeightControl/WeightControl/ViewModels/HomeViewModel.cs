@@ -1,11 +1,19 @@
 ﻿using System;
+using WeightControl.Services;
 
 namespace WeightControl.ViewModels
 {
-    public class HomeViewModel
+    public class HomeViewModel : BaseViewModel
     {
-        public HomeViewModel()
+        private readonly INavigationService navigationService;
+        private readonly ICurrentUserService currentUserService;
+        
+        public HomeViewModel(
+            INavigationService navigationService,
+            CurrentUserService currentUserService)
         {
+            this.navigationService = navigationService;
+            this.currentUserService = currentUserService;
         }
     }
 }
