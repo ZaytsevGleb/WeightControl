@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace WeightControl.ViewModels
 {
-    public class SignInviewModel: BaseViewModel
+    public class SignInViewModel: BaseViewModel
     {
         //private readonly NavigationService navigationService;
         

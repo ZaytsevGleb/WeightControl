@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace WeightControl.Services
 {
-    public class NavigationService
+    public class NavigationService : INavigationService
     {
         public NavigationService()
         {

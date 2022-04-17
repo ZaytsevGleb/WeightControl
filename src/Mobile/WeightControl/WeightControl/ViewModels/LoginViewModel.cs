@@ -10,9 +10,9 @@ namespace WeightControl.ViewModels
     [QueryProperty(nameof(Password), nameof(Password))]
     public class LoginViewModel : BaseViewModel
     {
-        private readonly NavigationService navigationService;
+        private readonly INavigationService navigationService;
         private readonly CurrentUserService currentUserService;
-
+        
         public string Login { get; set; }
         public string Password { get; set; }
         public bool LoginEmpty { get; set; }
@@ -21,10 +21,12 @@ namespace WeightControl.ViewModels
         public Command GoToLoginCommand { get; set; }
         public Command GoToRegisterCommand { get; set; }
 
-        public LoginViewModel()
+        public LoginViewModel(
+            INavigationService navigationService,
+            CurrentUserService currentUserService)
         {
-            navigationService = new NavigationService();
-            currentUserService = new CurrentUserService();
+            this.navigationService = navigationService;
+            this.currentUserService = currentUserService;
 
             GoToLoginCommand = new Command(async () => await GoToLoginAsync());
             GoToRegisterCommand = new Command(async () => await GoToRegisterAsync());

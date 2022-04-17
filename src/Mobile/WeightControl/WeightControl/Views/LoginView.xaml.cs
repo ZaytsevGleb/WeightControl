@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using WeightControl.ViewModels;
 using Xamarin.Forms;
 
@@ -10,7 +11,7 @@ namespace WeightControl.Views
         public LoginView()
         {
             InitializeComponent();
-            BindingContext = new LoginViewModel();
+            BindingContext = App.ServiceProvider.GetRequiredService<LoginViewModel>();
         }
     }
 }

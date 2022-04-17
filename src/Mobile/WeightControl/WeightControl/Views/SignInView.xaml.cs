@@ -10,7 +10,7 @@ namespace WeightControl.Views
         public SignInView()
         {
             InitializeComponent();
-            BindingContext = new SignInviewModel();
+            BindingContext = new SignInViewModel();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using WeightControl.Services;
 using WeightControl.ViewModels;
 using WeightControl.Views;
@@ -9,22 +10,25 @@ namespace WeightControl
 {
     public partial class App : Application
     {
-        private readonly CurrentUserService currentUserService;
-        private readonly NavigationService navigationService;
-
+        public static ServiceProvider ServiceProvider;
+        
         public App()
         {
-            navigationService = new NavigationService();
-            currentUserService = new CurrentUserService();
+            var services = new ServiceCollection();
+            services.AddTransient<INavigationService,NavigationService>();
+            services.AddTransient<CurrentUserService>();
+
+            services.AddTransient<LoginViewModel>();
+            ServiceProvider = services.BuildServiceProvider();
 
             InitializeComponent();
-
             MainPage = new AppShell();
-
         }
 
         protected async override void OnStart()
         {
+            var currentUserService = ServiceProvider.GetRequiredService<CurrentUserService>();
+            var navigationService = ServiceProvider.GetRequiredService<NavigationService>();
             if(currentUserService.IsSignedIn)
             {
                 await navigationService.NavigateToHomeAsync();
