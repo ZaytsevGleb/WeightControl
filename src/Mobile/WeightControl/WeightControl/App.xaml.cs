@@ -15,7 +15,7 @@ namespace WeightControl
         public App()
         {
             var services = new ServiceCollection();
-            services.AddSingleton<INavigationService,NavigationService>();
+            services.AddTransient<INavigationService,NavigationService>();
             services.AddTransient<ICurrentUserService,CurrentUserService>();
 
             services.AddTransient<LoginViewModel>();
@@ -32,8 +32,8 @@ namespace WeightControl
 
         protected async override void OnStart()
         {
-            var currentUserService = ServiceProvider.GetRequiredService<CurrentUserService>();
-            var navigationService = ServiceProvider.GetRequiredService<NavigationService>();
+            var currentUserService = ServiceProvider.GetRequiredService<ICurrentUserService>();
+            var navigationService = ServiceProvider.GetRequiredService<INavigationService>();
             if(currentUserService.IsSignedIn)
             {
                 await navigationService.NavigateToHomeAsync();

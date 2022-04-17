@@ -10,7 +10,7 @@ namespace WeightControl.ViewModels
         
         public HomeViewModel(
             INavigationService navigationService,
-            CurrentUserService currentUserService)
+            ICurrentUserService currentUserService)
         {
             this.navigationService = navigationService;
             this.currentUserService = currentUserService;
