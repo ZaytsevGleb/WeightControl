@@ -2,14 +2,14 @@ namespace WeightControl.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public void Login()
+        public bool Login(string name, string password)
         {
-            throw new System.NotImplementedException();
+            return true;
         }
 
-        public void Register()
+        public bool Register(string name, string password, string mail)
         {
-            throw new System.NotImplementedException();
+            return true;
         }
     }
-}
+}   

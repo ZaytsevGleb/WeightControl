@@ -44,9 +44,12 @@ namespace WeightControl.ViewModels
         {
             if (Validate())
             {
-                currentUserService.IsRegistered = true;
-
-                await navigationService.NavigateToHomeAsync();
+                if (authenticationService.Login(nameof(Login),nameof(Password)))
+                {
+                    currentUserService.IsRegistered = true;
+                    await navigationService.NavigateToHomeAsync();
+                }
+                
             }
         }
 

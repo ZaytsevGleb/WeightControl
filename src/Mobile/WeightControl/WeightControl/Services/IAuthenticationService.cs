@@ -3,7 +3,7 @@ namespace WeightControl.Services
 {
     public interface IAuthenticationService
     {
-        void Login();
-        void Register();
+        bool Login(string name, string password);
+        bool Register(string name, string password, string mail);
     }
 }
