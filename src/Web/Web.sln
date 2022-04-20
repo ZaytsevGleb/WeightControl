@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.Api", "WeightControl.Api\WeightControl.Api.csproj", "{854AECFB-ED87-48AD-9004-2FD50CBB14CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.BusinessLogic", "WeightControl.BusinessLogic\WeightControl.BusinessLogic.csproj", "{59ACA437-5768-4B96-9870-766E814C1759}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.DataAccess", "WeightControl.DataAccess\WeightControl.DataAccess.csproj", "{5F1D0D2B-E804-45CE-A03E-6C349A6BB651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.Domain", "WeightControl.Domain\WeightControl.Domain.csproj", "{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{854AECFB-ED87-48AD-9004-2FD50CBB14CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854AECFB-ED87-48AD-9004-2FD50CBB14CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854AECFB-ED87-48AD-9004-2FD50CBB14CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854AECFB-ED87-48AD-9004-2FD50CBB14CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59ACA437-5768-4B96-9870-766E814C1759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59ACA437-5768-4B96-9870-766E814C1759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59ACA437-5768-4B96-9870-766E814C1759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59ACA437-5768-4B96-9870-766E814C1759}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F1D0D2B-E804-45CE-A03E-6C349A6BB651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F1D0D2B-E804-45CE-A03E-6C349A6BB651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F1D0D2B-E804-45CE-A03E-6C349A6BB651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F1D0D2B-E804-45CE-A03E-6C349A6BB651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
