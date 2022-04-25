@@ -39,5 +39,31 @@ namespace WeightControl.DataAccess.Repositories
 
             return null;
         }
+
+        public User Create(string login, string password)
+        { 
+            foreach (var user in users) 
+            {
+                if (user.Login == login)
+                {
+                    return null;
+                }
+            }
+
+            // users.Add(new User()
+            // {
+            //     Id = users.Count + 1,
+            //     Login = login,
+            //     Password = password
+            // });
+// оно конечно добавляет, но на момент отправки, должно ли дальше находить потом если в postman сразу изменить register
+// на login и ввести зареганные данные?
+            return new User()
+            {
+                Id = users.Count + 1,
+                Login = login,
+                Password = password
+            };
+        }
     }
 }

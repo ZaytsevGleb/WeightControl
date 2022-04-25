@@ -38,5 +38,50 @@ namespace WeightControl.BusinessLogic.Services
                 Succeded = true
             };
         }
+
+        public RegisterResult Register(string login, string email, string password)
+        {
+            var user = usersRepository.Create(login, password);
+            if (user == null)
+            {
+                return new RegisterResult()
+                {
+                    Succeded = false,
+                    Error = RegisterError.SuchUserAlreadyExists
+                };
+            }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                return new RegisterResult()
+                {
+                    Succeded = false,
+                    Error = RegisterError.PasswordIsNullOrEmpty
+                };
+            }
+            
+            if (string.IsNullOrEmpty(email))
+            {
+                return new RegisterResult()
+                {
+                    Succeded = false,
+                    Error = RegisterError.EmailIsNullOrEmpty
+                };
+            }
+            
+            if (string.IsNullOrEmpty(login))
+            {
+                return new RegisterResult()
+                {
+                    Succeded = false,
+                    Error = RegisterError.LoginIsNullOrEmpty
+                };
+            }
+            
+            return new RegisterResult()
+            {
+                Succeded = true
+            };
+        }
     }
 }
