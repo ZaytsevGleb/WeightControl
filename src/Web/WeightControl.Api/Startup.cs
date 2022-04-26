@@ -20,7 +20,7 @@ namespace WeightControl.Api
         {
             services.AddControllers();
             services.AddScoped<IAuthService,AuthService>();
-            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddSingleton<IUsersRepository, UsersRepository>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)

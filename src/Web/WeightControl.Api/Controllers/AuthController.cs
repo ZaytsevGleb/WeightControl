@@ -28,8 +28,8 @@ namespace WeightControl.Api.Controllers
             
             return Ok(loginResultDto);
         }
-     
-      [HttpPost("register")]
+        
+        [HttpPost("register")]
         public ActionResult Register(RegisterDto registerDto)
         {
             var registerResult = authService.Register(registerDto.Login, registerDto.Email, registerDto.Password);

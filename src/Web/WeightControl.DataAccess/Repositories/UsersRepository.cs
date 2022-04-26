@@ -40,30 +40,23 @@ namespace WeightControl.DataAccess.Repositories
             return null;
         }
 
-        public User Create(string login, string password)
-        { 
-            foreach (var user in users) 
-            {
-                if (user.Login == login)
-                {
-                    return null;
-                }
-            }
+        
+        public User Create(User user)
+        {
+            user.Id = GenerateId();
+            users.Add(user);
+            return user;
+        }
 
-            // users.Add(new User()
-            // {
-            //     Id = users.Count + 1,
-            //     Login = login,
-            //     Password = password
-            // });
-// оно конечно добавляет, но на момент отправки, должно ли дальше находить потом если в postman сразу изменить register
-// на login и ввести зареганные данные?
-            return new User()
+        
+        private int GenerateId()
+        {
+            var result = 0;
+            foreach (var user in users)
             {
-                Id = users.Count + 1,
-                Login = login,
-                Password = password
-            };
+                result = Math.Max(result, user.Id);
+            }
+            return result++;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace WeightControl.BusinessLogic.Services
         }
         public LoginResult Login(string login, string password)
         {
-            var user = usersRepository.GetByLogin(login);
+           var user = usersRepository.GetByLogin(login);
             if (user == null)
             {
                 return new LoginResult()
@@ -22,7 +22,7 @@ namespace WeightControl.BusinessLogic.Services
                     Succeded = false,
                     Error = LoginError.UserNotFound
                 };
-            }
+            } 
 
             if (user.Password != password)
             {
@@ -41,16 +41,6 @@ namespace WeightControl.BusinessLogic.Services
 
         public RegisterResult Register(string login, string email, string password)
         {
-            var user = usersRepository.Create(login, password);
-            if (user == null)
-            {
-                return new RegisterResult()
-                {
-                    Succeded = false,
-                    Error = RegisterError.SuchUserAlreadyExists
-                };
-            }
-
             if (string.IsNullOrEmpty(password))
             {
                 return new RegisterResult()
@@ -77,6 +67,23 @@ namespace WeightControl.BusinessLogic.Services
                     Error = RegisterError.LoginIsNullOrEmpty
                 };
             }
+            
+            var user = usersRepository.GetByLogin(login);
+            if (user != null)
+            {
+                return new RegisterResult()
+                {
+                    Succeded = false,
+                    Error = RegisterError.SuchUserAlreadyExists
+                };
+            }
+
+            user = new User()
+            {
+                Login = login,
+                Password = password
+            };
+            usersRepository.Create(user);
             
             return new RegisterResult()
             {
