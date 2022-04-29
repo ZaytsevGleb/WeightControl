@@ -7,4 +7,4 @@ namespace WeightControl.Domain.Enums
         PasswordIsNullOrEmpty = 2,
         SuchUserAlreadyExists = 3
     }
-}
+}   

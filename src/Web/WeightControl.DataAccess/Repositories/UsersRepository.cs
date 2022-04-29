@@ -1,62 +1,57 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using WeightControl.Domain.Entities;
 
 namespace WeightControl.DataAccess.Repositories
 {
     public class UsersRepository : IUsersRepository
     {
-        private readonly List<User> users;
-        
-        public UsersRepository()
-        {
-            users = new List<User>()
-            {
-                new User()
-                {
-                    Id = 1,
-                    Login = "Gleb",
-                    Password = "qwerty"
-                },
-                new User()
-                {
-                    Id = 2,
-                    Login = "Dzianis",
-                    Password = "1234"
-                }
-            };
-        }
-
+        private readonly string connectionString = @"Data Source=localhost,1433;Initial Catalog=WeightControlDB;User Id=sa; Password=WeightControl2022;";
         public User GetByLogin(string login)
         {
-            foreach (var user in users)
+            User user = new User();
+            string sqlExpression = $"SELECT Id, Login, Password, Email FROM Users WHERE Login = '{login}'";
+            
+            using (var connection = new SqlConnection(connectionString))
             {
-                if (user.Login == login)
+                connection.Open();
+                var command = new SqlCommand(); 
+                command.Connection = connection;
+                command.CommandText = sqlExpression;
+                var reader = command.ExecuteReader();
+                
+                if (reader.HasRows)
                 {
-                    return user;
+                    if (reader.Read())
+                    {
+                        user.Id = (int)reader.GetValue(0);
+                        user.Login = (string) reader.GetValue(1);
+                        user.Password = (string) reader.GetValue(2);
+                        user.Email = (string) reader.GetValue(3);   
+                    }
                 }
+                reader.Close();
             }
 
-            return null;
+            return user;
+
         }
 
         
         public User Create(User user)
         {
-            user.Id = GenerateId();
-            users.Add(user);
-            return user;
-        }
+            string sqlExpression =
+                $"INSERT INTO Users (Login, Password, Email) VALUES {user.Login}, {user.Password}, {user.Email}";
 
-        
-        private int GenerateId()
-        {
-            var result = 0;
-            foreach (var user in users)
+            using (var connection = new SqlConnection(connectionString))
             {
-                result = Math.Max(result, user.Id);
+                var command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = sqlExpression;
             }
-            return result++;
+
+            return user;
         }
     }
 }

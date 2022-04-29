@@ -14,7 +14,7 @@ namespace WeightControl.BusinessLogic.Services
         }
         public LoginResult Login(string login, string password)
         {
-           var user = usersRepository.GetByLogin(login);
+            var user = usersRepository.GetByLogin(login);
             if (user == null)
             {
                 return new LoginResult()
@@ -81,7 +81,8 @@ namespace WeightControl.BusinessLogic.Services
             user = new User()
             {
                 Login = login,
-                Password = password
+                Password = password,
+                Email = email
             };
             usersRepository.Create(user);
             
