@@ -19,7 +19,7 @@ namespace WeightControl.Api.Controllers
         [HttpPost("login")]
         public ActionResult Login(LoginDto loginDto)
         {
-            var loginResult = authService.Login(loginDto.Login,loginDto.Password);
+            var loginResult = authService.Login(loginDto.Login,loginDto.Password, loginDto.Email);
             var loginResultDto = new LoginResultDto()
             {
                 Succeded = loginResult.Succeded,

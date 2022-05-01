@@ -5,6 +5,7 @@ namespace WeightControl.Domain.Enums
         LoginIsNullOrEmpty = 0,
         EmailIsNullOrEmpty = 1, 
         PasswordIsNullOrEmpty = 2,
-        SuchUserAlreadyExists = 3
+        SuchUserAlreadyExists = 3,
+        AllFieldsAreNullOrEmpty = 4
     }
 }   

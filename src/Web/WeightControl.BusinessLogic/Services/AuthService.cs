@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using WeightControl.DataAccess.Repositories;
 using WeightControl.Domain.Entities;
 using WeightControl.Domain.Enums;
@@ -12,7 +13,7 @@ namespace WeightControl.BusinessLogic.Services
         {
             this.usersRepository = usersRepository;
         }
-        public LoginResult Login(string login, string password)
+        public LoginResult Login(string login, string password, string email)
         {
             var user = usersRepository.GetByLogin(login);
             if (user == null)
@@ -41,6 +42,15 @@ namespace WeightControl.BusinessLogic.Services
 
         public RegisterResult Register(string login, string email, string password)
         {
+            if (string.IsNullOrEmpty(login) && string.IsNullOrEmpty(email) && string.IsNullOrEmpty(password))
+            {
+                return new RegisterResult()
+                {
+                    Succeded = false,
+                    Error = RegisterError.AllFieldsAreNullOrEmpty
+                };
+            }
+            
             if (string.IsNullOrEmpty(password))
             {
                 return new RegisterResult()
