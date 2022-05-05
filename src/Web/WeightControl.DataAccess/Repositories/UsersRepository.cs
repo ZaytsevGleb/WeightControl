@@ -10,8 +10,8 @@ namespace WeightControl.DataAccess.Repositories
         private readonly string connectionString = @"Data Source=localhost,1433;Initial Catalog=WeightControlDB;User Id=sa; Password=WeightControl2022;";
         public User GetByLogin(string login)
         {
+            User user = null;
             string sqlExpression = $"SELECT Id, Login, Password, Email FROM Users WHERE Login = '{login}'";
-            
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -23,22 +23,18 @@ namespace WeightControl.DataAccess.Repositories
                 {
                     if (reader.Read())
                     {
-                        var user = new User
+                        user = new User
                         {
-                            Id = (int)reader?.GetValue(0),
-                            Login = (string) reader.GetValue(1),
-                            Password = (string) reader.GetValue(2),
-                            Email = (string) reader.GetValue(3)
+                            Id = reader.GetInt32(0),
+                            Login =  reader.GetString(1),
+                            Password = reader.GetString(2),
+                            Email =  reader.GetString(3)
                         };
-                        reader.Close();
-                        return user;
                     }
                 }
-                
-                reader.Close();
             }
             
-            return null;
+            return user;
         }
 
         

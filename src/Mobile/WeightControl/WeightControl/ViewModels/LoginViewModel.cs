@@ -49,7 +49,6 @@ namespace WeightControl.ViewModels
                     currentUserService.IsRegistered = true;
                     await navigationService.NavigateToHomeAsync();
                 }
-                
             }
         }
 
