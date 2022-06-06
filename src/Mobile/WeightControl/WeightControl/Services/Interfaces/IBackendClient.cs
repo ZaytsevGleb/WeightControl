@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WeightControl.Services
+namespace WeightControl.Services    
 {
     public interface IBackendClient
     {

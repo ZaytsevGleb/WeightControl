@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using WeightControl.Services;
+using WeightControl.Services.Interfaces;
 using Xamarin.Forms;
 
 namespace WeightControl.ViewModels
@@ -44,7 +45,7 @@ namespace WeightControl.ViewModels
         {
             if (Validate())
             {
-                if (authenticationService.Login(Login,Password))
+                if (await authenticationService.LoginAsync(Login,Password))
                 {
                     currentUserService.IsRegistered = true;
                     await navigationService.NavigateToHomeAsync();

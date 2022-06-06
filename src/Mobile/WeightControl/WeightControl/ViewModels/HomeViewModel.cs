@@ -1,5 +1,6 @@
 ﻿using System;
 using WeightControl.Services;
+using WeightControl.Services.Interfaces;
 
 namespace WeightControl.ViewModels
 {

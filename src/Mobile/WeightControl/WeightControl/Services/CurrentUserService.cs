@@ -1,4 +1,6 @@
 ﻿using System;
+using WeightControl.Services.Interfaces;
+
 namespace WeightControl.Services
 {
     public class CurrentUserService : ICurrentUserService

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using WeightControl.Services.Interfaces;
 using WeightControl.ViewModels;
 using WeightControl.Views;
 using Xamarin.Forms;

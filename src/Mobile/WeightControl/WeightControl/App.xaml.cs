@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using WeightControl.Services;
+using WeightControl.Services.Interfaces;
 using WeightControl.ViewModels;
 using WeightControl.Views;
 using Xamarin.Forms;
@@ -18,6 +19,7 @@ namespace WeightControl
             services.AddTransient<INavigationService,NavigationService>();
             services.AddTransient<ICurrentUserService,CurrentUserService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IBackendClient, BackendClient>();
 
             services.AddTransient<LoginViewModel>();
             services.AddTransient<RegisterViewModel>();

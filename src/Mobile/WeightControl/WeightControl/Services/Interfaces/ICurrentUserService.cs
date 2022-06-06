@@ -1,4 +1,4 @@
-namespace WeightControl.Services
+namespace WeightControl.Services.Interfaces
 {
     public interface ICurrentUserService
     {
