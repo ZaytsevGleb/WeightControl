@@ -18,8 +18,7 @@ namespace WeightControl.Services
         {
             this.backendClient = backendClient;
         }
-        
-        //Rename Login to LoginAsync
+
         public async Task<bool> LoginAsync(string name, string password)
         {
             //prepare obj to send

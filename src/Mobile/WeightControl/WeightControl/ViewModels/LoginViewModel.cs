@@ -57,7 +57,7 @@ namespace WeightControl.ViewModels
         {
             var isValid = true;
 
-            if (string.IsNullOrWhiteSpace(Login))
+            if (string.IsNullOrEmpty(Login))
             {
                 LoginEmpty = true;
                 isValid = false;
@@ -67,7 +67,7 @@ namespace WeightControl.ViewModels
                 LoginEmpty = false;
             }
 
-            if (string.IsNullOrWhiteSpace(Password))
+            if (string.IsNullOrEmpty(Password))
             {
                 PasswordEmpty = true;
                 isValid = false;
