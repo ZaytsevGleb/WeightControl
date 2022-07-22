@@ -1,0 +1,19 @@
+<!-- <ng-template appRef></ng-template> -->
+<div class="productpart" *ngIf="isFocused">
+    <div class="productpart__header">
+        <input [(ngModel)]="searchInput"  (ngModelChange)="getProducts()"  class="productpart__search" type="text">
+    </div>
+    <div class="productpart__products">
+        <ul class="productpart__list">
+            <li *ngFor="let product of products">
+                <ul class="productpart__product">
+                    <li>{{product.name}}</li>
+                    <li>Calories: {{product.calories}}</li>
+                    <li>{{showProductUnit(product.unit)}}: {{setAmount(product.unit)}} </li>
+                    <li><button (click)="showAmountDialog(product.id)">add</button></li>
+                    <ng-template #amount></ng-template>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

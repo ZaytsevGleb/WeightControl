@@ -1,0 +1,71 @@
+<div class="meals__part">
+    <div class="mealspart__header">
+        <div class="mealspart__calories">
+            <h2>1700/2000</h2>
+        </div>
+
+        <div class="mealspart__date">
+            <h2>{{date | date: 'mediumDate'}}</h2>
+        </div>
+    </div>
+    <div class="meals">
+        <ul class="mealspart__list">
+            <li class="mealpart__header">
+                <h3>Breakfast</h3>
+                <div class="mealspart__button">
+                    <button (click)="showProducts(0)">add</button>
+                </div>
+            </li>
+            <li class="mealpart__main" *ngFor="let b of breakfast">
+                <ul class="mealpart__info">
+                    <li>{{showProductName(b.productId)}}</li>
+                    <li>Calories: {{showProductCalories(b.productId, b.amount)}}</li>
+                    <li>{{showProductUnit(b.productId)}}: {{setAmount(b.productId,b.amount)}}</li>
+                    <li><button (click)="deleteMealProduct(b.id, 0, b.productId)">delete</button></li>
+                </ul>
+            </li>
+            <li class="mealpart__header">
+                <h3>Lunch</h3>
+                <div class="mealspart__button">
+                    <button (click)="showProducts(1)">add</button>
+                </div>
+            </li>
+            <li class="mealpart__main" *ngFor="let l of lunch">
+                <ul class="mealpart__info">
+                    <li>{{showProductName(l.productId)}}</li>
+                    <li>Calories: {{showProductCalories(l.productId, l.amount)}}</li>
+                    <li>{{showProductUnit(l.productId)}}: {{setAmount(l.productId,l.amount)}}</li>
+                    <li><button (click)="deleteMealProduct(l.id, 1, l.productId)">delete</button></li>
+                </ul>
+            </li>
+            <li class="mealpart__header">
+                <h3>Dinner</h3>
+                <div class="mealspart__button">
+                    <button (click)="showProducts(2)">add</button>
+                </div>
+            </li>
+            <li class="mealpart__main" *ngFor="let d of dinner">
+                <ul class="mealpart__info">
+                    <li>{{showProductName(d.productId)}}</li>
+                    <li>Calories: {{showProductCalories(d.productId, d.amount)}}</li>
+                    <li>{{showProductUnit(d.productId)}}: {{setAmount(d.productId, d.amount)}}</li>
+                    <li><button (click)="deleteMealProduct(d.id, 2, d.productId)">delete</button></li>
+                </ul>
+            </li>
+            <li class="mealpart__header">
+                <h3>Snack</h3>
+                <div class="mealspart__button">
+                    <button (click)="showProducts(3)">add</button>
+                </div>
+            </li>
+            <li class="mealpart__main" *ngFor="let s of snack">
+                <ul class="mealpart__info">
+                    <li>{{showProductName(s.productId)}}</li>
+                    <li>Calories: {{showProductCalories(s.productId, s.amount)}}</li>
+                    <li>{{showProductUnit(s.productId)}}: {{setAmount(s.productId,s.amount)}}</li>
+                    <li><button (click)="deleteMealProduct(s.id, 3, s.productId)">delete</button></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

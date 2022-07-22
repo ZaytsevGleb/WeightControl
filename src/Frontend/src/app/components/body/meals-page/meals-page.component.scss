@@ -1,0 +1,40 @@
+.meals{
+    // border: solid 2px #000;
+    display: grid;
+    grid-template-areas: "header header header"
+                         "meals-part . products-part";
+    grid-template-columns: 1fr 5px 1fr;
+    grid-template-rows: 50px 1fr;
+    height: 100%;
+}
+
+.meals__header {
+    grid-area: header;
+    border: #64D36F 1px solid;
+    display: grid;
+    justify-content: start;
+    padding: 10px;
+
+}
+
+.meals__header h1 {
+     font-size: 26px;
+     font-weight:500;
+     margin: 0px;
+ }
+
+.meals__part {
+    grid-area: meals-part;
+}
+
+.products__part {
+    grid-area: products-part;
+    border-left: #64D36F 1px solid;
+    border-right: #64D36F 1px solid;
+    border-bottom: #64D36F 1px solid;
+}
+.meals__part {
+    border-left:  #64D36F 1px solid;
+    border-right: #64D36F 1px solid;
+    border-bottom: #64D36F 1px solid;
+}

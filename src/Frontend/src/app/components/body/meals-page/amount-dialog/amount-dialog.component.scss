@@ -1,0 +1,32 @@
+
+.backdrop {
+    position:fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0,0,0, .3);
+}
+.amount{
+    display: grid;
+    grid-row: 1fr 1fr 1fr;
+    padding: 1rem;
+    background-color: #fff;
+    margin-top: 3rem;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    border: solid 2px #64D36F;
+}
+.amount__buttons{
+    padding-top: 5px;
+    display: -moz-grid-line;
+    grid-column: 50% 50%;
+}
+.amount__buttons button{
+    width: 50%;
+}
+h1{
+    margin: 0px;
+}
+

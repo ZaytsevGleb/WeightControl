@@ -1,0 +1,9 @@
+<div class="backdrop"></div>
+<div class="amount">
+    <h1>{{title}}</h1>
+    <input [(ngModel)]="_amount" min="1" type="number" value="1">
+    <div class="amount__buttons">
+        <button (click)="close.emit()">Close</button>
+        <button (click)="accept.emit()">Accept</button>
+    </div>
+</div>
