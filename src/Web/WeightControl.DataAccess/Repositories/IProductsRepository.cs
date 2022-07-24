@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeightControl.Domain.Enums
+namespace WeightControl.DataAccess.Repositories
 {
-    internal class ProductsError
+    public interface IProductsRepository
     {
+
     }
 }

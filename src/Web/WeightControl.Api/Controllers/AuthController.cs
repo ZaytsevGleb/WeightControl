@@ -25,7 +25,7 @@ namespace WeightControl.Api.Controllers
                 Succeded = loginResult.Succeded,
                 Error = loginResult.Error
             };
-            
+
             return Ok(loginResultDto);
         }
         
