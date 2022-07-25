@@ -37,7 +37,7 @@ namespace WeightControl.Api
             services.AddControllers();
             services.AddScoped<IAuthService,AuthService>();
             services.AddSingleton<IUsersRepository, UsersRepository>();
-            services.AddSingleton<IProductsRepository, IProductsRepository>();
+            services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IProductsService, ProductsService>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,6 +11,11 @@ namespace WeightControl.DataAccess.Repositories
     {
         private ApplicationDBContext Context { get; set; }
 
+        public ProductsRepository(ApplicationDBContext context)
+        {
+            Context = context;
+        }
+
         public Product Create(Product product)
         {
             Context.Set<Product>().Add(product);
@@ -28,6 +33,7 @@ namespace WeightControl.DataAccess.Repositories
         public Product Get(int id)
         {
             return Context.Set<Product>().FirstOrDefault(p => p.Id == id);
+
         }
 
         public List<Product> GetAll()

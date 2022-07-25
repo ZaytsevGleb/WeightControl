@@ -1,44 +1,51 @@
 ﻿using System;
+using WeightControl.DataAccess.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WeightControl.Domain.Entities;
+using WeightControl.Domain.Enums;
 
 namespace WeightControl.BusinessLogic.Services
 {
     public class ProductsService : IProductsService
     {
-        private readonly IProductsService productsService;
+        private readonly IProductsRepository productsRepository;
 
-        public ProductsService(IProductsService productsService)
+        public ProductsService(IProductsRepository productsRepository)
         {
-            this.productsService = productsService; 
+            this.productsRepository = productsRepository;
         }
 
-        public ProductResult Create()
+        public Product Create(Product product)
         {
-            throw new NotImplementedException();
+            var _product = productsRepository.Create(product);
+            return _product ?? null;
         }
 
-        public ProductResult Delete(int id)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+           productsRepository.Delete(id);
         }
 
-        public ProductResult Get(int id)
+        public Product Get(int id)
         {
-            throw new NotImplementedException();
+            var _product = productsRepository.Get(id);
+            return _product ?? null;
         }
 
-        public ProductResult GetAll()
+        public List<Product> GetAll()
         {
-            throw new NotImplementedException();
+            var _products = productsRepository.GetAll();
+            return _products ?? null;
+
         }
 
-        public ProductResult Update()
+        public Product Update(Product product)
         {
-            throw new NotImplementedException();
+            var _product = productsRepository.Update(product);
+            return _product ?? null;
         }
     }
 }

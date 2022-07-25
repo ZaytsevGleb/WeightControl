@@ -1,13 +1,14 @@
-﻿using WeightControl.Domain.Entities;
+﻿using System.Collections.Generic;
+using WeightControl.Domain.Entities;
 
 namespace WeightControl.BusinessLogic.Services
 {
     public interface IProductsService
     {
-        ProductResult Get(int id);
-        ProductResult GetAll();
-        ProductResult Create();
-        ProductResult Update();
-        ProductResult Delete(int id);
+        Product Get(int id);
+        List<Product> GetAll();
+        Product Create(Product product);
+        Product Update(Product product);
+        void Delete(int id);
     }
 }

@@ -8,13 +8,35 @@ namespace WeightControl.Api.Controllers
     [Route("api/products")]
     public class ProductsController : ControllerBase
     {
-        /*private readonly IProductsService productsService;*/
+        private readonly IProductsService productsService;
+
+        public ProductsController(IProductsService productsService)
+        {
+            this.productsService = productsService;
+        }
 
         [HttpGet("{id}")]
         public ActionResult<ProductsDto> Get(int id)
         {
-            var product = new ProductsDto() { Id = id };
-            return Ok(product);
+            var productsResult = productsService.Get(id);
+            
+            if(productsResult != null)
+            {
+                var productsDto = new ProductsDto()
+                {
+                    Id = productsResult.Id,
+                    Name = productsResult.Name,
+                    Calories = productsResult.Calories,
+                    Type = productsResult.Type,
+                    Unit = productsResult.Unit
+                };
+                return Ok(productsDto);
+            }
+            else
+            {
+                return NotFound();
+            }
+            
         }
 
         [HttpPut]
