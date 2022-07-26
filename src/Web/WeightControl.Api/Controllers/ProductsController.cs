@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using WeightControl.Api.Views;
 using WeightControl.BusinessLogic.Services;
 
@@ -15,35 +18,25 @@ namespace WeightControl.Api.Controllers
             this.productsService = productsService;
         }
 
+        [HttpGet]
+        public IEnumerable<ProductsDto> Get()
+        {
+            var products = productsService.GetAll().Select(product => product.AsDto());
+            return products;
+        }
+
         [HttpGet("{id}")]
         public ActionResult<ProductsDto> Get(int id)
         {
-            var productsResult = productsService.Get(id);
-            
-            if(productsResult != null)
-            {
-                var productsDto = new ProductsDto()
-                {
-                    Id = productsResult.Id,
-                    Name = productsResult.Name,
-                    Calories = productsResult.Calories,
-                    Type = productsResult.Type,
-                    Unit = productsResult.Unit
-                };
-                return Ok(productsDto);
-            }
-            else
+            var _product = productsService.Get(id);
+            if(_product == null)
             {
                 return NotFound();
             }
-            
-        }
-
-        [HttpPut]
-        public ActionResult<ProductsDto> Put(int id)
-        {
-            var product = new ProductsDto() { Id = id };
-            return Ok(product);
+            else
+            {
+                return _product.AsDto();
+            }
         }
 
         [HttpDelete]

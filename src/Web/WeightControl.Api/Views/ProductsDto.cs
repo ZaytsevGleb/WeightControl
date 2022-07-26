@@ -1,4 +1,6 @@
-﻿namespace WeightControl.Api.Views
+﻿using System;
+
+namespace WeightControl.Api.Views
 {
     public class ProductsDto
     {
