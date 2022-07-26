@@ -18,17 +18,10 @@ namespace WeightControl.BusinessLogic.Services
             this.productsRepository = productsRepository;
         }
 
-        public Product Create(string name, int Calories, int Type, int Unit)
-        {
-            var _product = new Product()
-            {
-                Name = name,
-                Calories = Calories,
-                Type = Type,
-                Unit = Unit
-            };
-            _product = productsRepository.Create(_product);
-            return _product ?? null;
+        public Product Create(Product product)
+        {          
+          var _product = productsRepository.Create(product);
+          return _product ?? null;
         }
 
         public void Delete(int id)

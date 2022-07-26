@@ -43,13 +43,9 @@ namespace WeightControl.DataAccess.Repositories
 
         public Product Update(Product product)
         {
-            var toUpdate = Context.Set<Product>().FirstOrDefault(p => p.Id == product.Id);
-            if (toUpdate != null)
-                toUpdate = product;
-
-            Context.Update(toUpdate);
+            Context.Update(product);
             Context.SaveChanges();
-            return toUpdate;
+            return product;
         }
     }
 }

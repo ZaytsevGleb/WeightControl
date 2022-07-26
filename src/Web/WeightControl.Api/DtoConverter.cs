@@ -5,9 +5,9 @@ namespace WeightControl.Api
 {
     public static class DtoConverter
     {
-        public static ProductsDto AsDto(this Product product)
+        public static ProductDto AsDto(this Product product)
         {
-            return new ProductsDto()
+            return new ProductDto()
             {
                 Id = product.Id,
                 Name = product.Name,

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WeightControl.Api.Views;
 using WeightControl.BusinessLogic.Services;
+using WeightControl.Domain.Entities;
 
 namespace WeightControl.Api.Controllers
 {
@@ -19,14 +20,14 @@ namespace WeightControl.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductsDto> Get()
+        public IEnumerable<ProductDto> Get()
         {
             var products = productsService.GetAll().Select(product => product.AsDto());
             return products;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ProductsDto> Get(int id)
+        public ActionResult<ProductDto> Get(int id)
         {
             var _product = productsService.Get(id);
             if(_product == null)
@@ -35,22 +36,54 @@ namespace WeightControl.Api.Controllers
             }
             else
             {
-                return _product.AsDto();
+                return Ok(_product.AsDto());
             }
         }
 
-        [HttpDelete]
-        public ActionResult<ProductsDto> Delete(int  id)
+        [HttpPost]
+        public ActionResult<ProductDto> Post(ProductDto productDto)
         {
-            var product = new ProductsDto(){Id = id};
-            return Ok(product);
+            if (productDto != null)
+            {
+                Product _product = new()
+                {
+                    Name = productDto.Name,
+                    Calories = productDto.Calories,
+                    Type = productDto.Type,
+                    Unit = productDto.Unit
+                };
+
+                return Created("Product is Created!", productsService.Create(_product).AsDto());
+            }
+            return BadRequest();
         }
 
-        [HttpPost]
-        public ActionResult<ProductsDto> Post(int id)
+
+        [HttpDelete("{id}")]
+        public ActionResult<ProductDto> Delete(int  id)
         {
-            var products = new ProductsDto() { Id = id };
-            return Ok(products);
+            productsService.Delete(id);
+            return Ok();
+        }
+
+        [HttpPut]
+        public ActionResult<ProductDto> Put(ProductDto productDto)
+        {
+            if (productDto != null)
+            {
+                Product _product = new()
+                {
+                    Id = productDto.Id,
+                    Name = productDto.Name,
+                    Calories = productDto.Calories,
+                    Type = productDto.Type,
+                    Unit = productDto.Unit
+                };
+                var productResult = (productsService.Update(_product).AsDto());
+               if(productResult != null)
+                    return Ok(productResult);
+            }
+            return NotFound();
         }
     }
 }

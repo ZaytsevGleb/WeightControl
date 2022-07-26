@@ -8,7 +8,7 @@ namespace WeightControl.BusinessLogic.Services
     {
         Product Get(int id);
         List<Product> GetAll();
-        Product Create(string name, int Calories, int Type, int Unit);
+        Product Create(Product product);
         Product Update(Product product);
         void Delete(int id);
     }
