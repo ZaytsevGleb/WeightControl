@@ -1,11 +1,7 @@
 ﻿using System;
-using WeightControl.DataAccess.Repositories;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WeightControl.DataAccess.Repositories;
 using WeightControl.Domain.Entities;
-using WeightControl.Domain.Enums;
 
 namespace WeightControl.BusinessLogic.Services
 {
@@ -19,14 +15,25 @@ namespace WeightControl.BusinessLogic.Services
         }
 
         public Product Create(Product product)
-        {          
-          var _product = productsRepository.Create(product);
-          return _product ?? null;
+        {
+            var _product = productsRepository.Create(product);
+            return _product ?? null;
         }
 
         public void Delete(int id)
         {
-           productsRepository.Delete(id);
+            if (id <= 0)
+            {
+                throw new Exception("Bad request");
+            }
+
+            var product= productsRepository.Get(id);
+            if(product == null)
+            {
+                throw new Exception("Not found");
+            }
+
+            productsRepository.Delete(product);
         }
 
         public Product Get(int id)
@@ -37,7 +44,7 @@ namespace WeightControl.BusinessLogic.Services
 
         public List<Product> GetAll()
         {
-            var _products = productsRepository.GetAll();
+            var _products = productsRepository.Find();
             return _products ?? null;
 
         }

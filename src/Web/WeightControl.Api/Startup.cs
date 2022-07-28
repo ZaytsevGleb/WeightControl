@@ -31,7 +31,11 @@ namespace WeightControl.Api
             string connection = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ApplicationDBContext>(options =>
-            options.UseSqlServer(connection));
+            {
+                /*options.LogTo(Console.WriteLine,Microsoft.Extensions.Logging.LogLevel.Information);*/
+                options.UseSqlServer(connection);
+            });
+
             services.AddControllersWithViews();
 
             services.AddControllers();

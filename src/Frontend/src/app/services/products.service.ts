@@ -1,30 +1,32 @@
-import { Injectable } from '@angular/core';
-import { startWith } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
+import { startWith, map,tap, catchError, Observable } from 'rxjs';
 import { Meal } from '../models/meal';
 import { MealProduct } from '../models/mealproduct';
 import { Product } from '../models/product';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsService {
+export class ProductsService implements OnInit {
 
-  private readonly products: Array<Product> = [
-    { id: 1, name: 'Tea', calories: 20, type: 0, unit:0 },
-    { id: 2, name: 'Cake', calories: 269, type: 5, unit: 1 },
-    { id: 3, name: 'Coffe', calories: 100, type: 1, unit: 0 },
-    { id: 4, name: 'Bread', calories: 265, type: 6, unit: 1 },
-    { id: 5, name: 'Egg', calories: 157, type: 0, unit: 2 },
-    { id: 6, name: 'Potato', calories: 76, type: 3, unit: 1 },
-    { id: 7, name: 'Bacon', calories: 500, type: 0, unit: 1 },
-    { id: 8, name: 'Apple', calories: 47, type: 4, unit: 2 },
-    { id: 9, name: 'Banana', calories: 96, type: 4, unit: 2 },
-    { id: 10, name: 'Fish', calories: 112, type: 0, unit: 1 },
-  ];
+product!: Product;
+  private  products: Array<Product> = [];
 
-  constructor() { 
+  ngOnInit() {
+   this.httpService.getProducts().subscribe((data: Array<Product>) => this.products = data);
+  }
+
+private readonly http : HttpClient;
+private readonly httpService : HttpService;
+
+  constructor(http: HttpClient, httpService: HttpService) { 
+    this.http = http;
+    this.httpService = httpService;
     
   }
+
   filterProduct: Array<Product> = [];
   mealProduct: Array<MealProduct> = [];
 
@@ -44,6 +46,10 @@ export class ProductsService {
 
   getProduct(id: number): Product {
     return this.products.find(p => p.id == id)!;
+    // this.http.get<any>('https://localhost:49714/api/products/1').subscribe(data => {
+    //   this.product = {id: data.id, name: data.name, calories: data.calories, type: data.type, unit: data.unit}
+    // })
+    // return this.product;
   }
 
 }

@@ -9,10 +9,10 @@ namespace WeightControl.DataAccess.Repositories
 {
     public interface IProductsRepository
     {
-        public List<Product> GetAll();
+        public List<Product> Find(string name = null);
         public Product Get(int id);
         public Product Create(Product product);
         public Product Update(Product product);
-        public void Delete(int id);
+        public void Delete(Product product);
     }
 }

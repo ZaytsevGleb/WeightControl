@@ -20,7 +20,7 @@ namespace WeightControl.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductDto> Get()
+        public IEnumerable<ProductDto> Get([FromQuery] string name)
         {
             var products = productsService.GetAll().Select(product => product.AsDto());
             return products;
@@ -30,7 +30,7 @@ namespace WeightControl.Api.Controllers
         public ActionResult<ProductDto> Get(int id)
         {
             var _product = productsService.Get(id);
-            if(_product == null)
+            if (_product == null)
             {
                 return NotFound();
             }
@@ -58,14 +58,24 @@ namespace WeightControl.Api.Controllers
             return BadRequest();
         }
 
-
         [HttpDelete("{id}")]
-        public ActionResult<ProductDto> Delete(int  id)
+        public ActionResult<ProductDto> Delete(int id)
         {
-            productsService.Delete(id);
-            return Ok();
-        }
+            try
+            {
+                productsService.Delete(id);
+                return NoContent();
 
+            }
+            catch(Exception ex) when (ex.Message.Contains("Bad request"))
+            {
+                return BadRequest();
+            }
+            catch (Exception ex) when (ex.Message.Contains("Not found"))
+            {
+                return NotFound($"Product with id {id} not found");
+            }
+        }
         [HttpPut]
         public ActionResult<ProductDto> Put(ProductDto productDto)
         {
@@ -80,7 +90,7 @@ namespace WeightControl.Api.Controllers
                     Unit = productDto.Unit
                 };
                 var productResult = (productsService.Update(_product).AsDto());
-               if(productResult != null)
+                if (productResult != null)
                     return Ok(productResult);
             }
             return NotFound();

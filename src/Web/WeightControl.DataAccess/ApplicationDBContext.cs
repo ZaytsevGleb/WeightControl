@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeightControl.Domain.Entities;
 
+
 namespace WeightControl.DataAccess
 {
     public class ApplicationDBContext: DbContext

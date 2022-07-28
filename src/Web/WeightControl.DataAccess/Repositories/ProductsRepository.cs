@@ -9,43 +9,43 @@ namespace WeightControl.DataAccess.Repositories
 {
     public class ProductsRepository : IProductsRepository
     {
-        private ApplicationDBContext Context { get; set; }
+        private readonly ApplicationDBContext context;
 
         public ProductsRepository(ApplicationDBContext context)
         {
-            Context = context;
-        }
-
-        public Product Create(Product product)
-        {
-            Context.Set<Product>().Add(product);
-            Context.SaveChanges();
-            return product;
-        }
-
-        public void Delete(int id)
-        {
-            var toDelete = Context.Set<Product>().FirstOrDefault(p => p.Id == id);
-            Context.Set<Product>().Remove(toDelete);
-            Context.SaveChanges();
+            this.context = context;
         }
 
         public Product Get(int id)
         {
-            return Context.Set<Product>().FirstOrDefault(p => p.Id == id);
-
+            return context.Products.FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Product> GetAll()
+        public List<Product> Find(string name)
         {
-            return Context.Set<Product>().ToList();
+            return context.Products
+                .Where(p => p.Name == name)
+                .ToList();
+        }
+
+        public Product Create(Product product)
+        {
+            context.Products.Add(product);
+            context.SaveChanges();
+            return product;
         }
 
         public Product Update(Product product)
         {
-            Context.Update(product);
-            Context.SaveChanges();
+            context.Update(product);
+            context.SaveChanges();
             return product;
+        }
+
+        public void Delete(Product product)
+        {
+            context.Products.Remove(product);
+            context.SaveChanges();
         }
     }
 }
