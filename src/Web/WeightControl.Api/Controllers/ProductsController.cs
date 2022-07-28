@@ -29,21 +29,25 @@ namespace WeightControl.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<ProductDto> Get(int id)
         {
-            var _product = productsService.Get(id);
-            if (_product == null)
+            try
             {
-                return NotFound();
-            }
-            else
-            {
+                var _product = productsService.Get(id);
                 return Ok(_product.AsDto());
+            }
+            catch (Exception ex) when (ex.Message.Contains("Bad request"))
+            {
+                return BadRequest();
+            }
+            catch (Exception ex) when (ex.Message.Contains("Not found"))
+            {
+                return NotFound($"Product with id {id} not found");
             }
         }
 
         [HttpPost]
         public ActionResult<ProductDto> Post(ProductDto productDto)
         {
-            if (productDto != null)
+            try
             {
                 Product _product = new()
                 {
@@ -52,10 +56,12 @@ namespace WeightControl.Api.Controllers
                     Type = productDto.Type,
                     Unit = productDto.Unit
                 };
-
                 return Created("Product is Created!", productsService.Create(_product).AsDto());
             }
-            return BadRequest();
+            catch(Exception ex) when (ex.Message.Contains("Bad request"))
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete("{id}")]
@@ -65,9 +71,8 @@ namespace WeightControl.Api.Controllers
             {
                 productsService.Delete(id);
                 return NoContent();
-
             }
-            catch(Exception ex) when (ex.Message.Contains("Bad request"))
+            catch (Exception ex) when (ex.Message.Contains("Bad request"))
             {
                 return BadRequest();
             }
@@ -76,10 +81,10 @@ namespace WeightControl.Api.Controllers
                 return NotFound($"Product with id {id} not found");
             }
         }
-        [HttpPut]
-        public ActionResult<ProductDto> Put(ProductDto productDto)
+        [HttpPut("{id}")]
+        public ActionResult<ProductDto> Put(int id, ProductDto productDto)
         {
-            if (productDto != null)
+            try
             {
                 Product _product = new()
                 {
@@ -89,11 +94,17 @@ namespace WeightControl.Api.Controllers
                     Type = productDto.Type,
                     Unit = productDto.Unit
                 };
-                var productResult = (productsService.Update(_product).AsDto());
-                if (productResult != null)
-                    return Ok(productResult);
+                var productResult = (productsService.Update(id, _product).AsDto());
+                return Ok(productResult);
             }
-            return NotFound();
+            catch (Exception ex) when (ex.Message.Contains("Bad request"))
+            {
+                return BadRequest();
+            }
+            catch (Exception ex) when (ex.Message.Contains("Not found"))
+            {
+                return NotFound($"Product with id {id} not found");
+            }
         }
     }
 }

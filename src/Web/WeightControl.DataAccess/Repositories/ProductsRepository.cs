@@ -24,7 +24,7 @@ namespace WeightControl.DataAccess.Repositories
         public List<Product> Find(string name)
         {
             return context.Products
-                .Where(p => p.Name == name)
+                /*.Where(p => p.Name == name)*/
                 .ToList();
         }
 

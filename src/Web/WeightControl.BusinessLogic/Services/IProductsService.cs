@@ -9,7 +9,7 @@ namespace WeightControl.BusinessLogic.Services
         Product Get(int id);
         List<Product> GetAll();
         Product Create(Product product);
-        Product Update(Product product);
+        Product Update(int id, Product product);
         void Delete(int id);
     }
 }

@@ -32,7 +32,6 @@ namespace WeightControl.Api
 
             services.AddDbContext<ApplicationDBContext>(options =>
             {
-                /*options.LogTo(Console.WriteLine,Microsoft.Extensions.Logging.LogLevel.Information);*/
                 options.UseSqlServer(connection);
             });
 
