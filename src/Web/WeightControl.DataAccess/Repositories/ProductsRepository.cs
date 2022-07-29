@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace WeightControl.DataAccess.Repositories
 
         public Product Get(int id)
         {
-            return context.Products.FirstOrDefault(p => p.Id == id);
+            return context.Products.AsNoTracking().FirstOrDefault(p => p.Id == id);
         }
 
         public List<Product> Find(string name)
@@ -37,7 +38,7 @@ namespace WeightControl.DataAccess.Repositories
 
         public Product Update(Product product)
         {
-            context.Update(product);
+             context.Products.Update(product);
             context.SaveChanges();
             return product;
         }

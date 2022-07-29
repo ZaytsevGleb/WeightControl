@@ -13,15 +13,13 @@ namespace WeightControl.BusinessLogic.Services
         {
             this.productsRepository = productsRepository;
         }
-        // В принципе я мог бы вынести логику проверок в расширение, но 
-        // middleware скорее всего и так этим занимается так что сейчас в этом нету смысла
+
         public Product Get(int id)
         {
             if (id <= 0)
             {
                 throw new Exception("Bad request");
             }
-
             var _product = productsRepository.Get(id);
             return _product ?? throw new Exception("Not Found");
         }
@@ -30,7 +28,6 @@ namespace WeightControl.BusinessLogic.Services
         {
             var _products = productsRepository.Find();
             return _products ?? null;
-
         }
 
         public Product Create(Product product)
@@ -46,17 +43,16 @@ namespace WeightControl.BusinessLogic.Services
 
         public Product Update(int id ,Product product)
         {
-            if(id<= 0 || id != product.Id )
+            if(id<= 0 || id != product.Id || product == null)
             {
                 throw new Exception("Bad request");
             }
 
             var _product = productsRepository.Get(id);
-            if(_product == null)
+            if (_product == null)
             {
                 throw new Exception("Not found");
             }
-
             return productsRepository.Update(product);
         }
 
