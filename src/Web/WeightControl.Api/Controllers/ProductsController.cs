@@ -22,7 +22,7 @@ namespace WeightControl.Api.Controllers
         [HttpGet]
         public IEnumerable<ProductDto> Get([FromQuery] string name)
         {
-            var products = productsService.GetAll().Select(product => product.AsDto());
+            var products = productsService.GetAll(name).Select(product => product.AsDto());
             return products;
         }
 

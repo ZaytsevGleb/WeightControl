@@ -24,9 +24,9 @@ namespace WeightControl.BusinessLogic.Services
             return _product ?? throw new Exception("Not Found");
         }
 
-        public List<Product> GetAll()
+        public List<Product> GetAll(string name)
         {
-            var _products = productsRepository.Find();
+            var _products = productsRepository.Find(name);
             return _products ?? null;
         }
 
