@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WeightControl.BusinessLogic.Exceptions;
 using WeightControl.DataAccess.Repositories;
 using WeightControl.Domain.Entities;
 
@@ -21,13 +22,16 @@ namespace WeightControl.BusinessLogic.Services
                 throw new Exception("Bad request");
             }
             var _product = productsRepository.Get(id);
-            return _product ?? throw new Exception("Not Found");
+            return _product ?? throw new NotFoundException($"Product with {id} not found");
         }
 
         public List<Product> GetAll(string name)
         {
-            var _products = productsRepository.Find(name);
-            return _products ?? null;
+            var products = string.IsNullOrEmpty(name)
+                ? productsRepository.Find()
+                : productsRepository.Find(x => x.Name.Contains(name));
+
+            return products;
         }
 
         public Product Create(Product product)
@@ -60,13 +64,13 @@ namespace WeightControl.BusinessLogic.Services
         {
             if (id <= 0)
             {
-                throw new Exception("Bad request");
+                throw new BadRequestException("Id is not valid");
             }
 
             var product= productsRepository.Get(id);
             if(product == null)
             {
-                throw new Exception("Not found");
+                throw new BadRequestException($"Product with {id} not found");
             }
 
             productsRepository.Delete(product);

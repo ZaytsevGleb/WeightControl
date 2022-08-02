@@ -12,14 +12,12 @@ using WeightControl.BusinessLogic.Services;
 using WeightControl.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using WeightControl.DataAccess;
+using WeightControl.Api.Middlewares;
 
 namespace WeightControl.Api
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,22 +30,26 @@ namespace WeightControl.Api
 
             services.AddDbContext<ApplicationDBContext>(options =>
             {
+                options.EnableSensitiveDataLogging();
                 options.UseSqlServer(connection);
             });
 
             services.AddControllersWithViews();
-
+            
             services.AddControllers();
             services.AddScoped<IAuthService,AuthService>();
-            services.AddSingleton<IUsersRepository, UsersRepository>();
-            services.AddScoped<IProductsRepository, ProductsRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<IProductsRepository, ProductsRepository>();
             services.AddScoped<IProductsService, ProductsService>();
+            services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             app.UseRouting();
-            
+            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet(

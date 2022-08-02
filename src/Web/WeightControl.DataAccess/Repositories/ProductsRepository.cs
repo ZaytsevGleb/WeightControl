@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using WeightControl.Domain.Entities;
@@ -17,15 +18,24 @@ namespace WeightControl.DataAccess.Repositories
             this.context = context;
         }
 
+        //Можно сделать асинхронно
         public Product Get(int id)
         {
-            return context.Products.AsNoTracking().FirstOrDefault(p => p.Id == id);
+            return context.Products
+                .AsNoTracking()
+                .FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Product> Find(string name)
+        public List<Product> Find(Expression<Func<Product,bool>> predicate = null)
         {
-            return context.Products
-                .Where(p => p.Name == name || name == null)
+            var query = context.Products.AsQueryable();
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            return query
+                .AsNoTracking()
                 .ToList();
         }
 
