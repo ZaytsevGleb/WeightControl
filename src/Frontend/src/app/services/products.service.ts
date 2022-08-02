@@ -5,43 +5,41 @@ import { Meal } from '../models/meal';
 import { MealProduct } from '../models/mealproduct';
 import { Product } from '../models/product';
 import { HttpService } from './http.service';
+import { ProductDto } from './models/product.dto';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsService implements OnInit {
+export class ProductsService {
 
-product!: Product;
+  product!: Product;
   private  products: Array<Product> = [];
 
-  ngOnInit() {
-   this.httpService.getProducts().subscribe((data: Array<Product>) => this.products = data);
-  }
 
 private readonly http : HttpClient;
-private readonly httpService : HttpService;
 
-  constructor(http: HttpClient, httpService: HttpService) { 
+  constructor(http: HttpClient) { 
     this.http = http;
-    this.httpService = httpService;
     
   }
 
   filterProduct: Array<Product> = [];
   mealProduct: Array<MealProduct> = [];
 
-  Search(searchWord: string): Array<Product> {
-    for (let product of this.products) {
-      if ((product.name.toLowerCase().startsWith(searchWord.toLowerCase()) && searchWord != '')) {
-        this.filterProduct.push(product);
-      }
-    }
-    return this.filterProduct;
-  }
+  // Search(searchWord: string): Array<Product> {
+  //   for (let product of this.products) {
+  //     if ((product.name.toLowerCase().startsWith(searchWord.toLowerCase()) && searchWord != '')) {
+  //       this.filterProduct.push(product);
+  //     }
+  //   }
+  //   return this.filterProduct;
+  // }
 
-  getProducts(search: string): Array<Product> {
-    this.filterProduct = [];
-    return this.Search(search);
+  getProducts(search: string):Observable<Product[]> {
+    return this.http
+      .get<ProductDto[]>(`https://localhost:49714/api/products?name=${search}`)
+      .pipe(map(response => response.map(dto => new Product(dto.id, dto.name, dto.calories, dto.type, dto.unit))));
   }
 
   getProduct(id: number): Product {

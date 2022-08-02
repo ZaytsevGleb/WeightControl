@@ -43,7 +43,9 @@ export class ProductsPartComponent implements OnInit, OnDestroy {
   }
 
   public getProducts() {
-    this.products = this.productService.getProducts(this.searchInput);
+    this.productService.getProducts(this.searchInput).subscribe((response)=> {
+      this.products = response;
+    });
   }
 
   public showAmountDialog(id: number) {
