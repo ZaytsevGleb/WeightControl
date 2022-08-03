@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using WeightControl.Api.Views;
@@ -13,10 +14,12 @@ namespace WeightControl.Api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService productsService;
+        private readonly IValidator<ProductDto> validator;
 
-        public ProductsController(IProductsService productsService)
+        public ProductsController(IProductsService productsService, IValidator<ProductDto> validator)
         {
             this.productsService = productsService;
+            this.validator = validator;
         }
 
         [HttpGet]
@@ -29,27 +32,31 @@ namespace WeightControl.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<ProductDto> Get(int id)
         {
-            var _product = productsService.Get(id);
-            return Ok(_product.AsDto());
+            var product = productsService.Get(id);
+            return Ok(product.AsDto());
         }
 
+        // тут уберется преобразование в product, т.к. он передаст в виде дто + будет расширение
+        // + сделать async
         [HttpPost]
         public ActionResult<ProductDto> Post(ProductDto productDto)
         {
-            try
+            ValidationResult result = validator.Validate(productDto);
+            if (!result.IsValid)
             {
-                Product _product = new()
+                return BadRequest(result);
+            }
+            else 
+            {
+                Product product = new()
                 {
                     Name = productDto.Name,
                     Calories = productDto.Calories,
                     Type = productDto.Type,
                     Unit = productDto.Unit
                 };
-                return Created("Product is Created!", productsService.Create(_product).AsDto());
-            }
-            catch (Exception ex) when (ex.Message.Contains("Bad request"))
-            {
-                return BadRequest();
+                
+                return Created("Product is Created!", productsService.Create(product).AsDto());
             }
         }
 
@@ -63,7 +70,12 @@ namespace WeightControl.Api.Controllers
         [HttpPut("{id}")]
         public ActionResult<ProductDto> Put(int id, ProductDto productDto)
         {
-            try
+            ValidationResult result = validator.Validate(productDto);
+            if (!result.IsValid)
+            {
+                return BadRequest(result);
+            }
+            else
             {
                 Product _product = new()
                 {
@@ -73,17 +85,22 @@ namespace WeightControl.Api.Controllers
                     Type = productDto.Type,
                     Unit = productDto.Unit
                 };
-                var productResult = (productsService.Update(id, _product).AsDto());
-                return Ok(productResult);
+                /*var productResult = (productsService.Update(id, _product).AsDto());*/
+                return Ok(productsService.Update(id, _product).AsDto());
             }
-            catch (Exception ex) when (ex.Message.Contains("Bad request"))
-            {
-                return BadRequest();
-            }
-            catch (Exception ex) when (ex.Message.Contains("Not found"))
-            {
-                return NotFound($"Product with id {id} not found");
-            }
+            // аналогичено Post
+            /*            try
+                        {*/
+            
+            /*            }
+                        catch (Exception ex) when (ex.Message.Contains("Bad request"))
+                        {
+                            return BadRequest();
+                        }
+                        catch (Exception ex) when (ex.Message.Contains("Not found"))
+                        {
+                            return NotFound($"Product with id {id} not found");
+                        }*/
         }
     }
 }

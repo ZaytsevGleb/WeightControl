@@ -19,10 +19,11 @@ namespace WeightControl.BusinessLogic.Services
         {
             if (id <= 0)
             {
-                throw new Exception("Bad request");
+                throw new BadRequestException($"Id: {id} not valid");
             }
+
             var _product = productsRepository.Get(id);
-            return _product ?? throw new NotFoundException($"Product with {id} not found");
+            return _product ?? throw new NotFoundException($"Product with id: {id} not found");
         }
 
         public List<Product> GetAll(string name)
@@ -36,26 +37,21 @@ namespace WeightControl.BusinessLogic.Services
 
         public Product Create(Product product)
         {
-            if(product.Name == null && product.Calories == 0)
-            {
-                throw new Exception("Bad request");
-            }
-
             var _product = productsRepository.Create(product);
             return _product ?? null;
         }
 
         public Product Update(int id ,Product product)
         {
-            if(id<= 0 || id != product.Id || product == null)
+            if(id != product.Id)
             {
-                throw new Exception("Bad request");
+                throw new BadRequestException($"Id: {id} and product id: {product.Id} must be the same");
             }
 
             var _product = productsRepository.Get(id);
             if (_product == null)
             {
-                throw new Exception("Not found");
+                throw new NotFoundException("Not found");
             }
             return productsRepository.Update(product);
         }
@@ -64,13 +60,13 @@ namespace WeightControl.BusinessLogic.Services
         {
             if (id <= 0)
             {
-                throw new BadRequestException("Id is not valid");
+                throw new BadRequestException($"Id: {id} is not valid");
             }
 
             var product= productsRepository.Get(id);
             if(product == null)
             {
-                throw new BadRequestException($"Product with {id} not found");
+                throw new NotFoundException($"Product with id: {id} not found");
             }
 
             productsRepository.Delete(product);

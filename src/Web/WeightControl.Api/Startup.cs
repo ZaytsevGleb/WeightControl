@@ -13,6 +13,10 @@ using WeightControl.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 using WeightControl.DataAccess;
 using WeightControl.Api.Middlewares;
+using FluentValidation;
+using WeightControl.Domain.Entities;
+using WeightControl.BusinessLogic.Validators;
+using WeightControl.Api.Views;
 
 namespace WeightControl.Api
 {
@@ -35,7 +39,7 @@ namespace WeightControl.Api
             });
 
             services.AddControllersWithViews();
-            
+            services.AddScoped <IValidator<ProductDto>, ProductPostValidator>();
             services.AddControllers();
             services.AddScoped<IAuthService,AuthService>();
             services.AddTransient<IUsersRepository, UsersRepository>();

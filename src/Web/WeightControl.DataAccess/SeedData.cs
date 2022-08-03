@@ -17,7 +17,7 @@ namespace WeightControl.DataAccess
                 new Product {Name = "Qiwi", Type = 1, Unit = 1},
                 new Product { Name = "Banana", Type = 2, Unit = 2}
             };
-
+                    
             dbContext.AddRange(products);
             dbContext.SaveChanges();
         }
