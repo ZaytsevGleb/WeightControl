@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
-using WeightControl.Api.Views;
-using WeightControl.BusinessLogic.Exceptions;
+using WeightControl.BusinessLogic.Models;
 
 namespace WeightControl.BusinessLogic.Validators
 {
-    public class ProductPostValidator : AbstractValidator<ProductDto>
+    public class ProductValidator : AbstractValidator<ProductDto>
     {
-        public ProductPostValidator()
+        public ProductValidator()
         {
             RuleFor(p => p.Id > 0).NotNull().NotEmpty().WithMessage("Id is not valid");
             RuleFor(p => p.Name).NotNull().NotEmpty().Matches(@"^[a-zA-Z]+$").Length(3,250);

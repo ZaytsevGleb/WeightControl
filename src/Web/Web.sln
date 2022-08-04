@@ -1,12 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.Api", "WeightControl.Api\WeightControl.Api.csproj", "{854AECFB-ED87-48AD-9004-2FD50CBB14CF}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.Api", "WeightControl.Api\WeightControl.Api.csproj", "{854AECFB-ED87-48AD-9004-2FD50CBB14CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.BusinessLogic", "WeightControl.BusinessLogic\WeightControl.BusinessLogic.csproj", "{59ACA437-5768-4B96-9870-766E814C1759}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.BusinessLogic", "WeightControl.BusinessLogic\WeightControl.BusinessLogic.csproj", "{59ACA437-5768-4B96-9870-766E814C1759}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.DataAccess", "WeightControl.DataAccess\WeightControl.DataAccess.csproj", "{5F1D0D2B-E804-45CE-A03E-6C349A6BB651}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.DataAccess", "WeightControl.DataAccess\WeightControl.DataAccess.csproj", "{5F1D0D2B-E804-45CE-A03E-6C349A6BB651}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.Domain", "WeightControl.Domain\WeightControl.Domain.csproj", "{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.Domain", "WeightControl.Domain\WeightControl.Domain.csproj", "{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +33,11 @@ Global
 		{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6C4D2F1A-1CFA-4E09-AB0E-E8B9277ED3CC}
 	EndGlobalSection
 EndGlobal

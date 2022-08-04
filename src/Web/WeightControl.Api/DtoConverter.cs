@@ -1,4 +1,4 @@
-﻿using WeightControl.Api.Views;
+﻿using WeightControl.BusinessLogic.Models;
 using WeightControl.Domain.Entities;
 
 namespace WeightControl.Api

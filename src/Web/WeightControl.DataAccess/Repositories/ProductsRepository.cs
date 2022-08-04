@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using WeightControl.Domain.Entities;
 
 namespace WeightControl.DataAccess.Repositories
@@ -18,7 +16,6 @@ namespace WeightControl.DataAccess.Repositories
             this.context = context;
         }
 
-        //Можно сделать асинхронно
         public Product Get(int id)
         {
             return context.Products
@@ -26,7 +23,7 @@ namespace WeightControl.DataAccess.Repositories
                 .FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Product> Find(Expression<Func<Product,bool>> predicate = null)
+        public List<Product> Find(Expression<Func<Product, bool>> predicate = null)
         {
             var query = context.Products.AsQueryable();
             if (predicate != null)
@@ -48,7 +45,7 @@ namespace WeightControl.DataAccess.Repositories
 
         public Product Update(Product product)
         {
-             context.Products.Update(product);
+            context.Products.Update(product);
             context.SaveChanges();
             return product;
         }

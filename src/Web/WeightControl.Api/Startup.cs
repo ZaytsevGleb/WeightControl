@@ -1,22 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using WeightControl.BusinessLogic.Services;
-using WeightControl.DataAccess.Repositories;
-using Microsoft.EntityFrameworkCore;
-using WeightControl.DataAccess;
 using WeightControl.Api.Middlewares;
-using FluentValidation;
-using WeightControl.Domain.Entities;
+using WeightControl.BusinessLogic.Models;
+using WeightControl.BusinessLogic.Services;
 using WeightControl.BusinessLogic.Validators;
-using WeightControl.Api.Views;
+using WeightControl.DataAccess;
+using WeightControl.DataAccess.Repositories;
+using WeightControl.Domain.Entities;
 
 namespace WeightControl.Api
 {
@@ -37,11 +32,12 @@ namespace WeightControl.Api
                 options.EnableSensitiveDataLogging();
                 options.UseSqlServer(connection);
             });
-
+            //here 
+            services.AddAutoMapper(typeof(Product), typeof(ProductDto));
             services.AddControllersWithViews();
-            services.AddScoped <IValidator<ProductDto>, ProductPostValidator>();
+            services.AddScoped<IValidator<ProductDto>, ProductValidator>();
             services.AddControllers();
-            services.AddScoped<IAuthService,AuthService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<IProductsRepository, ProductsRepository>();
             services.AddScoped<IProductsService, ProductsService>();
@@ -62,9 +58,9 @@ namespace WeightControl.Api
                     {
                         await context.Response.WriteAsync("Hello World!");
                     });
-                
+
                 endpoints.MapControllers();
-                
+
             });
         }
     }
