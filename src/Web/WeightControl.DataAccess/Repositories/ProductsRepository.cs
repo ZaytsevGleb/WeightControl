@@ -20,7 +20,7 @@ namespace WeightControl.DataAccess.Repositories
         {
             return context.Products
                 .AsNoTracking()
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefault(p => p.Id == id); 
         }
 
         public List<Product> Find(Expression<Func<Product, bool>> predicate = null)

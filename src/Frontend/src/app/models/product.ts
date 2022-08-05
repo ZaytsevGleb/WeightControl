@@ -14,13 +14,15 @@ export class Product {
 }
 
 enum TypeofFood {
-    meat,
-    drink,
-    cereal,
-    vegetable,
-    fruit,
-    confection,
-    bake
+    Meat,
+    Drink,
+    Cereal,
+    Vegetable,
+    Fruit,
+    Confection,
+    Bake,
+    Garnish, 
+    Berrie, 
 }
 
 enum unitType {

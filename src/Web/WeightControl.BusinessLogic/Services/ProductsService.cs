@@ -1,21 +1,18 @@
-﻿using AutoMapper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using WeightControl.BusinessLogic.Exceptions;
+using WeightControl.BusinessLogic.Mapping;
 using WeightControl.BusinessLogic.Models;
 using WeightControl.DataAccess.Repositories;
-using WeightControl.Domain.Entities;
 
 namespace WeightControl.BusinessLogic.Services
 {
     public class ProductsService : IProductsService
     {
         private readonly IProductsRepository productsRepository;
-        private readonly IMapper mapper;
 
-        public ProductsService(IProductsRepository productsRepository, IMapper mapper)
+        public ProductsService(IProductsRepository productsRepository)
         {
             this.productsRepository = productsRepository;
-            this.mapper = mapper;
         }
 
         public ProductDto Get(int id)
@@ -26,8 +23,8 @@ namespace WeightControl.BusinessLogic.Services
             }
             else
             {
-                var product = mapper.Map<ProductDto>(productsRepository.Get(id));
-                return product ?? throw new NotFoundException($"Product with id: {id} not found");
+                var product = productsRepository.Get(id);
+                return product.AsProductDto() ?? throw new NotFoundException($"Product with id: {id} not found");
             }
         }
 
@@ -37,22 +34,14 @@ namespace WeightControl.BusinessLogic.Services
                 ? productsRepository.Find()
                 : productsRepository.Find(x => x.Name.Contains(name));
 
-            return mapper.Map<List<ProductDto>>(products);
+            return products.AsProductDto();
         }
 
         public ProductDto Create(ProductDto productDto)
         {
-            // подумать как обойти передачу id конкретно только тут, возможно проще свой маппер написать\
-            // либо либо реализовать ещё один automapper только для метода Create...
-            var product = productsRepository.Create(mapper.Map<Product>(new ProductDto
-            {
-                Name = productDto.Name,
-                Calories = productDto.Calories,
-                Type = productDto.Type,
-                Unit = productDto.Unit
-            }));
+            var product = productsRepository.Create(productDto.AsProductCreate());
 
-            return mapper.Map<ProductDto>(product);
+            return product.AsProductDto();
         }
 
         public ProductDto Update(int id, ProductDto productDto)
@@ -68,8 +57,8 @@ namespace WeightControl.BusinessLogic.Services
                 throw new NotFoundException("Not found");
             }
 
-            var product = productsRepository.Update(mapper.Map<Product>(productDto));
-            return mapper.Map<ProductDto>(product);
+            var product = productsRepository.Update(productDto.AsProduct());
+            return product.AsProductDto();
         }
 
         public void Delete(int id)

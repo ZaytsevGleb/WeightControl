@@ -33,7 +33,6 @@ namespace WeightControl.Api
                 options.UseSqlServer(connection);
             });
             //here 
-            services.AddAutoMapper(typeof(Product), typeof(ProductDto));
             services.AddControllersWithViews();
             services.AddScoped<IValidator<ProductDto>, ProductValidator>();
             services.AddControllers();
