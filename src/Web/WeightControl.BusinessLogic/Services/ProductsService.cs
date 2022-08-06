@@ -17,15 +17,9 @@ namespace WeightControl.BusinessLogic.Services
 
         public ProductDto Get(int id)
         {
-            if (id <= 0)
-            {
-                throw new BadRequestException($"Id: {id} not valid");
-            }
-            else
-            {
-                var product = productsRepository.Get(id);
-                return product.AsProductDto() ?? throw new NotFoundException($"Product with id: {id} not found");
-            }
+            var product = productsRepository.Get(id);
+
+            return product.AsProductDto() ?? throw new NotFoundException($"Product with id: {id} not found");
         }
 
         public List<ProductDto> GetAll(string name)
@@ -39,13 +33,21 @@ namespace WeightControl.BusinessLogic.Services
 
         public ProductDto Create(ProductDto productDto)
         {
-            var product = productsRepository.Create(productDto.AsProductCreate());
-
-            return product.AsProductDto();
+            var unique = productsRepository.Find(x => x.Name.Contains(productDto.Name));
+            if (unique.Contains(productDto.AsProduct()))
+            {
+                var product = productsRepository.Create(productDto.AsProductCreate());
+                return product.AsProductDto();
+            }
+            else
+            {
+                throw new BadRequestException("A product with the same name already exists in the database");
+            }
         }
 
         public ProductDto Update(int id, ProductDto productDto)
         {
+            //подумать, мб что-то можно сократить
             if (id != productDto.Id)
             {
                 throw new BadRequestException($"Id: {id} and product id: {productDto.Id} must be the same");
@@ -57,17 +59,21 @@ namespace WeightControl.BusinessLogic.Services
                 throw new NotFoundException("Not found");
             }
 
-            var product = productsRepository.Update(productDto.AsProduct());
-            return product.AsProductDto();
+            var unique = productsRepository.Find(x => x.Name.Contains(productDto.Name));
+            if (unique.Contains(productDto.AsProduct()))
+            {
+                var product = productsRepository.Update(productDto.AsProduct());
+                return product.AsProductDto();
+            }
+            else
+            {
+                throw new BadRequestException("A product with the same name already exists in the database");
+            }
+
         }
 
         public void Delete(int id)
         {
-            if (id <= 0)
-            {
-                throw new BadRequestException($"Id: {id} is not valid");
-            }
-
             var product = productsRepository.Get(id);
             if (product == null)
             {

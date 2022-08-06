@@ -40,7 +40,7 @@ namespace WeightControl.DataAccess.Repositories
         {
             context.Products.Add(product);
             context.SaveChanges();
-            return product;
+            return product ?? null;
         }
 
         public Product Update(Product product)

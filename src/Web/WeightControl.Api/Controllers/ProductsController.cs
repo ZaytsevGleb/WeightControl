@@ -30,7 +30,11 @@ namespace WeightControl.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<ProductDto> Get(int id)
         {
-            return Ok(productsService.Get(id));
+            ValidationResult result = validator.Validate(new ProductDto { Id = id });
+
+            return result.IsValid
+                ? Ok(productsService.Get(id))
+                : BadRequest(result);
         }
 
         [HttpPost]
@@ -46,8 +50,19 @@ namespace WeightControl.Api.Controllers
         [HttpDelete("{id}")]
         public ActionResult<ProductDto> Delete(int id)
         {
-            productsService.Delete(id);
-            return NoContent();
+            ValidationResult result = validator.Validate(new ProductDto { Id = id });
+
+            if (result.IsValid)
+            {
+                productsService.Delete(id);
+                return NoContent();
+            }
+
+            return BadRequest(result);
+            ///либо проверить в service через if(id<=0)
+            /// и тут оставить две строчик 
+            ///productsService.Delete(id);
+            ///return NoContent();
         }
 
         [HttpPut("{id}")]
