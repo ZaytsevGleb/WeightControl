@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WeightControl.BusinessLogic.Models;
 using WeightControl.Domain.Entities;
 
@@ -41,6 +42,7 @@ namespace WeightControl.BusinessLogic.Mapping
                 Name = productDto.Name,
                 Calories = productDto.Calories,
                 Type = productDto.Type,
+                Unit = productDto.Unit
             };
         }
 

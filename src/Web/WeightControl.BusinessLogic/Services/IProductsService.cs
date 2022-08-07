@@ -9,10 +9,10 @@ namespace WeightControl.BusinessLogic.Services
 {
     public interface IProductsService
     {
-        ProductDto Get(int id);
-        List<ProductDto> GetAll(string name);
-        ProductDto Create(ProductDto product);
-        ProductDto Update(int id, ProductDto product);
-        void Delete(int id);
+        Task<ProductDto> GetAsync(int id);
+        Task<List<ProductDto>> FindAsync(string name);
+        Task<ProductDto> CreateAsync(ProductDto product);
+        Task<ProductDto> UpdateAsync(int id, ProductDto product);
+        Task DeleteAsync(int id);
     }
 }

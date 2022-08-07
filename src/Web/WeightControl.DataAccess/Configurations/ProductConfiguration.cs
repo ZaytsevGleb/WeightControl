@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 using WeightControl.Domain.Entities;
 
 namespace WeightControl.DataAccess.Configurations
@@ -12,8 +11,11 @@ namespace WeightControl.DataAccess.Configurations
             builder.ToTable("Products", "dbo");
 
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Name).IsRequired();
-            builder.HasAlternateKey(x => x.Name);
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(250);
+            //test
+            /* builder.HasIndex(x => x.Name).IsUnique();
+               builder.Property(x => x.Type).IsRequired();
+               builder.Property(x => x.Unit).IsRequired();*/
         }
     }
 }

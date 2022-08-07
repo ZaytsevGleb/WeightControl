@@ -10,10 +10,10 @@ namespace WeightControl.DataAccess.Repositories
 {
     public interface IProductsRepository
     {
-        List<Product> Find(Expression<Func<Product, bool>> predicate = null);
-        Product Get(int id);
-        Product Create(Product product);
-        Product Update(Product product);
-        void Delete(Product product);
+        Task<List<Product>> FindAsync(Expression<Func<Product, bool>> predicate = null);
+        Task<Product> GetAsync(int id);
+        Task<Product> CreateAsync(Product product);
+        Task<Product> UpdateAsync(Product product);
+        Task DeleteAsync (Product product);
     }
 }

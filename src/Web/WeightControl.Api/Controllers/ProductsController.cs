@@ -2,7 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using WeightControl.BusinessLogic.Models;
 using WeightControl.BusinessLogic.Services;
 
@@ -21,58 +21,44 @@ namespace WeightControl.Api.Controllers
             this.validator = validator;
         }
 
-        [HttpGet]
-        public IEnumerable<ProductDto> Get([FromQuery] string name)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductDto>> Get(int id)
         {
-            return productsService.GetAll(name).Select(product => product);
+            return Ok(await productsService.GetAsync(id));
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<ProductDto> Get(int id)
+        [HttpGet]
+        public async Task<IEnumerable<ProductDto>> Get([FromQuery] string name)
         {
-            ValidationResult result = validator.Validate(new ProductDto { Id = id });
-
-            return result.IsValid
-                ? Ok(productsService.Get(id))
-                : BadRequest(result);
+            return await productsService.FindAsync(name);
         }
 
         [HttpPost]
-        public ActionResult<ProductDto> Post(ProductDto productDto)
+        public async Task<ActionResult<ProductDto>> Post(ProductDto productDto)
         {
             ValidationResult result = validator.Validate(productDto);
 
             return result.IsValid
-                ? Created("Product is Created!", productsService.Create(productDto))
+                ? Created("Product is Created!", await productsService.CreateAsync(productDto))
+                : BadRequest(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ProductDto>> Put(int id, ProductDto productDto)
+        {
+            ValidationResult result = validator.Validate(productDto);
+
+            return result.IsValid
+                ? Ok(await productsService.UpdateAsync(id, productDto))
                 : BadRequest(result);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<ProductDto> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            ValidationResult result = validator.Validate(new ProductDto { Id = id });
+            await productsService.DeleteAsync(id);
 
-            if (result.IsValid)
-            {
-                productsService.Delete(id);
-                return NoContent();
-            }
-
-            return BadRequest(result);
-            ///либо проверить в service через if(id<=0)
-            /// и тут оставить две строчик 
-            ///productsService.Delete(id);
-            ///return NoContent();
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult<ProductDto> Put(int id, ProductDto productDto)
-        {
-            ValidationResult result = validator.Validate(productDto);
-
-            return result.IsValid
-                ? Ok(productsService.Update(id, productDto))
-                : BadRequest(result);
+            return NoContent();
         }
     }
 }

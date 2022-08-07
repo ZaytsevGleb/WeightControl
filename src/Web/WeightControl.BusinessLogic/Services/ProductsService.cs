@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WeightControl.BusinessLogic.Exceptions;
 using WeightControl.BusinessLogic.Mapping;
 using WeightControl.BusinessLogic.Models;
@@ -15,28 +16,34 @@ namespace WeightControl.BusinessLogic.Services
             this.productsRepository = productsRepository;
         }
 
-        public ProductDto Get(int id)
+        public async Task<ProductDto> GetAsync(int id)
         {
-            var product = productsRepository.Get(id);
-
-            return product.AsProductDto() ?? throw new NotFoundException($"Product with id: {id} not found");
+            if (id <= 0)
+            {
+                throw new BadRequestException($"Id: {id} not valid");
+            }
+            else
+            {
+                var product = await productsRepository.GetAsync(id);
+                return product.AsProductDto() ?? throw new NotFoundException($"Product with id: {id} not found");
+            }
         }
 
-        public List<ProductDto> GetAll(string name)
+        public async Task<List<ProductDto>> FindAsync(string name)
         {
             var products = string.IsNullOrEmpty(name)
-                ? productsRepository.Find()
-                : productsRepository.Find(x => x.Name.Contains(name));
+                ? await productsRepository.FindAsync()
+                : await productsRepository.FindAsync(x => x.Name.Contains(name));
 
             return products.AsProductDto();
         }
 
-        public ProductDto Create(ProductDto productDto)
+        public async Task<ProductDto> CreateAsync(ProductDto productDto)
         {
-            var unique = productsRepository.Find(x => x.Name.Contains(productDto.Name));
-            if (unique.Contains(productDto.AsProduct()))
+            var unique = await productsRepository.FindAsync(x => x.Name == productDto.Name);
+            if (unique.Count == 0)
             {
-                var product = productsRepository.Create(productDto.AsProductCreate());
+                var product = await productsRepository.CreateAsync(productDto.AsProductCreate());
                 return product.AsProductDto();
             }
             else
@@ -45,42 +52,48 @@ namespace WeightControl.BusinessLogic.Services
             }
         }
 
-        public ProductDto Update(int id, ProductDto productDto)
+        public async Task<ProductDto> UpdateAsync(int id, ProductDto productDto)
         {
-            //подумать, мб что-то можно сократить
+            //подумать, мб что-то можно сократить + нужно как-то менять отделные поля но при этом нельзя создавать
+            //такое же имя помимо сущности которую меняешь xd
             if (id != productDto.Id)
             {
                 throw new BadRequestException($"Id: {id} and product id: {productDto.Id} must be the same");
             }
 
-            var productId = productsRepository.Get(id);
+            var productId = await productsRepository.GetAsync(id);
             if (productId == null)
             {
                 throw new NotFoundException("Not found");
             }
 
-            var unique = productsRepository.Find(x => x.Name.Contains(productDto.Name));
-            if (unique.Contains(productDto.AsProduct()))
+            var unique = await productsRepository.FindAsync(x => x.Name == productDto.Name);
+            if (unique.Count == 0)
             {
-                var product = productsRepository.Update(productDto.AsProduct());
+                var product = await productsRepository.UpdateAsync(productDto.AsProduct());
                 return product.AsProductDto();
             }
             else
             {
                 throw new BadRequestException("A product with the same name already exists in the database");
-            }
 
+            }
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var product = productsRepository.Get(id);
+            if (id <= 0)
+            {
+                throw new BadRequestException($"Id: {id} is not valid");
+            }
+
+            var product = await productsRepository.GetAsync(id);
             if (product == null)
             {
                 throw new NotFoundException($"Product with id: {id} not found");
             }
 
-            productsRepository.Delete(product);
+            await productsRepository.DeleteAsync(product);
         }
     }
 }

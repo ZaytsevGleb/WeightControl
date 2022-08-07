@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using WeightControl.Domain.Entities;
 
 namespace WeightControl.DataAccess.Repositories
@@ -16,14 +17,14 @@ namespace WeightControl.DataAccess.Repositories
             this.context = context;
         }
 
-        public Product Get(int id)
+        public async Task<Product> GetAsync(int id)
         {
-            return context.Products
+            return await context.Products
                 .AsNoTracking()
-                .FirstOrDefault(p => p.Id == id); 
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public List<Product> Find(Expression<Func<Product, bool>> predicate = null)
+        public async Task<List<Product>> FindAsync(Expression<Func<Product, bool>> predicate = null)
         {
             var query = context.Products.AsQueryable();
             if (predicate != null)
@@ -31,29 +32,29 @@ namespace WeightControl.DataAccess.Repositories
                 query = query.Where(predicate);
             }
 
-            return query
+            return await query
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
         }
 
-        public Product Create(Product product)
+        public async Task<Product> CreateAsync(Product product)
         {
-            context.Products.Add(product);
-            context.SaveChanges();
-            return product ?? null;
-        }
-
-        public Product Update(Product product)
-        {
-            context.Products.Update(product);
-            context.SaveChanges();
+            await context.Products.AddAsync(product);
+            await context.SaveChangesAsync();
             return product;
         }
 
-        public void Delete(Product product)
+        public async Task<Product> UpdateAsync(Product product)
+        {
+            context.Products.Update(product);
+            await context.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task DeleteAsync(Product product)
         {
             context.Products.Remove(product);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
