@@ -41,6 +41,7 @@ namespace WeightControl.DataAccess.Repositories
         {
             await context.Products.AddAsync(product);
             await context.SaveChangesAsync();
+
             return product;
         }
 
@@ -48,6 +49,7 @@ namespace WeightControl.DataAccess.Repositories
         {
             context.Products.Update(product);
             await context.SaveChangesAsync();
+
             return product;
         }
 

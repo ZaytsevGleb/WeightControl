@@ -12,7 +12,7 @@ namespace WeightControl.BusinessLogic.Services
         Task<ProductDto> GetAsync(int id);
         Task<List<ProductDto>> FindAsync(string name);
         Task<ProductDto> CreateAsync(ProductDto product);
-        Task<ProductDto> UpdateAsync(int id, ProductDto product);
+        Task<ProductDto> UpdateAsync(ProductDto product);
         Task DeleteAsync(int id);
     }
 }

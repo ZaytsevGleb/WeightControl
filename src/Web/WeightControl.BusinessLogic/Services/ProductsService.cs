@@ -1,19 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using FluentValidation;
+using FluentValidation.Results;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WeightControl.BusinessLogic.Exceptions;
-using WeightControl.BusinessLogic.Mapping;
 using WeightControl.BusinessLogic.Models;
 using WeightControl.DataAccess.Repositories;
+using WeightControl.Domain.Entities;
 
 namespace WeightControl.BusinessLogic.Services
 {
     public class ProductsService : IProductsService
     {
         private readonly IProductsRepository productsRepository;
+        private readonly IValidator<ProductDto> validator;
+        private readonly IMapper mapper;
 
-        public ProductsService(IProductsRepository productsRepository)
+        public ProductsService(IProductsRepository productsRepository,
+            IValidator<ProductDto> validator,
+            IMapper mapper)
         {
             this.productsRepository = productsRepository;
+            this.validator = validator;
+            this.mapper = mapper;
         }
 
         public async Task<ProductDto> GetAsync(int id)
@@ -22,11 +31,15 @@ namespace WeightControl.BusinessLogic.Services
             {
                 throw new BadRequestException($"Id: {id} not valid");
             }
-            else
+
+            var product = await productsRepository.GetAsync(id);
+
+            if (product == null)
             {
-                var product = await productsRepository.GetAsync(id);
-                return product.AsProductDto() ?? throw new NotFoundException($"Product with id: {id} not found");
+                throw new NotFoundException($"Product with id: {id} not found");
             }
+
+            return mapper.Map<ProductDto>(product);
         }
 
         public async Task<List<ProductDto>> FindAsync(string name)
@@ -35,16 +48,22 @@ namespace WeightControl.BusinessLogic.Services
                 ? await productsRepository.FindAsync()
                 : await productsRepository.FindAsync(x => x.Name.Contains(name));
 
-            return products.AsProductDto();
+            return mapper.Map<List<ProductDto>>(products);
         }
 
         public async Task<ProductDto> CreateAsync(ProductDto productDto)
         {
+            ValidationResult result = validator.Validate(productDto);
+            if (result.IsValid)
+            {
+                throw new BadRequestException(result.ToString());
+            }
+
             var unique = await productsRepository.FindAsync(x => x.Name == productDto.Name);
             if (unique.Count == 0)
             {
-                var product = await productsRepository.CreateAsync(productDto.AsProductCreate());
-                return product.AsProductDto();
+                var product = await productsRepository.CreateAsync(mapper.Map<Product>(productDto));
+                return mapper.Map<ProductDto>(product);
             }
             else
             {
@@ -52,32 +71,24 @@ namespace WeightControl.BusinessLogic.Services
             }
         }
 
-        public async Task<ProductDto> UpdateAsync(int id, ProductDto productDto)
+        public async Task<ProductDto> UpdateAsync(ProductDto productDto)
         {
-            //подумать, мб что-то можно сократить + нужно как-то менять отделные поля но при этом нельзя создавать
-            //такое же имя помимо сущности которую меняешь xd
-            if (id != productDto.Id)
+            ValidationResult result = validator.Validate(productDto);
+
+            if (result.IsValid)
             {
-                throw new BadRequestException($"Id: {id} and product id: {productDto.Id} must be the same");
+                throw new BadRequestException(result.ToString());
             }
 
-            var productId = await productsRepository.GetAsync(id);
+            var productId = await productsRepository.GetAsync(productDto.Id);
             if (productId == null)
             {
                 throw new NotFoundException("Not found");
             }
 
-            var unique = await productsRepository.FindAsync(x => x.Name == productDto.Name);
-            if (unique.Count == 0)
-            {
-                var product = await productsRepository.UpdateAsync(productDto.AsProduct());
-                return product.AsProductDto();
-            }
-            else
-            {
-                throw new BadRequestException("A product with the same name already exists in the database");
+            var product = await productsRepository.UpdateAsync(mapper.Map<Product>(productDto));
 
-            }
+            return mapper.Map<ProductDto>(product);
         }
 
         public async Task DeleteAsync(int id)

@@ -32,7 +32,7 @@ namespace WeightControl.Api
                 options.EnableSensitiveDataLogging();
                 options.UseSqlServer(connection);
             });
-            //here 
+            services.AddAutoMapper(typeof(Product), typeof(ProductDto));
             services.AddControllersWithViews();
             services.AddScoped<IValidator<ProductDto>, ProductValidator>();
             services.AddControllers();
@@ -42,7 +42,7 @@ namespace WeightControl.Api
             services.AddScoped<IProductsService, ProductsService>();
             services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
         }
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<ErrorHandlingMiddleware>();

@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WeightControl.BusinessLogic.Models;
@@ -13,48 +11,53 @@ namespace WeightControl.Api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService productsService;
-        private readonly IValidator<ProductDto> validator;
 
-        public ProductsController(IProductsService productsService, IValidator<ProductDto> validator)
+
+        public ProductsController(IProductsService productsService)
         {
             this.productsService = productsService;
-            this.validator = validator;
+
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductDto>> Get(int id)
+        public async Task<ActionResult<ProductDto>> GetAsync(int id)
         {
-            return Ok(await productsService.GetAsync(id));
+            var product = await productsService.GetAsync(id);
+
+            return Ok(product);
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ProductDto>> Get([FromQuery] string name)
+        public async Task<IEnumerable<ProductDto>> GetAsync([FromQuery] string name)
         {
-            return await productsService.FindAsync(name);
+            var products = await productsService.FindAsync(name);
+
+            return products;
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductDto>> Post(ProductDto productDto)
+        public async Task<ActionResult<ProductDto>> PostAsync(ProductDto productDto)
         {
-            ValidationResult result = validator.Validate(productDto);
+            var product = await productsService.CreateAsync(productDto);
 
-            return result.IsValid
-                ? Created("Product is Created!", await productsService.CreateAsync(productDto))
-                : BadRequest(result);
+            return Created("Product is Created!", product);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ProductDto>> Put(int id, ProductDto productDto)
+        public async Task<ActionResult<ProductDto>> PutAsync(int id, ProductDto productDto)
         {
-            ValidationResult result = validator.Validate(productDto);
+            if (id != productDto.Id)
+            {
+                BadRequest($"Id: {id} and product id: {productDto.Id} must be the same");
+            }
 
-            return result.IsValid
-                ? Ok(await productsService.UpdateAsync(id, productDto))
-                : BadRequest(result);
+            var product = await productsService.UpdateAsync(productDto);
+
+            return Ok(product);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
             await productsService.DeleteAsync(id);
 
