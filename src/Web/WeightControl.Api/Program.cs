@@ -22,7 +22,7 @@ namespace WeightControl.Api
             }
             catch (Exception ex)
             {
-                //Log this
+                throw new Exception(ex.Message);
             }
 
             host.Run();

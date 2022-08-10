@@ -12,11 +12,11 @@ namespace WeightControl.BusinessLogic.Services
 {
     public class ProductsService : IProductsService
     {
-        private readonly IProductsRepository productsRepository;
+        private readonly IRepository<Product> productsRepository;
         private readonly IValidator<ProductDto> validator;
         private readonly IMapper mapper;
 
-        public ProductsService(IProductsRepository productsRepository,
+        public ProductsService(IRepository<Product> productsRepository,
             IValidator<ProductDto> validator,
             IMapper mapper)
         {
@@ -54,7 +54,8 @@ namespace WeightControl.BusinessLogic.Services
         public async Task<ProductDto> CreateAsync(ProductDto productDto)
         {
             ValidationResult result = validator.Validate(productDto);
-            if (result.IsValid)
+
+            if (!result.IsValid)
             {
                 throw new BadRequestException(result.ToString());
             }
@@ -75,7 +76,7 @@ namespace WeightControl.BusinessLogic.Services
         {
             ValidationResult result = validator.Validate(productDto);
 
-            if (result.IsValid)
+            if (!result.IsValid)
             {
                 throw new BadRequestException(result.ToString());
             }

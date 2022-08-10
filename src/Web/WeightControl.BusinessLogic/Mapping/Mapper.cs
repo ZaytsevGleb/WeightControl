@@ -13,8 +13,9 @@ namespace WeightControl.BusinessLogic.Mapping
     {
         public Mapping()
         {
+            this.CreateMap<Task<Product>, Task<ProductDto>>().ReverseMap();
+            this.CreateMap<Task<List<Product>>, Task<List<ProductDto>>>().ReverseMap();
             this.CreateMap<Product, ProductDto>().ReverseMap();
-            this.CreateMap<List<Product>, List<ProductDto>>().ReverseMap();
         }
     }
 }

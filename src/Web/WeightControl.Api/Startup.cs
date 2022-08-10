@@ -38,7 +38,7 @@ namespace WeightControl.Api
             services.AddControllers();
             services.AddScoped<IAuthService, AuthService>();
             services.AddTransient<IUsersRepository, UsersRepository>();
-            services.AddTransient<IProductsRepository, ProductsRepository>();
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductsService, ProductsService>();
             services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
         }

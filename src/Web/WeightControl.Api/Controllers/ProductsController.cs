@@ -12,12 +12,7 @@ namespace WeightControl.Api.Controllers
     {
         private readonly IProductsService productsService;
 
-
-        public ProductsController(IProductsService productsService)
-        {
-            this.productsService = productsService;
-
-        }
+        public ProductsController(IProductsService productsService) => this.productsService = productsService;
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDto>> GetAsync(int id)

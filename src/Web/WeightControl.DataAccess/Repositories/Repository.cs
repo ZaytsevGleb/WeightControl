@@ -8,25 +8,27 @@ using WeightControl.Domain.Entities;
 
 namespace WeightControl.DataAccess.Repositories
 {
-    public class ProductsRepository : IProductsRepository
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly ApplicationDBContext context;
+        private readonly DbSet<TEntity> entities;
 
-        public ProductsRepository(ApplicationDBContext context)
+        public Repository(ApplicationDBContext context)
         {
             this.context = context;
+            entities = context.Set<TEntity>();
         }
 
-        public async Task<Product> GetAsync(int id)
+        public async Task<TEntity> GetAsync(int id)
         {
-            return await context.Products
+            return await entities
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<List<Product>> FindAsync(Expression<Func<Product, bool>> predicate = null)
+        public async Task<List<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
-            var query = context.Products.AsQueryable();
+            var query = entities.AsQueryable();
             if (predicate != null)
             {
                 query = query.Where(predicate);
@@ -37,25 +39,25 @@ namespace WeightControl.DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Product> CreateAsync(Product product)
+        public async Task<TEntity> CreateAsync(TEntity item)
         {
-            await context.Products.AddAsync(product);
+            await entities.AddAsync(item);
             await context.SaveChangesAsync();
 
-            return product;
+            return item;
         }
 
-        public async Task<Product> UpdateAsync(Product product)
+        public async Task<TEntity> UpdateAsync(TEntity item)
         {
-            context.Products.Update(product);
+            entities.Update(item);
             await context.SaveChangesAsync();
 
-            return product;
+            return item;
         }
 
-        public async Task DeleteAsync(Product product)
+        public async Task DeleteAsync(TEntity item)
         {
-            context.Products.Remove(product);
+            entities.Remove(item);
             await context.SaveChangesAsync();
         }
     }
