@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using WeightControl.Api.Models;
-using WeightControl.BusinessLogic.Services;
-
+using WeightControl.Application.Auth;
+using WeightControl.Application.Auth.Models;
 
 namespace WeightControl.Api.Controllers
 {
@@ -15,11 +14,11 @@ namespace WeightControl.Api.Controllers
         {
             this.authService = authService;
         }
-        //Postman address   
+
         [HttpPost("login")]
         public ActionResult Login(LoginDto loginDto)
         {
-            var loginResult = authService.Login(loginDto.Login,loginDto.Password, loginDto.Email);
+            var loginResult = authService.Login(loginDto.Login, loginDto.Password, loginDto.Email);
             var loginResultDto = new LoginResultDto()
             {
                 Succeded = loginResult.Succeded,
@@ -28,7 +27,7 @@ namespace WeightControl.Api.Controllers
 
             return Ok(loginResultDto);
         }
-        
+
         [HttpPost("register")]
         public ActionResult Register(RegisterDto registerDto)
         {
@@ -38,7 +37,7 @@ namespace WeightControl.Api.Controllers
                 Succeded = registerResult.Succeded,
                 Error = registerResult.Error
             };
-            
+
             return Ok(registerResultDto);
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WeightControl.BusinessLogic.Exceptions
+namespace WeightControl.Application.Exceptions
 {
     public class NotFoundException : Exception
     {

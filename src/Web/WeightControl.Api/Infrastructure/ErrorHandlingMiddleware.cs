@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
 using System.Threading.Tasks;
-using WeightControl.BusinessLogic.Exceptions;
+using WeightControl.Application.Exceptions;
 
-namespace WeightControl.Api.Middlewares
+namespace WeightControl.Api.Infrastructure
 {
     public class ErrorHandlingMiddleware
     {
@@ -23,11 +22,11 @@ namespace WeightControl.Api.Middlewares
             catch (NotFoundException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
-                await context.Response.WriteAsync(ex.Message);  
+                await context.Response.WriteAsync(ex.Message);
             }
             catch (BadRequestException ex)
             {
-                context.Response.StatusCode = 400;
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsync(ex.Message);
             }
         }

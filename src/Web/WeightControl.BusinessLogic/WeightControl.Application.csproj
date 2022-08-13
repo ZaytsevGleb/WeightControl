@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WeightControl.DataAccess\WeightControl.DataAccess.csproj" />
+      <ProjectReference Include="..\WeightControl.Domain\WeightControl.Domain.csproj" />
     </ItemGroup>
     
 </Project>

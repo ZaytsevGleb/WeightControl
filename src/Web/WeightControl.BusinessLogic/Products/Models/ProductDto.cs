@@ -1,5 +1,6 @@
 ﻿using System;
-namespace WeightControl.BusinessLogic.Models
+
+namespace WeightControl.Application.Products.Models
 {
     public class ProductDto
     {

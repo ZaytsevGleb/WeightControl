@@ -1,6 +1,6 @@
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.DataAccess.Repositories
+namespace WeightControl.Application.Common.Interfaces
 {
     public interface IUsersRepository
     {

@@ -1,11 +1,12 @@
 using System.Diagnostics;
-using WeightControl.DataAccess.Repositories;
 using WeightControl.Domain.Entities;
 using WeightControl.Domain.Enums;
+using WeightControl.Application.Common.Interfaces;
+using WeightControl.Application.Auth.Models;
 
-namespace WeightControl.BusinessLogic.Services
+namespace WeightControl.Application.Auth
 {
-    public class AuthService: IAuthService
+    public class AuthService : IAuthService
     {
         private readonly IUsersRepository usersRepository;
 
@@ -13,75 +14,75 @@ namespace WeightControl.BusinessLogic.Services
         {
             this.usersRepository = usersRepository;
         }
-        public LoginResult Login(string login, string password, string email)
+        public LoginResultDto Login(string login, string password, string email)
         {
             var user = usersRepository.GetByLogin(login);
             if (user == null)
             {
-                return new LoginResult()
+                return new LoginResultDto()
                 {
                     Succeded = false,
                     Error = LoginError.UserNotFound
                 };
-            } 
+            }
 
             if (user.Password != password)
             {
-                return new LoginResult()
+                return new LoginResultDto()
                 {
                     Succeded = false,
                     Error = LoginError.IncorrectPassword
                 };
             }
 
-            return new LoginResult()
+            return new LoginResultDto()
             {
                 Succeded = true
             };
         }
 
-        public RegisterResult Register(string login, string email, string password)
+        public RegisterResultDto Register(string login, string email, string password)
         {
             if (string.IsNullOrEmpty(login) && string.IsNullOrEmpty(email) && string.IsNullOrEmpty(password))
             {
-                return new RegisterResult()
+                return new RegisterResultDto()
                 {
                     Succeded = false,
                     Error = RegisterError.AllFieldsAreNullOrEmpty
                 };
             }
-            
+
             if (string.IsNullOrEmpty(password))
             {
-                return new RegisterResult()
+                return new RegisterResultDto()
                 {
                     Succeded = false,
                     Error = RegisterError.PasswordIsNullOrEmpty
                 };
             }
-            
+
             if (string.IsNullOrEmpty(email))
             {
-                return new RegisterResult()
+                return new RegisterResultDto()
                 {
                     Succeded = false,
                     Error = RegisterError.EmailIsNullOrEmpty
                 };
             }
-            
+
             if (string.IsNullOrEmpty(login))
             {
-                return new RegisterResult()
+                return new RegisterResultDto()
                 {
                     Succeded = false,
                     Error = RegisterError.LoginIsNullOrEmpty
                 };
             }
-            
+
             var user = usersRepository.GetByLogin(login);
             if (user != null)
             {
-                return new RegisterResult()
+                return new RegisterResultDto()
                 {
                     Succeded = false,
                     Error = RegisterError.SuchUserAlreadyExists
@@ -95,8 +96,8 @@ namespace WeightControl.BusinessLogic.Services
                 Email = email
             };
             usersRepository.Create(user);
-            
-            return new RegisterResult()
+
+            return new RegisterResultDto()
             {
                 Succeded = true
             };

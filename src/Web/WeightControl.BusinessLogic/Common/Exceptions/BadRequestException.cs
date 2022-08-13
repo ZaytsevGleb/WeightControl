@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeightControl.BusinessLogic.Exceptions
+namespace WeightControl.Application.Exceptions
 {
     public class BadRequestException:Exception
     {

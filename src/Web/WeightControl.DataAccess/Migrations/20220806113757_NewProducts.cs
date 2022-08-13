@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WeightControl.DataAccess.Migrations
+namespace WeightControl.Persistence.Migrations
 {
     public partial class NewProducts : Migration
     {
