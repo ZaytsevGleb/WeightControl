@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using WeightControl.BusinessLogic.Models;
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.BusinessLogic.Mapping
+namespace WeightControl.Application.Products.Models
 {
     public class Mapping : Profile
     {

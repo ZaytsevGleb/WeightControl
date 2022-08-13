@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.DataAccess.Repositories
+namespace WeightControl.Application.Common.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {
@@ -14,6 +12,6 @@ namespace WeightControl.DataAccess.Repositories
         Task<TEntity> GetAsync(int id);
         Task<TEntity> CreateAsync(TEntity item);
         Task<TEntity> UpdateAsync(TEntity item);
-        Task DeleteAsync (TEntity item);
+        Task DeleteAsync(TEntity item);
     }
 }

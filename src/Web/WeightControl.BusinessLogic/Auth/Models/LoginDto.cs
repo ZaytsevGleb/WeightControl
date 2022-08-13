@@ -1,4 +1,4 @@
-namespace WeightControl.Api.Models
+namespace WeightControl.Application.Auth.Models
 {
     public class LoginDto
     {

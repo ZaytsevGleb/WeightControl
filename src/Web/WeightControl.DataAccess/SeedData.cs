@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.DataAccess
+namespace WeightControl.Persistence
 {
     public static class SeedData
     {

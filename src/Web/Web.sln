@@ -5,11 +5,17 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.Api", "WeightControl.Api\WeightControl.Api.csproj", "{854AECFB-ED87-48AD-9004-2FD50CBB14CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.BusinessLogic", "WeightControl.BusinessLogic\WeightControl.BusinessLogic.csproj", "{59ACA437-5768-4B96-9870-766E814C1759}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.Application", "WeightControl.BusinessLogic\WeightControl.Application.csproj", "{59ACA437-5768-4B96-9870-766E814C1759}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.DataAccess", "WeightControl.DataAccess\WeightControl.DataAccess.csproj", "{5F1D0D2B-E804-45CE-A03E-6C349A6BB651}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.Persistence", "WeightControl.DataAccess\WeightControl.Persistence.csproj", "{5F1D0D2B-E804-45CE-A03E-6C349A6BB651}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.Domain", "WeightControl.Domain\WeightControl.Domain.csproj", "{B801ED3F-17DB-47F7-AD5A-B88C80D29D14}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{2F3191F3-481E-4E4A-B2DB-0B2B6B8B21B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F626D2AF-2489-49B3-AEBB-222005700921}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastucture", "Infrastucture", "{49085F38-920A-4690-BE35-6FF6947F117E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +42,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{854AECFB-ED87-48AD-9004-2FD50CBB14CF} = {2F3191F3-481E-4E4A-B2DB-0B2B6B8B21B1}
+		{59ACA437-5768-4B96-9870-766E814C1759} = {F626D2AF-2489-49B3-AEBB-222005700921}
+		{5F1D0D2B-E804-45CE-A03E-6C349A6BB651} = {49085F38-920A-4690-BE35-6FF6947F117E}
+		{B801ED3F-17DB-47F7-AD5A-B88C80D29D14} = {F626D2AF-2489-49B3-AEBB-222005700921}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C4D2F1A-1CFA-4E09-AB0E-E8B9277ED3CC}

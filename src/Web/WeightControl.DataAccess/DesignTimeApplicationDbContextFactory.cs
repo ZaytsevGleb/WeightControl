@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace WeightControl.DataAccess
+namespace WeightControl.Persistence
 {
     public class DesignTimeApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDBContext>
     {

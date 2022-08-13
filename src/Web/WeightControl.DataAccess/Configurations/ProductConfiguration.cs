@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.DataAccess.Configurations
+namespace WeightControl.Persistence.Configurations
 {
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {

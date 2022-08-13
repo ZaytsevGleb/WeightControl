@@ -1,45 +1,30 @@
-using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WeightControl.Api.Middlewares;
-using WeightControl.BusinessLogic.Models;
-using WeightControl.BusinessLogic.Services;
-using WeightControl.BusinessLogic.Validators;
-using WeightControl.DataAccess;
-using WeightControl.DataAccess.Repositories;
-using WeightControl.Domain.Entities;
+using WeightControl.Api.Infrastructure;
+using WeightControl.Application;
+using WeightControl.Persistence;
 
 namespace WeightControl.Api
 {
     public class Startup
     {
+        private readonly IConfiguration configuration;
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            this.configuration = configuration;
         }
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services
+                .AddApplicationDependensies()
+                .AddPersistenceDependensies(configuration);
 
-            services.AddDbContext<ApplicationDBContext>(options =>
-            {
-                options.EnableSensitiveDataLogging();
-                options.UseSqlServer(connection);
-            });
-            services.AddAutoMapper(typeof(Product), typeof(ProductDto));
-            services.AddControllersWithViews();
-            services.AddScoped<IValidator<ProductDto>, ProductValidator>();
             services.AddControllers();
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddTransient<IUsersRepository, UsersRepository>();
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IProductsService, ProductsService>();
             services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
         }
 

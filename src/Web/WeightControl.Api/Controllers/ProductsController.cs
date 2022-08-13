@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WeightControl.BusinessLogic.Models;
-using WeightControl.BusinessLogic.Services;
+using WeightControl.Application.Products;
+using WeightControl.Application.Products.Models;
 
 namespace WeightControl.Api.Controllers
 {
@@ -46,7 +46,7 @@ namespace WeightControl.Api.Controllers
         {
             if (id != productDto.Id)
             {
-               return BadRequest($"Id: {id} and product id: {productDto.Id} must be the same");
+                return BadRequest($"Id: {id} and product id: {productDto.Id} must be the same");
             }
 
             productDto = await productsService.UpdateAsync(productDto);

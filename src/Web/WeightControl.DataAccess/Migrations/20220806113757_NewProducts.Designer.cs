@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WeightControl.DataAccess;
+using WeightControl.Persistence;
 
-namespace WeightControl.DataAccess.Migrations
+namespace WeightControl.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
     [Migration("20220806113757_NewProducts")]

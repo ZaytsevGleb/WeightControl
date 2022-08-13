@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.DataAccess
+namespace WeightControl.Persistence
 {
     public class ApplicationDBContext : DbContext
     {

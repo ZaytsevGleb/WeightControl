@@ -1,8 +1,8 @@
 using WeightControl.Domain.Enums;
 
-namespace WeightControl.Domain.Entities
+namespace WeightControl.Application.Auth.Models
 {
-    public class LoginResult
+    public class LoginResultDto
     {
         public bool Succeded { get; set; }
         public LoginError Error { get; set; }

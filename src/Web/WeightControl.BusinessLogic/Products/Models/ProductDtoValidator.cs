@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
-using WeightControl.BusinessLogic.Models;
 
-namespace WeightControl.BusinessLogic.Validators
+namespace WeightControl.Application.Products.Models
 {
-    public class ProductValidator : AbstractValidator<ProductDto>
+    public class ProductDtoValidator : AbstractValidator<ProductDto>
     {
-        public ProductValidator()
+        public ProductDtoValidator()
         {
             RuleFor(p => p.Name).NotNull().NotEmpty().Matches(@"^[a-zA-Z]+$").Length(3, 250);
             RuleFor(p => p.Calories).NotNull().InclusiveBetween(10, 4000).WithMessage("Calories is not valid");

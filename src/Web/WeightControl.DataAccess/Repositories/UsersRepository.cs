@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
+using WeightControl.Application.Common.Interfaces;
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.DataAccess.Repositories
+namespace WeightControl.Persistence.Repositories
 {
     public class UsersRepository : IUsersRepository
     {
@@ -15,10 +14,10 @@ namespace WeightControl.DataAccess.Repositories
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                
-                var command = new SqlCommand(sqlExpression,connection);
+
+                var command = new SqlCommand(sqlExpression, connection);
                 var reader = command.ExecuteReader();
-                
+
                 if (reader.HasRows)
                 {
                     if (reader.Read())
@@ -26,28 +25,28 @@ namespace WeightControl.DataAccess.Repositories
                         user = new User
                         {
                             Id = reader.GetInt32(0),
-                            Login =  reader.GetString(1),
+                            Login = reader.GetString(1),
                             Password = reader.GetString(2),
-                            Email =  reader.GetString(3)
+                            Email = reader.GetString(3)
                         };
                     }
                 }
             }
-            
+
             return user;
         }
 
-        
+
         public User Create(User user)
         {
             string sqlExpression =
                 $"INSERT INTO Users (Login, Password, Email) VALUES ('{user.Login}', '{user.Password}', '{user.Email}')";
 
-            using(var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-               connection.Open();
-               var command = new SqlCommand(sqlExpression, connection);
-               command.ExecuteNonQuery();
+                connection.Open();
+                var command = new SqlCommand(sqlExpression, connection);
+                command.ExecuteNonQuery();
             }
 
             return user;

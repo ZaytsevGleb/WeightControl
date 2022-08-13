@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WeightControl.BusinessLogic.Mapping;
-using WeightControl.BusinessLogic.Models;
-using WeightControl.Domain.Entities;
+using WeightControl.Application.Products.Models;
 
-namespace WeightControl.BusinessLogic.Services
+namespace WeightControl.Application.Products
 {
     public interface IProductsService
     {

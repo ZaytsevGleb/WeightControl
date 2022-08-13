@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using WeightControl.Application.Common.Interfaces;
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.DataAccess.Repositories
+namespace WeightControl.Persistence.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {

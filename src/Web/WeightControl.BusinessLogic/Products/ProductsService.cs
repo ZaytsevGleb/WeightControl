@@ -3,12 +3,12 @@ using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WeightControl.BusinessLogic.Exceptions;
-using WeightControl.BusinessLogic.Models;
-using WeightControl.DataAccess.Repositories;
+using WeightControl.Application.Common.Interfaces;
+using WeightControl.Application.Exceptions;
+using WeightControl.Application.Products.Models;
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.BusinessLogic.Services
+namespace WeightControl.Application.Products
 {
     public class ProductsService : IProductsService
     {
