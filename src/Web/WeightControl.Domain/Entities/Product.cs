@@ -2,7 +2,6 @@
 {
     public class Product: BaseEntity
     {
-        public new int Id { get; set; }
         public string Name { get; set; }
         public int Calories { get; set; }
         public int Type { get; set; }

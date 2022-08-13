@@ -12,7 +12,10 @@ namespace WeightControl.Api.Controllers
     {
         private readonly IProductsService productsService;
 
-        public ProductsController(IProductsService productsService) => this.productsService = productsService;
+        public ProductsController(IProductsService productsService)
+        {
+            this.productsService = productsService;
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDto>> GetAsync(int id)
@@ -25,30 +28,30 @@ namespace WeightControl.Api.Controllers
         [HttpGet]
         public async Task<IEnumerable<ProductDto>> GetAsync([FromQuery] string name)
         {
-            var products = await productsService.FindAsync(name);
+            var productDtos = await productsService.FindAsync(name);
 
-            return products;
+            return productDtos;
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductDto>> PostAsync(ProductDto productDto)
+        public async Task<ActionResult<ProductDto>> CreateAsync(ProductDto productDto)
         {
-            var product = await productsService.CreateAsync(productDto);
+            productDto = await productsService.CreateAsync(productDto);
 
-            return Created("Product is Created!", product);
+            return Created($"api/products/{productDto.Id}", productDto);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ProductDto>> PutAsync(int id, ProductDto productDto)
+        public async Task<ActionResult<ProductDto>> UpdateAsync(int id, ProductDto productDto)
         {
             if (id != productDto.Id)
             {
-                BadRequest($"Id: {id} and product id: {productDto.Id} must be the same");
+               return BadRequest($"Id: {id} and product id: {productDto.Id} must be the same");
             }
 
-            var product = await productsService.UpdateAsync(productDto);
+            productDto = await productsService.UpdateAsync(productDto);
 
-            return Ok(product);
+            return Ok(productDto);
         }
 
         [HttpDelete("{id}")]

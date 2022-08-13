@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using FluentValidation.Results;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WeightControl.BusinessLogic.Exceptions;
 using WeightControl.BusinessLogic.Models;
@@ -16,7 +16,8 @@ namespace WeightControl.BusinessLogic.Services
         private readonly IValidator<ProductDto> validator;
         private readonly IMapper mapper;
 
-        public ProductsService(IRepository<Product> productsRepository,
+        public ProductsService(
+            IRepository<Product> productsRepository,
             IValidator<ProductDto> validator,
             IMapper mapper)
         {
@@ -33,7 +34,6 @@ namespace WeightControl.BusinessLogic.Services
             }
 
             var product = await productsRepository.GetAsync(id);
-
             if (product == null)
             {
                 throw new NotFoundException($"Product with id: {id} not found");
@@ -48,46 +48,47 @@ namespace WeightControl.BusinessLogic.Services
                 ? await productsRepository.FindAsync()
                 : await productsRepository.FindAsync(x => x.Name.Contains(name));
 
-            return mapper.Map<List<ProductDto>>(products);
+            return products
+                .Select(product => mapper.Map<ProductDto>(product))
+                .ToList();
         }
 
         public async Task<ProductDto> CreateAsync(ProductDto productDto)
         {
-            ValidationResult result = validator.Validate(productDto);
-
+            var result = validator.Validate(productDto);
             if (!result.IsValid)
             {
                 throw new BadRequestException(result.ToString());
             }
 
-            var unique = await productsRepository.FindAsync(x => x.Name == productDto.Name);
-            if (unique.Count == 0)
+            var products = await productsRepository.FindAsync(x => x.Name == productDto.Name);
+            if (products.Any())
             {
-                var product = await productsRepository.CreateAsync(mapper.Map<Product>(productDto));
-                return mapper.Map<ProductDto>(product);
+                throw new BadRequestException($"Product with name: {productDto.Name} already exists.");
             }
-            else
-            {
-                throw new BadRequestException("A product with the same name already exists in the database");
-            }
+
+            var product = mapper.Map<Product>(productDto);
+            product = await productsRepository.CreateAsync(product);
+
+            return mapper.Map<ProductDto>(product);
         }
 
         public async Task<ProductDto> UpdateAsync(ProductDto productDto)
         {
-            ValidationResult result = validator.Validate(productDto);
-
+            var result = validator.Validate(productDto);
             if (!result.IsValid)
             {
                 throw new BadRequestException(result.ToString());
             }
 
-            var productId = await productsRepository.GetAsync(productDto.Id);
-            if (productId == null)
+            var product = await productsRepository.GetAsync(productDto.Id);
+            if (product == null)
             {
-                throw new NotFoundException("Not found");
+                throw new NotFoundException($"Product with id: {product.Id} not found");
             }
 
-            var product = await productsRepository.UpdateAsync(mapper.Map<Product>(productDto));
+            product = mapper.Map<Product>(productDto);
+            product = await productsRepository.UpdateAsync(product);
 
             return mapper.Map<ProductDto>(product);
         }
