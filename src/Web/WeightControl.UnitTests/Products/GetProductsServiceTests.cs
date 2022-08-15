@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using Moq;
+using Moq.AutoMock;
 using System.Threading.Tasks;
 using WeightControl.Application.Common.Interfaces;
 using WeightControl.Application.Exceptions;
@@ -14,21 +14,12 @@ namespace WeightControl.UnitTests.Products
     public class GetProductsServiceTests
     {
         private readonly ProductsService produtsService;
-
-        private readonly Mock<IRepository<Product>> mockProductsRepository;
-        private readonly Mock<IValidator<ProductDto>> mockValidator;
-        private readonly Mock<IMapper> mockMapper;
+        private readonly AutoMocker mocker;
 
         public GetProductsServiceTests()
         {
-            mockProductsRepository = new Mock<IRepository<Product>>();
-            mockValidator = new Mock<IValidator<ProductDto>>();
-            mockMapper = new Mock<IMapper>();
-
-            produtsService = new ProductsService(
-                mockProductsRepository.Object,
-                mockValidator.Object,
-                mockMapper.Object);
+            mocker = new AutoMocker();
+            produtsService = mocker.CreateInstance<ProductsService>();
         }
 
         [Fact]
@@ -42,11 +33,13 @@ namespace WeightControl.UnitTests.Products
                 Calories = 20
             };
 
-            mockProductsRepository
+            mocker
+                .GetMock<IRepository<Product>>()
                 .Setup(x => x.GetAsync(It.IsAny<int>()))
                 .ReturnsAsync(() => expectedProduct);
 
-            mockMapper
+            mocker
+                .GetMock<IMapper>()
                 .Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
                 .Returns(() => new ProductDto())
                 .Callback<object>(obj =>
@@ -63,8 +56,13 @@ namespace WeightControl.UnitTests.Products
             // Assert
             Assert.NotNull(productDto);
 
-            mockProductsRepository.Verify(x => x.GetAsync(expectedProduct.Id), Times.Once);
-            mockMapper.Verify(x => x.Map<ProductDto>(expectedProduct), Times.Once);
+            mocker
+               .GetMock<IRepository<Product>>()
+               .Verify(x => x.GetAsync(expectedProduct.Id), Times.Once);
+
+            mocker
+                .GetMock<IMapper>()
+                .Verify(x => x.Map<ProductDto>(expectedProduct), Times.Once);
         }
 
         [Theory]
@@ -78,22 +76,31 @@ namespace WeightControl.UnitTests.Products
             // Assert
             await Assert.ThrowsAsync<BadRequestException>(() => task);
 
-            mockProductsRepository.Verify(x => x.GetAsync(It.IsAny<int>()), Times.Never);
-            mockMapper.Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never);
+            mocker
+               .GetMock<IRepository<Product>>()
+               .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Never);
+
+            mocker
+                .GetMock<IMapper>()
+                .Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never);
         }
 
-        [Theory]
-        [InlineData(1)]
-        public async Task Get_ShouldThrowNotFoundException_IfDBNotContainProduct(int id)
+        [Fact]
+        public async Task Get_ShouldThrowNotFoundException_IfDBNotContainProduct()
         {
             // Act
-            var task = produtsService.GetAsync(id);
+            var task = produtsService.GetAsync(1);
 
             // Assert
             await Assert.ThrowsAsync<NotFoundException>(() => task);
 
-            mockProductsRepository.Verify(x => x.GetAsync(It.IsAny<int>()), Times.Once);
-            mockMapper.Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never);
+            mocker
+               .GetMock<IRepository<Product>>()
+               .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Once);
+
+            mocker
+                .GetMock<IMapper>()
+                .Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never);
         }
     }
 }
