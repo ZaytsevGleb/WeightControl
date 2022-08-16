@@ -102,6 +102,7 @@ namespace WeightControl.UnitTests.Products
             mocker
                 .GetMock<IRepository<Product>>()
                 .Verify(x => x.FindAsync(x => x.Name.Contains("c")), Times.Once);
+
             mocker
                 .GetMock<IRepository<Product>>()
                 .Verify(x => x.FindAsync(null), Times.Never);

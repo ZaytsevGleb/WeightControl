@@ -124,12 +124,12 @@ namespace WeightControl.UnitTests.Products
                 .Verify(x => x.Validate(It.IsAny<ProductDto>()), Times.Once);
 
             mocker
-               .GetMock<IRepository<Product>>()
-               .Verify(x => x.FindAsync(It.IsAny<Expression<Func<Product, bool>>>()), Times.Once);
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.FindAsync(It.IsAny<Expression<Func<Product, bool>>>()), Times.Once);
 
             mocker
-               .GetMock<IRepository<Product>>()
-               .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Never);
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Never);
         }
     }
 }

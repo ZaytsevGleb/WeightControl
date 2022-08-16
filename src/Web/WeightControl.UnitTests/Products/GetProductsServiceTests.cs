@@ -57,8 +57,8 @@ namespace WeightControl.UnitTests.Products
             Assert.NotNull(productDto);
 
             mocker
-               .GetMock<IRepository<Product>>()
-               .Verify(x => x.GetAsync(expectedProduct.Id), Times.Once);
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.GetAsync(expectedProduct.Id), Times.Once);
 
             mocker
                 .GetMock<IMapper>()
@@ -77,8 +77,8 @@ namespace WeightControl.UnitTests.Products
             await Assert.ThrowsAsync<BadRequestException>(() => task);
 
             mocker
-               .GetMock<IRepository<Product>>()
-               .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Never);
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Never);
 
             mocker
                 .GetMock<IMapper>()
@@ -95,8 +95,8 @@ namespace WeightControl.UnitTests.Products
             await Assert.ThrowsAsync<NotFoundException>(() => task);
 
             mocker
-               .GetMock<IRepository<Product>>()
-               .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Once);
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Once);
 
             mocker
                 .GetMock<IMapper>()
