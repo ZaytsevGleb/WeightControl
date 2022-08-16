@@ -61,6 +61,7 @@ namespace WeightControl.UnitTests.Products
             mocker
                 .GetMock<IRepository<Product>>()
                 .Verify(x => x.FindAsync(null), Times.Once);
+
             mocker
                 .GetMock<IRepository<Product>>()
                 .Verify(x => x.FindAsync(x => x.Name.Contains(It.IsAny<string>())), Times.Never);
@@ -78,8 +79,8 @@ namespace WeightControl.UnitTests.Products
 
             mocker
                 .GetMock<IRepository<Product>>()
-             .Setup(x => x.FindAsync(It.IsAny<Expression<Func<Product, bool>>>()))
-             .ReturnsAsync(() => expectedProducts);
+                .Setup(x => x.FindAsync(It.IsAny<Expression<Func<Product, bool>>>()))
+                .ReturnsAsync(() => expectedProducts);
 
             mocker
                 .GetMock<IMapper>()
