@@ -13,7 +13,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldThrowNameNullAndEmptyError()
+        public void Validator_ShouldThrowNameEmptyError()
         {
             // Arrange
             var product = new ProductDto { Name = "" };
