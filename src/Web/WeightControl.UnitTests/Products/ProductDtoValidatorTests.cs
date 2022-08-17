@@ -13,16 +13,6 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldThrowNameEmptyError()
-        {
-            // Arrange
-            var product = new ProductDto { Name = "" };
-
-            // Act/Assert
-            validator.TestValidate(product).ShouldHaveValidationErrorFor(n => n.Name);
-        }
-
-        [Fact]
         public void Validator_ShouldThrowNameNullError()
         {
             // Arrange
