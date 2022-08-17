@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WeightControl.BusinessLogic\WeightControl.Application.csproj" />
+    <ProjectReference Include="..\WeightControl.Application\WeightControl.Application.csproj" />
   </ItemGroup>
 
 </Project>
