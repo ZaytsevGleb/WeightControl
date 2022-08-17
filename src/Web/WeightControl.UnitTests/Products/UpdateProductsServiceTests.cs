@@ -28,7 +28,7 @@ namespace WeightControl.UnitTests.Products
         public async Task Update_ShouldReturnUpdatedProductDto()
         {
             // Arrange
-            var inputProduct = new ProductDto()
+            var productDto = new ProductDto()
             {
                 Id = 1,
                 Name = "qwerty",
@@ -37,14 +37,7 @@ namespace WeightControl.UnitTests.Products
                 Unit = 1
             };
 
-            var expectedProduct = new Product()
-            {
-                Id = 1,
-                Name = "qwerty",
-                Calories = 140,
-                Type = 4,
-                Unit = 1
-            };
+            var existingProduct = new Product();
 
             mocker
                 .GetMock<IValidator<ProductDto>>()
@@ -54,28 +47,36 @@ namespace WeightControl.UnitTests.Products
             mocker
                 .GetMock<IRepository<Product>>()
                 .Setup(x => x.GetAsync(It.IsAny<int>()))
-                .ReturnsAsync(() => new Product());
-
-            mocker
-                .GetMock<IMapper>()
-                .Setup(x => x.Map<Product>(It.IsAny<ProductDto>()))
-                .Returns(() => expectedProduct);
+                .ReturnsAsync(() => existingProduct);
 
             mocker
                 .GetMock<IRepository<Product>>()
                 .Setup(x => x.UpdateAsync(It.IsAny<Product>()))
-                .ReturnsAsync(() => expectedProduct);
+                .Callback<Product>(actualProduct =>
+                {
+                    // Assert
+                    Assert.Equal(actualProduct, existingProduct);
+                });
 
             mocker
                 .GetMock<IMapper>()
                 .Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
-                .Returns(() => inputProduct);
+                .Returns(() => new ProductDto())
+                .Callback<object>(obj =>
+                {
+                    // Assert
+                    Assert.Equal(productDto, obj as ProductDto);
+                });
 
             // Act
-            var productDto = await productsService.UpdateAsync(inputProduct);
+            var actualProductDto = await productsService.UpdateAsync(productDto);
 
             // Assert
-            Assert.Equal(productDto, inputProduct);
+            Assert.NotNull(productDto);
+
+            mocker
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Once);
 
             mocker
                 .GetMock<IRepository<Product>>()
@@ -84,7 +85,12 @@ namespace WeightControl.UnitTests.Products
             mocker
                 .GetMock<IMapper>()
                 .Verify(x => x.Map<Product>(It.IsAny<ProductDto>()), Times.Once);
+
+            mocker
+                .GetMock<IValidator<ProductDto>>()
+                .Verify(x => x.Validate(It.IsAny<ProductDto>()), Times.Once);
         }
+
         [Fact]
         public async Task Create_ShouldReturnNotFoundException()
         {
