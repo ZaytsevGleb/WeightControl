@@ -17,8 +17,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WeightControl.BusinessLogic\WeightControl.Application.csproj" />
-      <ProjectReference Include="..\WeightControl.DataAccess\WeightControl.Persistence.csproj" />
+      <ProjectReference Include="..\WeightControl.Application\WeightControl.Application.csproj" />
+      <ProjectReference Include="..\WeightControl.Persistence\WeightControl.Persistence.csproj" />
     </ItemGroup>
 
 </Project>
