@@ -88,7 +88,7 @@ namespace WeightControl.UnitTests.Products
 
             mocker
                 .GetMock<IValidator<ProductDto>>()
-                .Verify(x => x.Validate((It.IsAny<ProductDto>())), Times.Once);
+                .Verify(x => x.Validate(It.IsAny<ProductDto>()), Times.Once);
 
             mocker
                 .GetMock<IMapper>()
