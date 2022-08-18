@@ -3,6 +3,8 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using Moq.AutoMock;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WeightControl.Application.Common.Interfaces;
 using WeightControl.Application.Exceptions;
@@ -64,15 +66,24 @@ namespace WeightControl.UnitTests.Products
                 .Returns(() => new ProductDto())
                 .Callback<object>(obj =>
                 {
+                    var mapResultProduct = obj as Product;
+
                     // Assert
-                    Assert.Equal(productDto, obj as ProductDto);
+                    Assert.Equal(productDto.Name, mapResultProduct.Name);
+                    Assert.Equal(productDto.Calories, mapResultProduct.Calories);
+                    Assert.Equal(productDto.Type, mapResultProduct.Type);
+                    Assert.Equal(productDto.Unit, mapResultProduct.Unit);
                 });
 
             // Act
             var actualProductDto = await productsService.UpdateAsync(productDto);
 
             // Assert
-            Assert.NotNull(productDto);
+            Assert.NotNull(actualProductDto);
+
+            mocker
+                .GetMock<IValidator<ProductDto>>()
+                .Verify(x => x.Validate(It.IsAny<ProductDto>()), Times.Once);
 
             mocker
                 .GetMock<IRepository<Product>>()
@@ -84,15 +95,11 @@ namespace WeightControl.UnitTests.Products
 
             mocker
                 .GetMock<IMapper>()
-                .Verify(x => x.Map<Product>(It.IsAny<ProductDto>()), Times.Once);
-
-            mocker
-                .GetMock<IValidator<ProductDto>>()
-                .Verify(x => x.Validate(It.IsAny<ProductDto>()), Times.Once);
+                .Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Once);
         }
 
         [Fact]
-        public async Task Create_ShouldReturnNotFoundException()
+        public async Task Update_ShouldReturnNotFoundException()
         {
             // Arrange
             mocker
@@ -112,12 +119,55 @@ namespace WeightControl.UnitTests.Products
             await Assert.ThrowsAsync<NotFoundException>(() => task);
 
             mocker
+               .GetMock<IValidator<ProductDto>>()
+               .Verify(x => x.Validate(It.IsAny<ProductDto>()), Times.Once);
+
+            mocker
                 .GetMock<IRepository<Product>>()
                 .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Once);
 
             mocker
                 .GetMock<IRepository<Product>>()
                 .Verify(x => x.UpdateAsync(It.IsAny<Product>()), Times.Never);
+
+            mocker
+                .GetMock<IMapper>()
+                .Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task Update_ShouldReturnBadRequestException()
+        {
+            // Arrange
+            var validator = new ProductDtoValidator();
+
+            var actualProductDto = new ProductDto();
+            mocker
+                .GetMock<IValidator<ProductDto>>()
+                .Setup(x => x.Validate(It.IsAny<ProductDto>()))
+                .Returns(validator.Validate(actualProductDto));
+
+            // Act
+            var task = productsService.UpdateAsync(actualProductDto);
+
+            // Assert
+            await Assert.ThrowsAsync<BadRequestException>(() => task);
+
+            mocker
+                .GetMock<IValidator<ProductDto>>()
+                .Verify(x => x.Validate(It.IsAny<ProductDto>()), Times.Once);
+
+            mocker
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.GetAsync(It.IsAny<int>()), Times.Never);
+
+            mocker
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.UpdateAsync(It.IsAny<Product>()), Times.Never);
+
+            mocker
+                .GetMock<IMapper>()
+                .Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never);
         }
     }
 }
