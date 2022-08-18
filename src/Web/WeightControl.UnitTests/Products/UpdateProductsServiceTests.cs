@@ -140,6 +140,7 @@ namespace WeightControl.UnitTests.Products
             var validator = new ProductDtoValidator();
 
             var actualProductDto = new ProductDto();
+
             mocker
                 .GetMock<IValidator<ProductDto>>()
                 .Setup(x => x.Validate(It.IsAny<ProductDto>()))

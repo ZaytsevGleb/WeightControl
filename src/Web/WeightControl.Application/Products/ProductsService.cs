@@ -64,7 +64,7 @@ namespace WeightControl.Application.Products
             var products = await productsRepository.FindAsync(x => x.Name == productDto.Name);
             if (products.Any())
             {
-                throw new BadRequestException($"Product with name: {productDto.Name} already exists.");
+                throw new NotFoundException($"Product with name: {productDto.Name} already exists.");
             }
 
             var product = new Product
