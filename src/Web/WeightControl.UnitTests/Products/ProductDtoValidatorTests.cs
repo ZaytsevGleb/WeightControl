@@ -13,7 +13,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldThrowNameNullError()
+        public void Validator_ShouldThrowNameNullError_IfNameIsNull()
         {
             // Arrange
             var product = new ProductDto { Name = null };
@@ -23,7 +23,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldNotThrowNameNullAndEmptyError()
+        public void Validator_ShouldNotThrowNameNullError_IfNameIsValid()
         {
             // Arrange
             var product = new ProductDto { Name = "Pizza" };
@@ -33,7 +33,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldThrowCaloriesEmptyError()
+        public void Validator_ShouldThrowCaloriesEmptyError_IfCaloriesIsEmpty()
         {
             // Arrange
             var product = new ProductDto();
@@ -43,7 +43,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldNotThrowCaloriesEmptyError()
+        public void Validator_ShouldNotThrowCaloriesEmptyError_IfCaloriesIsValid()
         {
             // Arrange
             var product = new ProductDto { Calories = 10 };
@@ -53,7 +53,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldThrowTypeEmptyError()
+        public void Validator_ShouldThrowTypeEmptyError_IfTypeIsEmpty()
         {
             // Arrange
             var product = new ProductDto();
@@ -63,7 +63,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldNotThrowTypeEmptyError()
+        public void Validator_ShouldNotThrowTypeEmptyError_IfTypeIsValid()
         {
             // Arrange
             var product = new ProductDto { Type = 1 };
@@ -73,7 +73,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldThrowUnitEmptyError()
+        public void Validator_ShouldThrowUnitEmptyError_IfUnitIsEmpty()
         {
             // Arrange
             var product = new ProductDto();
@@ -83,7 +83,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public void Validator_ShouldNotThrowUnitEmptyError()
+        public void Validator_ShouldNotThrowUnitEmptyError_IfUnitIsValid()
         {
             // Arrange
             var product = new ProductDto { Unit = 1 };
