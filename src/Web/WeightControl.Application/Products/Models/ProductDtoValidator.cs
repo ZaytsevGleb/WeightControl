@@ -6,7 +6,7 @@ namespace WeightControl.Application.Products.Models
     {
         public ProductDtoValidator()
         {
-            RuleFor(p => p.Name).NotNull();
+            RuleFor(p => p.Name).NotNull().NotEmpty();
             RuleFor(p => p.Calories).NotEmpty();
             RuleFor(p => p.Type).NotEmpty();
             RuleFor(p => p.Unit).NotEmpty();
