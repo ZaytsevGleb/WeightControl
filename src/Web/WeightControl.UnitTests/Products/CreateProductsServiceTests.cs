@@ -28,7 +28,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public async Task Create_ShouldReturnProductDto()
+        public async Task Create_ShouldReturnCreatedProductDto()
         {
             // Arrange
             var productDto = new ProductDto()

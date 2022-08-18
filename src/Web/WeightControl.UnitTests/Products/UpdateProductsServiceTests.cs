@@ -97,7 +97,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public async Task Update_ShouldReturnNotFoundException()
+        public async Task Update_ShouldReturnNotFoundException_IfDBNotContainProduct()
         {
             // Arrange
             mocker
@@ -134,7 +134,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public async Task Update_ShouldReturnBadRequestException()
+        public async Task Update_ShouldReturnBadRequestException_IfProductIsNotValid()
         {
             // Arrange
             var validator = new ProductDtoValidator();
