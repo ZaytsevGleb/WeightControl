@@ -27,7 +27,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public async Task Find_ShouldReturnAllProductsDto()
+        public async Task Find_ShouldReturnAllProductsDto_IfNameNull()
         {
             // Arrange
             var actualProducts = new List<Product>();
@@ -68,7 +68,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public async Task Find_ShouldReturnProductsContainingName()
+        public async Task Find_ShouldReturnListProducts_IfNameNotNull()
         {
             // Arrange
             var actualProducts = new List<Product>();
