@@ -31,17 +31,8 @@ namespace WeightControl.UnitTests.Products
         public async Task Create_ShouldReturnProductDto()
         {
             // Arrange
-            var inputProductDto = new ProductDto()
+            var productDto = new ProductDto()
             {
-                Name = "Product",
-                Calories = 20,
-                Type = 2,
-                Unit = 2
-            };
-
-            var expectedProduct = new Product()
-            {
-                Id = 1,
                 Name = "Product",
                 Calories = 20,
                 Type = 2,
@@ -59,48 +50,83 @@ namespace WeightControl.UnitTests.Products
                 .ReturnsAsync(() => new List<Product>());
 
             mocker
-                .GetMock<IMapper>()
-               .Setup(x => x.Map<Product>(It.IsAny<ProductDto>()))
-               .Returns(() => new Product());
-
-            mocker
                 .GetMock<IRepository<Product>>()
                 .Setup(x => x.CreateAsync(It.IsAny<Product>()))
-                .ReturnsAsync(() => expectedProduct);
+                .ReturnsAsync(() => new Product())
+                .Callback<Product>( p =>
+                {
+                    // Assert
+                    Assert.Equal(productDto.Name, p.Name);
+                    Assert.Equal(productDto.Calories, p.Calories);
+                    Assert.Equal(productDto.Type, p.Type);
+                    Assert.Equal(productDto.Unit, p.Unit);
+                });
 
             mocker
                 .GetMock<IMapper>()
                 .Setup(x => x.Map<ProductDto>(It.IsAny<Product>()))
-                .Returns(() => new ProductDto())
-                .Callback<object>(obj =>
-                {
-                    var actualProduct = obj as Product;
-
-                    // Assert 
-                    Assert.Equal(expectedProduct, actualProduct);
-                });
+                .Returns(() => new ProductDto());
 
             // Act
-            var productDto = await productsService.CreateAsync(inputProductDto);
+            var actualProductDto = await productsService.CreateAsync(productDto);
 
             // Assert
-            Assert.NotNull(productDto);
+            Assert.NotNull(actualProductDto);
 
             mocker
                 .GetMock<IValidator<ProductDto>>()
                 .Verify(x => x.Validate(It.IsAny<ProductDto>()), Times.Once);
 
             mocker
-                .GetMock<IMapper>()
-                .Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Once);
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.FindAsync(It.IsAny<Expression<Func<Product, bool>>>()), Times.Once);
+
+            mocker
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.CreateAsync(It.IsAny<Product>()), Times.Once);
 
             mocker
                 .GetMock<IMapper>()
-                .Verify(x => x.Map<Product>(It.IsAny<ProductDto>()), Times.Once);
+                .Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Once);
         }
 
         [Fact]
-        public async Task Create_ShouldReturnBadRequestException()
+        public async Task Create_ShouldReturnBadRequestException_IfProductDtoIsNotValid()
+        {
+            // Arrange
+            var actualProductDto = new ProductDto();
+
+            mocker
+                .GetMock<IValidator<ProductDto>>()
+                .Setup(x => x.Validate(It.IsAny<ProductDto>()))
+                .Returns(new ValidationResult(new List<ValidationFailure> { new() }));
+
+            // Act
+            var task = productsService.CreateAsync(actualProductDto);
+
+
+            // Assert
+            await Assert.ThrowsAsync<BadRequestException>(() => task);
+
+            mocker
+                .GetMock<IValidator<ProductDto>>()
+                .Verify(x => x.Validate(It.IsAny<ProductDto>()), Times.Once);
+
+            mocker
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.FindAsync(It.IsAny<Expression<Func<Product, bool>>>()), Times.Never);
+
+            mocker
+                .GetMock<IRepository<Product>>()
+                .Verify(x => x.CreateAsync(It.IsAny<Product>()), Times.Never);
+
+            mocker
+                .GetMock<IMapper>()
+                .Verify(x => x.Map<ProductDto>(It.IsAny<Product>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task Create_ShouldReturnBadRequestException_IfDBAlreadyContainProduct()
         {
             // Arrange
             mocker
