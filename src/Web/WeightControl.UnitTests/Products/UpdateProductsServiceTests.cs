@@ -3,8 +3,6 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using Moq.AutoMock;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WeightControl.Application.Common.Interfaces;
 using WeightControl.Application.Exceptions;
