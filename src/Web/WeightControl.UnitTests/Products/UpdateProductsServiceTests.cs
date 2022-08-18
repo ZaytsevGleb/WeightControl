@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using Moq.AutoMock;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WeightControl.Application.Common.Interfaces;
 using WeightControl.Application.Exceptions;
@@ -137,14 +138,12 @@ namespace WeightControl.UnitTests.Products
         public async Task Update_ShouldReturnBadRequestException_IfProductIsNotValid()
         {
             // Arrange
-            var validator = new ProductDtoValidator();
-
             var actualProductDto = new ProductDto();
 
             mocker
                 .GetMock<IValidator<ProductDto>>()
                 .Setup(x => x.Validate(It.IsAny<ProductDto>()))
-                .Returns(validator.Validate(actualProductDto));
+                .Returns(new ValidationResult(new List<ValidationFailure> { new() }));
 
             // Act
             var task = productsService.UpdateAsync(actualProductDto);

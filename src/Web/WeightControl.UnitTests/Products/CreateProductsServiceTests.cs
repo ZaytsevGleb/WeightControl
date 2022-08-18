@@ -39,8 +39,6 @@ namespace WeightControl.UnitTests.Products
                 Unit = 2
             };
 
-            var expectedProduct = new Product();
-
             mocker
                 .GetMock<IValidator<ProductDto>>()
                 .Setup(x => x.Validate(It.IsAny<ProductDto>()))
@@ -73,7 +71,7 @@ namespace WeightControl.UnitTests.Products
             var actualProductDto = await productsService.CreateAsync(productDto);
 
             // Assert
-            Assert.NotNull(productDto);
+            Assert.NotNull(actualProductDto);
 
             mocker
                 .GetMock<IValidator<ProductDto>>()
@@ -96,14 +94,12 @@ namespace WeightControl.UnitTests.Products
         public async Task Create_ShouldReturnBadRequestException_IfProductDtoIsNotValid()
         {
             // Arrange
-            var validator = new ProductDtoValidator();
-
             var actualProductDto = new ProductDto();
 
             mocker
                 .GetMock<IValidator<ProductDto>>()
                 .Setup(x => x.Validate(It.IsAny<ProductDto>()))
-                .Returns(validator.Validate(actualProductDto));
+                .Returns(new ValidationResult(new List<ValidationFailure> { new() }));
 
             // Act
             var task = productsService.CreateAsync(actualProductDto);
@@ -147,7 +143,7 @@ namespace WeightControl.UnitTests.Products
             var task = productsService.CreateAsync(new ProductDto());
 
             // Assert
-            await Assert.ThrowsAsync<NotFoundException>(() => task);
+            await Assert.ThrowsAsync<BadRequestException>(() => task);
 
             mocker
                 .GetMock<IValidator<ProductDto>>()
