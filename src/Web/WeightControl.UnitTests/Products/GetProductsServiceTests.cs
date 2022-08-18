@@ -13,13 +13,13 @@ namespace WeightControl.UnitTests.Products
 {
     public class GetProductsServiceTests
     {
-        private readonly ProductsService produtsService;
+        private readonly ProductsService productsService;
         private readonly AutoMocker mocker;
 
         public GetProductsServiceTests()
         {
             mocker = new AutoMocker();
-            produtsService = mocker.CreateInstance<ProductsService>();
+            productsService = mocker.CreateInstance<ProductsService>();
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace WeightControl.UnitTests.Products
                 });
 
             // Act
-            var productDto = await produtsService.GetAsync(expectedProduct.Id);
+            var productDto = await productsService.GetAsync(expectedProduct.Id);
 
             // Assert
             Assert.NotNull(productDto);
@@ -71,7 +71,7 @@ namespace WeightControl.UnitTests.Products
         public async Task Get_ShouldThrowBadRequestException_IfIdIsNotValid(int id)
         {
             // Act
-            var task = produtsService.GetAsync(id);
+            var task = productsService.GetAsync(id);
 
             // Assert
             await Assert.ThrowsAsync<BadRequestException>(() => task);
@@ -89,7 +89,7 @@ namespace WeightControl.UnitTests.Products
         public async Task Get_ShouldThrowNotFoundException_IfDBNotContainProduct()
         {
             // Act
-            var task = produtsService.GetAsync(1);
+            var task = productsService.GetAsync(1);
 
             // Assert
             await Assert.ThrowsAsync<NotFoundException>(() => task);

@@ -28,7 +28,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public async Task Create_ShouldReturnCreatedProductDto()
+        public async Task Create_ShouldReturnProductDto()
         {
             // Arrange
             var productDto = new ProductDto()
@@ -130,7 +130,7 @@ namespace WeightControl.UnitTests.Products
         }
 
         [Fact]
-        public async Task Create_ShouldReturnNotFoundException_IfDBNotContainProduct()
+        public async Task Create_ShouldReturnBadRequestException_IfDBAlreadyContainProduct()
         {
             // Arrange
             mocker

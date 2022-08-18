@@ -11,13 +11,13 @@ namespace WeightControl.UnitTests.Products
 {
     public class DeleteProductsServiceTests
     {
-        private readonly ProductsService produtsService;
+        private readonly ProductsService productsService;
         private readonly AutoMocker mocker;
 
         public DeleteProductsServiceTests()
         {
             mocker = new AutoMocker();
-            produtsService = mocker.CreateInstance<ProductsService>();
+            productsService = mocker.CreateInstance<ProductsService>();
         }
 
         [Theory]
@@ -26,7 +26,7 @@ namespace WeightControl.UnitTests.Products
         public async Task Delete_ShouldThrowBadRequestException_IfIdIsNotValid(int id)
         {
             // Act
-            var task = produtsService.DeleteAsync(id);
+            var task = productsService.DeleteAsync(id);
 
             // Assert
             await Assert.ThrowsAsync<BadRequestException>(() => task);
@@ -40,7 +40,7 @@ namespace WeightControl.UnitTests.Products
         public async Task Delete_ShouldThrowNotFoundException_IfDBNotContainProduct()
         {
             // Act
-            var task = produtsService.DeleteAsync(1);
+            var task = productsService.DeleteAsync(1);
 
             // Assert
             await Assert.ThrowsAsync<NotFoundException>(() => task);
@@ -69,7 +69,7 @@ namespace WeightControl.UnitTests.Products
                 .Setup(x => x.DeleteAsync(It.IsAny<Product>()));
 
             // Act
-            await produtsService.DeleteAsync(expectedProduct.Id);
+            await productsService.DeleteAsync(expectedProduct.Id);
 
             // Assert
             mocker
