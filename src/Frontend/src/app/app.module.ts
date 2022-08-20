@@ -17,6 +17,8 @@ import { MealsPartComponent } from './components/body/meals-page/meals-part/meal
 import { ProductsPartComponent } from './components/body/meals-page/products-part/products-part.component';
 import { FormsModule } from '@angular/forms';
 import { AmountDialogComponent } from './components/body/meals-page/amount-dialog/amount-dialog.component';
+import { ApiClient, API_BASE_URL } from './clients/api.client';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,12 +36,9 @@ import { AmountDialogComponent } from './components/body/meals-page/amount-dialo
     ProductsPartComponent,
     AmountDialogComponent
   ],
-  
-    entryComponents: [
+  entryComponents: [
     AmountDialogComponent,
-    
   ],
-
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -47,7 +46,10 @@ import { AmountDialogComponent } from './components/body/meals-page/amount-dialo
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ApiClient,
+    { provide: API_BASE_URL, useValue: environment.apiUrl }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

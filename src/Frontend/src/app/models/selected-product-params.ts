@@ -1,7 +1,8 @@
 import { TypeOfMeal } from "./meal";
+import { Product } from "./product";
 
 export interface SelectedProductParams{
-    productId: number;
+    product: Product;
     typeofMeal: TypeOfMeal;
     amount: number;
 }

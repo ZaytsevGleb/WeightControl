@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using WeightControl.Api.Infrastructure;
 using WeightControl.Application;
 using WeightControl.Persistence;
@@ -24,14 +25,30 @@ namespace WeightControl.Api
                 .AddApplicationDependensies()
                 .AddPersistenceDependensies(configuration);
 
+            services
+                .AddSwaggerGen(options =>
+                {
+                    options.SwaggerDoc("v1.0", new OpenApiInfo
+                    {
+                        Title = "Weight Control API",
+                        Version = "v1.0"
+                    });
+                });
+
             services.AddControllers();
             services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("../swagger/v1.0/swagger.json", "Api v1.0");
+                options.RoutePrefix = "docs";
+            });
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseRouting();
             app.UseCors();
             app.UseEndpoints(endpoints =>

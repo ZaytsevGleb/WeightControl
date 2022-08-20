@@ -57,7 +57,7 @@ export class MealsPartComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   private addProduct(params: SelectedProductParams): void {
-    this.product = this.productService.getProduct(params.productId);
+    this.product = params.product;
     this.products.push(this.product);
     let mealProduct: MealProduct = { id: this.mealproductId, productId: this.product.id, date: this.date, amount: params.amount }
     this.mealproductId++;
