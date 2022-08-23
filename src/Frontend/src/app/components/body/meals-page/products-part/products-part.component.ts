@@ -32,7 +32,9 @@ export class ProductsPartComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.mealsController.isFocused$.pipe(takeUntil(this.destroy$)).subscribe(type => this.setFocus(type));
+    this.mealsController.isFocused$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(type => this.setFocus(type));
   }
 
   ngOnDestroy() {
@@ -42,13 +44,13 @@ export class ProductsPartComponent implements OnInit, OnDestroy {
     this.viewRef?.detach();
   }
 
-  public getProducts() {
-    this.productService.getProducts(this.searchInput).subscribe((response)=> {
+  public searchProducts() {
+    this.productService.searchProducts(this.searchInput).subscribe((response)=> {
       this.products = response;
     });
   }
 
-  public showAmountDialog(id: number) {
+  public showAmountDialog(product: Product) {
     this.viewRef?.clear();
     this.componentRef = this.viewRef?.createComponent(AmountDialogComponent);
     this.componentRef?.instance.close.subscribe(() => {
@@ -58,7 +60,7 @@ export class ProductsPartComponent implements OnInit, OnDestroy {
     this.componentRef?.instance.accept.subscribe(() => {
       this.viewRef?.clear();
       this.amount = this.componentRef?.instance.amount!;
-      this.mealsController.addProduct(id, this.targetTypeOfMeal, this.amount);
+      this.mealsController.addProduct(product, this.targetTypeOfMeal, this.amount);
     })
   }
 
