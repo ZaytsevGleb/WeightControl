@@ -3,24 +3,25 @@
   "defaultVariables": null,
   "documentGenerator": {
     "fromDocument": {
-      "url": "https://localhost:49714/swagger/v1.0/swagger.json",
+      "json": "",
+      "url": "https://localhost:7119/swagger/v1/swagger.json",
       "output": null,
       "newLineBehavior": "Auto"
     }
   },
   "codeGenerators": {
     "openApiToTypeScriptClient": {
-      "className": "ApiClient",
+      "className": "{controller}Client",
       "moduleName": "",
       "namespace": "",
-      "typeScriptVersion": 4.3,
-      "template": "Angular",
+      "typeScriptVersion": 2.7,
+      "template": "Fetch",
       "promiseType": "Promise",
       "httpClass": "HttpClient",
       "withCredentials": false,
       "useSingletonProvider": false,
-      "injectionTokenType": "InjectionToken",
-      "rxJsVersion": 7.0,
+      "injectionTokenType": "OpaqueToken",
+      "rxJsVersion": 6.0,
       "dateTimeType": "Date",
       "nullValue": "Undefined",
       "generateClientClasses": true,
@@ -69,7 +70,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "../app/clients/api.client.ts",
+      "output": null,
       "newLineBehavior": "Auto"
     }
   }
