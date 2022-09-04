@@ -1,106 +1,46 @@
-using System.Diagnostics;
-using WeightControl.Domain.Entities;
-using WeightControl.Domain.Enums;
-using WeightControl.Application.Common.Interfaces;
+using FluentValidation;
+using System.Threading.Tasks;
 using WeightControl.Application.Auth.Models;
+using WeightControl.Application.Common.Exceptions;
+using WeightControl.Application.Common.Interfaces;
+using WeightControl.Application.Exceptions;
+using WeightControl.Domain.Entities;
 
 namespace WeightControl.Application.Auth
 {
     public class AuthService : IAuthService
     {
-        private readonly IUsersRepository usersRepository;
+        private readonly IRepository<User> repository;
+        private readonly IValidator<LoginDto> loginValidator;
+        private readonly IValidator<RegisterDto> registerValidator;
 
-        public AuthService(IUsersRepository usersRepository)
+        public AuthService(
+            IRepository<User> repository, 
+            IValidator<LoginDto> loginValidator,
+            IValidator<RegisterDto> registerValidator)
         {
-            this.usersRepository = usersRepository;
+            this.repository = repository;
+            this.loginValidator = loginValidator;
+            this.registerValidator = registerValidator;
         }
-        public LoginResultDto Login(string login, string password, string email)
+        public async Task<LoginResultDto> Login(LoginDto login)
         {
-            var user = usersRepository.GetByLogin(login);
-            if (user == null)
+            var validResult = loginValidator.Validate(login);
+            if (!validResult.IsValid)
             {
-                return new LoginResultDto()
-                {
-                    Succeded = false,
-                    Error = LoginError.UserNotFound
-                };
+                throw new UnauthorizedException(validResult.ToString());
             }
-
-            if (user.Password != password)
-            {
-                return new LoginResultDto()
-                {
-                    Succeded = false,
-                    Error = LoginError.IncorrectPassword
-                };
-            }
-
-            return new LoginResultDto()
-            {
-                Succeded = true
-            };
+           
         }
 
-        public RegisterResultDto Register(string login, string email, string password)
+        public async Task<RegisterResultDto> Register(RegisterDto register)
         {
-            if (string.IsNullOrEmpty(login) && string.IsNullOrEmpty(email) && string.IsNullOrEmpty(password))
+            var validResult = registerValidator.Validate(register);
+            if (!validResult.IsValid)
             {
-                return new RegisterResultDto()
-                {
-                    Succeded = false,
-                    Error = RegisterError.AllFieldsAreNullOrEmpty
-                };
+                throw new BadRequestException(validResult.ToString());
             }
 
-            if (string.IsNullOrEmpty(password))
-            {
-                return new RegisterResultDto()
-                {
-                    Succeded = false,
-                    Error = RegisterError.PasswordIsNullOrEmpty
-                };
-            }
-
-            if (string.IsNullOrEmpty(email))
-            {
-                return new RegisterResultDto()
-                {
-                    Succeded = false,
-                    Error = RegisterError.EmailIsNullOrEmpty
-                };
-            }
-
-            if (string.IsNullOrEmpty(login))
-            {
-                return new RegisterResultDto()
-                {
-                    Succeded = false,
-                    Error = RegisterError.LoginIsNullOrEmpty
-                };
-            }
-
-            var user = usersRepository.GetByLogin(login);
-            if (user != null)
-            {
-                return new RegisterResultDto()
-                {
-                    Succeded = false,
-                    Error = RegisterError.SuchUserAlreadyExists
-                };
-            }
-
-            user = new User()
-            {
-                Login = login,
-                Password = password,
-                Email = email
-            };
-            usersRepository.Create(user);
-
-            return new RegisterResultDto()
-            {
-                Succeded = true
-            };
         }
     }
 }
