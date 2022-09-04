@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using WeightControl.Application.Common.Exceptions;
 using WeightControl.Application.Exceptions;
 
 namespace WeightControl.Api.Infrastructure
@@ -27,6 +28,11 @@ namespace WeightControl.Api.Infrastructure
             catch (BadRequestException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsync(ex.Message);
+            }
+            catch(UnauthorizedException ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 await context.Response.WriteAsync(ex.Message);
             }
         }

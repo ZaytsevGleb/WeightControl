@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WeightControl.Application.Auth;
 using WeightControl.Application.Auth.Models;
 
@@ -16,9 +17,9 @@ namespace WeightControl.Api.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult Login(LoginDto loginDto)
+        public async Task<ActionResult> Login(LoginDto loginDto)
         {
-            var loginResult = authService.Login(loginDto.Login, loginDto.Password, loginDto.Email);
+            var loginResult = await authService.Login(loginDto);
             var loginResultDto = new LoginResultDto()
             {
                 Succeded = loginResult.Succeded,
@@ -29,9 +30,9 @@ namespace WeightControl.Api.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult Register(RegisterDto registerDto)
+        public async Task<ActionResult> Register(RegisterDto registerDto)
         {
-            var registerResult = authService.Register(registerDto.Login, registerDto.Email, registerDto.Password);
+            var registerResult = await authService.Register(registerDto);
             var registerResultDto = new RegisterResultDto()
             {
                 Succeded = registerResult.Succeded,
