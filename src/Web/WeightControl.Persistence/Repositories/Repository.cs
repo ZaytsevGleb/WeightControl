@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,19 @@ namespace WeightControl.Persistence.Repositories
             return await query
                 .AsNoTracking()
                 .ToListAsync();
+        }
+
+        public async Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        {
+            var query = entities.AsQueryable();
+            query = query.Where(predicate);
+            if (include != null)
+            {
+                query = include.Invoke(query);
+            }
+            return await query
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
         }
 
         public async Task<TEntity> CreateAsync(TEntity item)

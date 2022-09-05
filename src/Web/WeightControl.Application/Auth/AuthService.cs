@@ -5,6 +5,7 @@ using WeightControl.Application.Common.Exceptions;
 using WeightControl.Application.Common.Interfaces;
 using WeightControl.Application.Exceptions;
 using WeightControl.Domain.Entities;
+using WeightControl.Domain.Enums;
 
 namespace WeightControl.Application.Auth
 {
@@ -15,7 +16,7 @@ namespace WeightControl.Application.Auth
         private readonly IValidator<RegisterDto> registerValidator;
 
         public AuthService(
-            IRepository<User> repository, 
+            IRepository<User> repository,
             IValidator<LoginDto> loginValidator,
             IValidator<RegisterDto> registerValidator)
         {
@@ -30,7 +31,30 @@ namespace WeightControl.Application.Auth
             {
                 throw new UnauthorizedException(validResult.ToString());
             }
-           
+
+            var user = await repository.FirstAsync(x => x.Login == login.Login);
+            if (user == null)
+            {
+                return new LoginResultDto
+                {
+                    Succeded = false,
+                    Error = LoginError.UserNotFound
+                };
+            }
+
+            if (user.Password != login.Password)
+            {
+                return new LoginResultDto
+                {
+                    Succeded = false,
+                    Error = LoginError.IncorrectPassword
+                };
+            }
+
+            return new LoginResultDto
+            {
+                Succeded = true
+            };
         }
 
         public async Task<RegisterResultDto> Register(RegisterDto register)
@@ -41,6 +65,30 @@ namespace WeightControl.Application.Auth
                 throw new BadRequestException(validResult.ToString());
             }
 
+            var user = await repository.FirstAsync(x => x.Login == register.Login);
+            if (user != null)
+            {
+                return new RegisterResultDto
+                {
+                    Succeded = false,
+                    Error = RegisterError.SuchUserAlreadyExists
+                };
+            }
+            else
+            {
+                await repository.CreateAsync(new User
+                {
+                    Email = register.Email,
+                    Login = register.Login,
+                    Password = register.Password,
+                    /*Roles*/
+                });
+
+                return new RegisterResultDto
+                {
+                    Succeded = true,
+                };
+            }
         }
     }
 }
