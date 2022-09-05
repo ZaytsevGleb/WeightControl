@@ -19,12 +19,7 @@ namespace WeightControl.Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginDto loginDto)
         {
-            var loginResult = await authService.Login(loginDto);
-            var loginResultDto = new LoginResultDto()
-            {
-                Succeded = loginResult.Succeded,
-                Error = loginResult.Error
-            };
+            var loginResultDto = await authService.Login(loginDto);
 
             return Ok(loginResultDto);
         }
@@ -32,12 +27,7 @@ namespace WeightControl.Api.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
-            var registerResult = await authService.Register(registerDto);
-            var registerResultDto = new RegisterResultDto()
-            {
-                Succeded = registerResult.Succeded,
-                Error = registerResult.Error
-            };
+            var registerResultDto = await authService.Register(registerDto);
 
             return Ok(registerResultDto);
         }
