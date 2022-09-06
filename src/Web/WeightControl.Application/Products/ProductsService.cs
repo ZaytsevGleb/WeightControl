@@ -12,7 +12,7 @@ namespace WeightControl.Application.Products
 {
     public class ProductsService : IProductsService
     {
-        private readonly IRepository<Product> productsRepository;
+        private readonly IRepository<Product> repository;
         private readonly IValidator<ProductDto> validator;
         private readonly IMapper mapper;
 
@@ -21,7 +21,7 @@ namespace WeightControl.Application.Products
             IValidator<ProductDto> validator,
             IMapper mapper)
         {
-            this.productsRepository = productsRepository;
+            this.repository = productsRepository;
             this.validator = validator;
             this.mapper = mapper;
         }
@@ -33,7 +33,7 @@ namespace WeightControl.Application.Products
                 throw new BadRequestException($"Id: {id} not valid");
             }
 
-            var product = await productsRepository.GetAsync(id);
+            var product = await repository.GetAsync(id);
             if (product == null)
             {
                 throw new NotFoundException($"Product with id: {id} not found");
@@ -45,8 +45,8 @@ namespace WeightControl.Application.Products
         public async Task<List<ProductDto>> FindAsync(string name)
         {
             var products = string.IsNullOrEmpty(name)
-                ? await productsRepository.FindAsync()
-                : await productsRepository.FindAsync(x => x.Name.Contains(name));
+                ? await repository.FindAsync()
+                : await repository.FindAsync(x => x.Name.Contains(name));
 
             return products
                 .Select(product => mapper.Map<ProductDto>(product))
@@ -61,7 +61,7 @@ namespace WeightControl.Application.Products
                 throw new BadRequestException(result.ToString());
             }
 
-            var products = await productsRepository.FindAsync(x => x.Name == productDto.Name);
+            var products = await repository.FindAsync(x => x.Name == productDto.Name);
             if (products.Any())
             {
                 throw new BadRequestException($"Product with name: {productDto.Name} already exists.");
@@ -75,7 +75,7 @@ namespace WeightControl.Application.Products
                 Unit = productDto.Unit
             };
 
-            product = await productsRepository.CreateAsync(product);
+            product = await repository.CreateAsync(product);
 
             return mapper.Map<ProductDto>(product);
         }
@@ -88,7 +88,7 @@ namespace WeightControl.Application.Products
                 throw new BadRequestException(result.ToString());
             }
 
-            var product = await productsRepository.GetAsync(productDto.Id);
+            var product = await repository.GetAsync(productDto.Id);
             if (product == null)
             {
                 throw new NotFoundException($"Product with id: {productDto.Id} not found");
@@ -99,7 +99,7 @@ namespace WeightControl.Application.Products
             product.Type = productDto.Type;
             product.Unit = productDto.Unit;
 
-            await productsRepository.UpdateAsync(product);
+            await repository.UpdateAsync(product);
 
             return mapper.Map<ProductDto>(product);
         }
@@ -111,13 +111,13 @@ namespace WeightControl.Application.Products
                 throw new BadRequestException($"Id: {id} is not valid");
             }
 
-            var product = await productsRepository.GetAsync(id);
+            var product = await repository.GetAsync(id);
             if (product == null)
             {
                 throw new NotFoundException($"Product with id: {id} not found");
             }
 
-            await productsRepository.DeleteAsync(product);
+            await repository.DeleteAsync(product);
         }
     }
 }

@@ -56,8 +56,8 @@ namespace WeightControl.Persistence
             {
                 var users = new[]
                 {
-                    new User{Email = "gzaytsev2000@gmail.com", Login = "Zaytsev Gleb", Password = "qwerty", Roles = new List<Role>{ new Role { Name = "user" }, new Role{Name = "admin" } } },
-                    new User{Email = "testUser@mail.com", Login = "TestUser", Password = "test", Roles = new List<Role>{ new Role { Name = "user" } } }
+                    new User{Email = "gzaytsev2000@gmail.com", Name = "Zaytsev Gleb", Password = "qwerty", Roles = new List<Role>{ new Role { Name = "user" }, new Role{Name = "admin" } } },
+                    new User{Email = "testUser@mail.com", Name = "TestUser", Password = "test", Roles = new List<Role>{ new Role { Name = "user" } } }
                 };
 
                 dbContext.AddRange(users);
