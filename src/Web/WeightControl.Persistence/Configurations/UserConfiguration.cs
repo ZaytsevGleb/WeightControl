@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeightControl.Domain.Entities;
 
 namespace WeightControl.Persistence.Configurations
@@ -17,12 +12,11 @@ namespace WeightControl.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Email).IsRequired();
-            builder.Property(x =>x.Login).IsRequired();
+            builder.Property(x => x.Name).IsRequired();
 
             builder.HasMany(r => r.Roles)
                 .WithMany(u => u.Users)
                 .UsingEntity(j => j.ToTable("UserRoles"));
-                
         }
     }
 }

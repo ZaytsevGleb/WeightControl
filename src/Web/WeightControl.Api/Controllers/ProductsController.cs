@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace WeightControl.Api.Controllers
 {
     [ApiController]
     [Route("api/products")]
+    [Authorize]
     [Produces("application/json")]
     public class ProductsController : ControllerBase
     {

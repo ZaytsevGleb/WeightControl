@@ -1,7 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using WeightControl.Application.Common.Interfaces;
+using WeightControl.Persistence.Auth;
 using WeightControl.Persistence.Repositories;
 
 namespace WeightControl.Persistence
@@ -16,8 +21,27 @@ namespace WeightControl.Persistence
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddTransient<IUsersRepository, UsersRepository>();
+            var jwtSettings = new JwtSettings();
+            configuration.Bind(JwtSettings.SectionName, jwtSettings);
+
+            services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+
+            services.AddSingleton(Options.Create(jwtSettings));
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
+            services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidAudience = jwtSettings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
+
+                });
 
             return services;
         }
