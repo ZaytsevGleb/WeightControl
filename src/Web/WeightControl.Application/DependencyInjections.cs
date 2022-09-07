@@ -16,6 +16,7 @@ namespace WeightControl.Application
             services.AddScoped<IAuthService, AuthService>();
 
             services.AddAutoMapper(typeof(Product), typeof(ProductDto));
+
             services.AddScoped<IValidator<ProductDto>, ProductDtoValidator>();
             services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
             services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();

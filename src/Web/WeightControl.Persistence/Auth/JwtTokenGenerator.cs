@@ -20,17 +20,21 @@ namespace WeightControl.Persistence.Auth
             this.jwtSettings = jwtSettings.Value;
         }
 
-        public string GenerateToken(string name, string email, List<Role> reles)
+        public string GenerateToken(string name, string email, ICollection<Role> reles)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
                 SecurityAlgorithms.HmacSha256);
 
-            //add more claims
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
-                new Claim(JwtRegisteredClaimNames.Name, name)
+                new Claim(JwtRegisteredClaimNames.Name, name),
+            };
+
+            foreach (Role role in reles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role.Name));
             };
 
             var securityToken = new JwtSecurityToken(

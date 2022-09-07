@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 using WeightControl.Application.Common.Interfaces;
 using WeightControl.Persistence.Auth;
@@ -23,7 +24,6 @@ namespace WeightControl.Persistence
 
             var jwtSettings = new JwtSettings();
             configuration.Bind(JwtSettings.SectionName, jwtSettings);
-
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
 
             services.AddSingleton(Options.Create(jwtSettings));
@@ -42,6 +42,18 @@ namespace WeightControl.Persistence
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
 
                 });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("user", builder =>
+                {
+                    builder.RequireClaim(ClaimTypes.Role, "user");
+                });
+                options.AddPolicy("admin", builder =>
+                {
+                    builder.RequireClaim(ClaimTypes.Role, "admin");
+                });
+            });
 
             return services;
         }

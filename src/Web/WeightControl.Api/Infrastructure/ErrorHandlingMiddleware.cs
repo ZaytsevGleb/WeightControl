@@ -30,7 +30,7 @@ namespace WeightControl.Api.Infrastructure
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsync(ex.Message);
             }
-            catch(UnauthorizedException ex)
+            catch (UnauthorizedException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 await context.Response.WriteAsync(ex.Message);

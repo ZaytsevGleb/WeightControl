@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WeightControl.Application.Auth.Models;
@@ -36,7 +37,11 @@ namespace WeightControl.Application.Auth
                 throw new UnauthorizedException(validResult.ToString());
             }
 
-            var user = await repository.FirstAsync(x => x.Name == loginDto.Login);
+            var user = await repository.FirstAsync(
+                x => x.Name == loginDto.Login 
+                || x.Email == loginDto.Login, 
+                x => x.Include(x => x.Roles));
+
             if (user == null)
             {
                 return new LoginResultDto
@@ -55,7 +60,7 @@ namespace WeightControl.Application.Auth
                 };
             }
 
-            var token = jwtTokenGenerator.GenerateToken(user.Name, user.Email, /*пока что так*/(List<Role>)user.Roles);
+            var token = jwtTokenGenerator.GenerateToken(user.Name, user.Email, user.Roles);
 
             return new LoginResultDto
             {
@@ -88,11 +93,10 @@ namespace WeightControl.Application.Auth
                     Email = registerDto.Email,
                     Name = registerDto.Name,
                     Password = registerDto.Password,
-                    //разобраться с добавлением роли
                     Roles = new List<Role> { new Role { Name = "user" } }
                 }); ;
 
-                var token = jwtTokenGenerator.GenerateToken(registeredUser.Name, registeredUser.Email, /*пока что так*/(List<Role>)registeredUser.Roles);
+                var token = jwtTokenGenerator.GenerateToken(registeredUser.Name, registeredUser.Email, registeredUser.Roles);
 
                 return new RegisterResultDto
                 {
