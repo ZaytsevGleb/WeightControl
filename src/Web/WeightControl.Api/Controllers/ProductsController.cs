@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper.Configuration.Annotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace WeightControl.Api.Controllers
 {
     [ApiController]
     [Route("api/products")]
-    [Authorize]
+    [Authorize(Roles = "admin")]
     [Produces("application/json")]
     public class ProductsController : ControllerBase
     {
@@ -32,7 +33,7 @@ namespace WeightControl.Api.Controllers
 
             return Ok(product);
         }
-
+        [AllowAnonymous]
         [HttpGet(Name = "Find")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProductDto>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
