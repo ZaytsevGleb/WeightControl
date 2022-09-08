@@ -24,15 +24,38 @@ namespace WeightControl.Api
                 .AddApplicationDependensies()
                 .AddPersistenceDependensies(configuration);
 
-            services
-                .AddSwaggerGen(options =>
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1.0", new OpenApiInfo
                 {
-                    options.SwaggerDoc("v1.0", new OpenApiInfo
-                    {
-                        Title = "Weight Control API",
-                        Version = "v1.0"
-                    });
+                    Title = "Weight Control API",
+                    Version = "v1.0"
                 });
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Insert token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]{ }
+                    }
+                });
+            });
 
             services.AddControllers();
             services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
@@ -49,9 +72,9 @@ namespace WeightControl.Api
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseRouting();
+            app.UseCors( builder => builder.WithMethods("POST"));
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet(
@@ -62,7 +85,6 @@ namespace WeightControl.Api
                     });
 
                 endpoints.MapControllers();
-
             });
         }
     }
