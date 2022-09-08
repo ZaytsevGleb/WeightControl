@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Authentication.OAuth.Claims;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace WeightControl.Persistence.Auth
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Name, name),
+                new Claim("Date", DateTime.Now.ToString())
             };
 
             foreach (Role role in reles)

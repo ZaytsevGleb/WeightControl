@@ -29,6 +29,7 @@ namespace WeightControl.Application.Auth
             this.registerValidator = registerValidator;
             this.jwtTokenGenerator = jwtTokenGenerator;
         }
+
         public async Task<LoginResultDto> Login(LoginDto loginDto)
         {
             var validResult = loginValidator.Validate(loginDto);
