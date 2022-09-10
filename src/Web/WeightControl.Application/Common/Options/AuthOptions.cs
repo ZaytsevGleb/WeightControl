@@ -1,8 +1,7 @@
-﻿namespace WeightControl.Persistence.Auth
+﻿namespace WeightControl.Application.Common.Options
 {
-    public class JwtSettings
+    public class AuthOptions
     {
-        public const string SectionName = "JwtSettings";
         public string Secret { get; init; } = null!;
         public int ExpiryMinutes { get; init; }
         public string Issuer { get; init; } = null!;

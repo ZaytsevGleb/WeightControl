@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.OAuth.Claims;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -7,24 +6,24 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WeightControl.Application.Common.Interfaces;
+using WeightControl.Application.Common.Options;
 using WeightControl.Domain.Entities;
 
-namespace WeightControl.Persistence.Auth
+namespace WeightControl.Infrastructure.Services
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
+        private readonly AuthOptions authOptions;
 
-        private readonly JwtSettings jwtSettings;
-
-        public JwtTokenGenerator(IOptions<JwtSettings> jwtSettings)
+        public JwtTokenGenerator(IOptions<AuthOptions> authOptions)
         {
-            this.jwtSettings = jwtSettings.Value;
+            this.authOptions = authOptions.Value;
         }
 
         public string GenerateToken(string name, string email, ICollection<Role> reles)
         {
             var signingCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOptions.Secret)),
                 SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
@@ -40,11 +39,11 @@ namespace WeightControl.Persistence.Auth
             };
 
             var securityToken = new JwtSecurityToken(
-                issuer: jwtSettings.Issuer,
-                expires: DateTime.Now.AddMinutes(jwtSettings.ExpiryMinutes),
+                issuer: authOptions.Issuer,
+                expires: DateTime.Now.AddMinutes(authOptions.ExpiryMinutes),
                 claims: claims,
                 signingCredentials: signingCredentials,
-                audience: jwtSettings.Audience
+                audience: authOptions.Audience
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(securityToken);
