@@ -20,7 +20,7 @@ namespace WeightControl.Infrastructure.Services
             this.authOptions = authOptions.Value;
         }
 
-        public string GenerateToken(string name, string email, ICollection<Role> reles)
+        public string GenerateToken(User user)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOptions.Secret)),
@@ -28,12 +28,10 @@ namespace WeightControl.Infrastructure.Services
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, email),
-                new Claim(JwtRegisteredClaimNames.Name, name),
-                new Claim("Date", DateTime.Now.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
-            foreach (Role role in reles)
+            foreach (Role role in user.Roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role.Name));
             };
@@ -43,8 +41,7 @@ namespace WeightControl.Infrastructure.Services
                 expires: DateTime.Now.AddMinutes(authOptions.ExpiryMinutes),
                 claims: claims,
                 signingCredentials: signingCredentials,
-                audience: authOptions.Audience
-                );
+                audience: authOptions.Audience);
 
             return new JwtSecurityTokenHandler().WriteToken(securityToken);
         }

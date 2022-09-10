@@ -13,8 +13,10 @@ namespace WeightControl.Persistence.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Email).IsRequired();
             builder.Property(x => x.Name).IsRequired();
+            builder.HasIndex(x => x.Email).IsUnique();
 
-            builder.HasMany(r => r.Roles)
+            builder
+                .HasMany(r => r.Roles)
                 .WithMany(u => u.Users)
                 .UsingEntity(j => j.ToTable("UserRoles"));
         }

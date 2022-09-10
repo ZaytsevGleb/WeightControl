@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using WeightControl.Application.Auth;
 using WeightControl.Application.Auth.Models;
+using WeightControl.Application.Auth.Validators;
 using WeightControl.Application.Products;
 using WeightControl.Application.Products.Models;
 using WeightControl.Domain.Entities;

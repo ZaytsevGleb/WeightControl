@@ -24,7 +24,6 @@ namespace WeightControl.Persistence.Repositories
         public async Task<TEntity> GetAsync(int id)
         {
             return await entities
-                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
@@ -37,7 +36,6 @@ namespace WeightControl.Persistence.Repositories
             }
 
             return await query
-                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -50,7 +48,6 @@ namespace WeightControl.Persistence.Repositories
                 query = include.Invoke(query);
             }
             return await query
-                    .AsNoTracking()
                     .FirstOrDefaultAsync();
         }
 

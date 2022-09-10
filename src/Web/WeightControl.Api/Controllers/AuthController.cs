@@ -20,12 +20,11 @@ namespace WeightControl.Api.Controllers
 
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResultDto))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
-        public async Task<ActionResult> Login(LoginDto loginDto)
+        public async Task<ActionResult> LoginAsync(LoginDto loginDto)
         {
-            var loginResultDto = await authService.Login(loginDto);
-
+            var loginResultDto = await authService.LoginAsync(loginDto);
             return Ok(loginResultDto);
         }
 
@@ -33,10 +32,9 @@ namespace WeightControl.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RegisterResultDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
-        public async Task<ActionResult> Register(RegisterDto registerDto)
+        public async Task<ActionResult> RegisterAsync(RegisterDto registerDto)
         {
-            var registerResultDto = await authService.Register(registerDto);
-
+            var registerResultDto = await authService.RegisterAsync(registerDto);
             return Ok(registerResultDto);
         }
     }

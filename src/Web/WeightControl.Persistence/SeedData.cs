@@ -54,10 +54,12 @@ namespace WeightControl.Persistence
             }
             else
             {
+                var roles = new List<Role> { new Role { Name = "user" }, new Role { Name = "admin" } };
+
                 var users = new[]
                 {
-                    new User{Email = "gzaytsev2000@gmail.com", Name = "Zaytsev Gleb", Password = "qwerty", Roles = new List<Role>{ new Role { Name = "user" }, new Role{Name = "admin" } } },
-                    new User{Email = "testUser@mail.com", Name = "TestUser", Password = "test", Roles = new List<Role>{ new Role { Name = "user" } } }
+                    new User{Email = "gzaytsev2000@gmail.com", Name = "Zaytsev Gleb", Password = "qwerty", Roles = roles},
+                    new User{Email = "testUser@mail.com", Name = "TestUser", Password = "test", Roles = new List<Role>{ roles[0] } }
                 };
 
                 dbContext.AddRange(users);

@@ -5,7 +5,7 @@ namespace WeightControl.Application.Auth
 {
     public interface IAuthService
     {
-        Task<LoginResultDto> Login(LoginDto loginDto);
-        Task<RegisterResultDto> Register(RegisterDto registerDto);
+        Task<LoginResultDto> LoginAsync(LoginDto loginDto);
+        Task<RegisterResultDto> RegisterAsync(RegisterDto registerDto);
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WeightControl.Application.Auth.Models;
-using WeightControl.Application.Common.Exceptions;
 using WeightControl.Application.Common.Interfaces;
 using WeightControl.Application.Exceptions;
 using WeightControl.Domain.Entities;
@@ -13,34 +12,36 @@ namespace WeightControl.Application.Auth
 {
     public class AuthService : IAuthService
     {
-        private readonly IRepository<User> repository;
+        private readonly IRepository<User> userRepository;
+        private readonly IRepository<Role> roleRepository;
         private readonly IValidator<LoginDto> loginValidator;
         private readonly IValidator<RegisterDto> registerValidator;
         private readonly IJwtTokenGenerator jwtTokenGenerator;
 
         public AuthService(
-            IRepository<User> repository,
+            IRepository<User> userRepository,
+            IRepository<Role> roleRepository,
             IValidator<LoginDto> loginValidator,
             IValidator<RegisterDto> registerValidator,
             IJwtTokenGenerator jwtTokenGenerator)
         {
-            this.repository = repository;
+            this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
             this.loginValidator = loginValidator;
             this.registerValidator = registerValidator;
             this.jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<LoginResultDto> Login(LoginDto loginDto)
+        public async Task<LoginResultDto> LoginAsync(LoginDto loginDto)
         {
             var validResult = loginValidator.Validate(loginDto);
             if (!validResult.IsValid)
             {
-                throw new UnauthorizedException(validResult.ToString());
+                throw new BadRequestException(validResult.ToString());
             }
 
-            var user = await repository.FirstAsync(
-                x => x.Name == loginDto.Login 
-                || x.Email == loginDto.Login, 
+            var user = await userRepository.FirstAsync(
+                x => x.Email == loginDto.Email,
                 x => x.Include(x => x.Roles));
 
             if (user == null)
@@ -61,7 +62,7 @@ namespace WeightControl.Application.Auth
                 };
             }
 
-            var token = jwtTokenGenerator.GenerateToken(user.Name, user.Email, user.Roles);
+            var token = jwtTokenGenerator.GenerateToken(user);
 
             return new LoginResultDto
             {
@@ -70,7 +71,7 @@ namespace WeightControl.Application.Auth
             };
         }
 
-        public async Task<RegisterResultDto> Register(RegisterDto registerDto)
+        public async Task<RegisterResultDto> RegisterAsync(RegisterDto registerDto)
         {
             var validResult = registerValidator.Validate(registerDto);
             if (!validResult.IsValid)
@@ -78,7 +79,7 @@ namespace WeightControl.Application.Auth
                 throw new BadRequestException(validResult.ToString());
             }
 
-            var user = await repository.FirstAsync(x => x.Email == registerDto.Email);
+            var user = await userRepository.FirstAsync(x => x.Email == registerDto.Email);
             if (user != null)
             {
                 return new RegisterResultDto
@@ -87,24 +88,26 @@ namespace WeightControl.Application.Auth
                     Error = RegisterError.SuchUserAlreadyExists
                 };
             }
-            else
+
+            var userRole = await roleRepository.FirstAsync(x => x.Name == "user");
+
+            user = new User
             {
-                var registeredUser = await repository.CreateAsync(new User
-                {
-                    Email = registerDto.Email,
-                    Name = registerDto.Name,
-                    Password = registerDto.Password,
-                    Roles = new List<Role> { new Role { Name = "user" } }
-                }); ;
+                Email = registerDto.Email,
+                Name = registerDto.Name,
+                Password = registerDto.Password,
+                Roles = new List<Role> { userRole }
+            };
 
-                var token = jwtTokenGenerator.GenerateToken(registeredUser.Name, registeredUser.Email, registeredUser.Roles);
+            await userRepository.CreateAsync(user);
 
-                return new RegisterResultDto
-                {
-                    Succeded = true,
-                    Token = token
-                };
-            }
+            var token = jwtTokenGenerator.GenerateToken(user);
+
+            return new RegisterResultDto
+            {
+                Succeded = true,
+                Token = token
+            };
         }
     }
 }
