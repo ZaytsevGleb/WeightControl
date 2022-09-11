@@ -15,15 +15,18 @@ namespace WeightControl.Application.Products
         private readonly IRepository<Product> repository;
         private readonly IValidator<ProductDto> validator;
         private readonly IMapper mapper;
+        private readonly ICurrentUserService currentUserService;
 
         public ProductsService(
             IRepository<Product> productsRepository,
             IValidator<ProductDto> validator,
-            IMapper mapper)
+            IMapper mapper,
+            ICurrentUserService currentUserService)
         {
             this.repository = productsRepository;
             this.validator = validator;
             this.mapper = mapper;
+            this.currentUserService = currentUserService;
         }
 
         public async Task<ProductDto> GetAsync(int id)
@@ -32,6 +35,8 @@ namespace WeightControl.Application.Products
             {
                 throw new BadRequestException($"Id: {id} not valid");
             }
+
+            var userId = currentUserService.UserId;
 
             var product = await repository.GetAsync(id);
             if (product == null)
