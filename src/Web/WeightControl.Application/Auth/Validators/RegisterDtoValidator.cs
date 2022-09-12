@@ -9,7 +9,7 @@ namespace WeightControl.Application.Auth.Validators
         {
             RuleFor(r => r.Name).NotEmpty();
             RuleFor(r => r.Password).NotEmpty();
-            RuleFor(r => r.Email).NotEmpty();
+            RuleFor(r => r.Email).EmailAddress();
         }
     }
 }
