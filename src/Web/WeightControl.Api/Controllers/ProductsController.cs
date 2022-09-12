@@ -25,7 +25,7 @@ namespace WeightControl.Api.Controllers
         [HttpGet("{id}", Name = "GetProduct")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
         public async Task<ActionResult<ProductDto>> GetAsync(int id)
         {
@@ -35,7 +35,7 @@ namespace WeightControl.Api.Controllers
 
         [HttpGet(Name = "Find")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProductDto>))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAsync([FromQuery] string name)
         {
@@ -47,8 +47,8 @@ namespace WeightControl.Api.Controllers
         [HttpPost(Name = "CreateProduct")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ProductDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDto))]
-        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
         public async Task<ActionResult<ProductDto>> CreateAsync(ProductDto productDto)
         {
@@ -60,8 +60,8 @@ namespace WeightControl.Api.Controllers
         [HttpPut("{id}", Name = "UpdateProduct")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorDto))]
-        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
         public async Task<ActionResult<ProductDto>> UpdateAsync(int id, ProductDto productDto)
@@ -77,7 +77,7 @@ namespace WeightControl.Api.Controllers
         [HttpDelete("{id}", Name = "DeleteProduct")]
         [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(ProductDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
-        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
         public async Task<ActionResult> DeleteAsync(int id)
