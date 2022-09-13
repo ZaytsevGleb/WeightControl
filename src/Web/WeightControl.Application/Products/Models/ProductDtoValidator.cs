@@ -6,10 +6,12 @@ namespace WeightControl.Application.Products.Models
     {
         public ProductDtoValidator()
         {
-            RuleFor(p => p.Name).NotEmpty();
-            RuleFor(p => p.Calories).NotEmpty();
-            RuleFor(p => p.Type).NotEmpty();
-            RuleFor(p => p.Unit).NotEmpty();
+            var message = "Error in field: {PropertyName}, value: '{PropertyValue}'";
+            
+            RuleFor(p => p.Name).NotEmpty().WithMessage(message);
+            RuleFor(p => p.Calories).NotEmpty().WithMessage(message);
+            RuleFor(p => p.Type).NotEmpty().WithMessage(message);
+            RuleFor(p => p.Unit).NotEmpty().WithMessage(message);
         }
     }
 }
