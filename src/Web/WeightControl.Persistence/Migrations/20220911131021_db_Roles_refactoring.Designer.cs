@@ -10,7 +10,7 @@ using WeightControl.Persistence;
 
 namespace WeightControl.Persistence.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(ApplicationDBContext))]
     [Migration("20220911131021_db_Roles_refactoring")]
     partial class db_Roles_refactoring
     {

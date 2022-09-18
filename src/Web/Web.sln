@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.Infrastructur
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{3B2B3EA2-E666-44F5-8E30-2B0BBE042399}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{9A78EFBD-F61C-4B11-9258-9C28FC30314E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{9A78EFBD-F61C-4B11-9258-9C28FC30314E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

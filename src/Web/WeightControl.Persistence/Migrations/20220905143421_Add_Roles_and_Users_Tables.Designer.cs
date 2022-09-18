@@ -11,7 +11,7 @@ using WeightControl.Persistence;
 
 namespace WeightControl.Persistence.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(ApplicationDBContext))]
     [Migration("20220905143421_Add_Roles_and_Users_Tables")]
     partial class Add_Roles_and_Users_Tables
     {
