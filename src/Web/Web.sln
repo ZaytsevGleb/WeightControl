@@ -19,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastucture", "Infrastuct
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1D011663-5AEE-4B4F-9E8D-1F4CD8178ACF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.UnitTests", "WeightControl.UnitTests\WeightControl.UnitTests.csproj", "{A35F8EB0-45FF-482D-8F88-B88A8DFFD989}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeightControl.UnitTests", "WeightControl.UnitTests\WeightControl.UnitTests.csproj", "{A35F8EB0-45FF-482D-8F88-B88A8DFFD989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightControl.Infrastructure", "WeightControl.Infrastructure\WeightControl.Infrastructure.csproj", "{F191319E-DCD6-4306-B302-743742A1BB8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{A35F8EB0-45FF-482D-8F88-B88A8DFFD989}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A35F8EB0-45FF-482D-8F88-B88A8DFFD989}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A35F8EB0-45FF-482D-8F88-B88A8DFFD989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F191319E-DCD6-4306-B302-743742A1BB8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F191319E-DCD6-4306-B302-743742A1BB8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F191319E-DCD6-4306-B302-743742A1BB8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F191319E-DCD6-4306-B302-743742A1BB8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{5F1D0D2B-E804-45CE-A03E-6C349A6BB651} = {49085F38-920A-4690-BE35-6FF6947F117E}
 		{B801ED3F-17DB-47F7-AD5A-B88C80D29D14} = {F626D2AF-2489-49B3-AEBB-222005700921}
 		{A35F8EB0-45FF-482D-8F88-B88A8DFFD989} = {1D011663-5AEE-4B4F-9E8D-1F4CD8178ACF}
+		{F191319E-DCD6-4306-B302-743742A1BB8B} = {49085F38-920A-4690-BE35-6FF6947F117E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C4D2F1A-1CFA-4E09-AB0E-E8B9277ED3CC}

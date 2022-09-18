@@ -16,7 +16,6 @@ namespace WeightControl.Persistence
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
             return services;

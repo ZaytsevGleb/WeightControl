@@ -1,11 +1,17 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
+using System.Text;
 using WeightControl.Api.Infrastructure;
 using WeightControl.Application;
+using WeightControl.Application.Common.Options;
+using WeightControl.Infrastructure;
 using WeightControl.Persistence;
 
 namespace WeightControl.Api
@@ -21,25 +27,84 @@ namespace WeightControl.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Register application dependencies
             services
                 .AddApplicationDependensies()
-                .AddPersistenceDependensies(configuration);
+                .AddPersistenceDependensies(configuration)
+                .AddInfrastructureDependensies(configuration);
+
+            // Api configuration
+            services
+                .AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()))
+                .AddControllers();
+
+            // Auth configuration
+            var authOption = new AuthOptions();
+            configuration.Bind(nameof(AuthOptions), authOption);
+            services.Configure<AuthOptions>(configuration.GetSection(nameof(AuthOptions)));
+            services.AddSingleton(Options.Create(authOption));
 
             services
-                .AddSwaggerGen(options =>
+                .AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.SwaggerDoc("v1.0", new OpenApiInfo
-                    {
-                        Title = "Weight Control API",
-                        Version = "v1.0"
-                    });
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = authOption.Issuer,
+                    ValidAudience = authOption.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOption.Secret))
                 });
 
-            services.AddControllers();
-            services.AddCors(opt => opt.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("user", builder =>
+                {
+                    builder.RequireClaim(ClaimTypes.Role, "user");
+                });
+                options.AddPolicy("admin", builder =>
+                {
+                    builder.RequireClaim(ClaimTypes.Role, "admin");
+                });
+            });
+
+            // Swagger configuration
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1.0", new OpenApiInfo
+                {
+                    Title = "Weight Control API",
+                    Version = "v1.0"
+                });
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Insert token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]{ }
+                    }
+                });
+            });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -50,7 +115,9 @@ namespace WeightControl.Api
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseRouting();
-            app.UseCors();
+            app.UseCors(builder => builder.WithMethods("POST"));
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet(
@@ -61,7 +128,6 @@ namespace WeightControl.Api
                     });
 
                 endpoints.MapControllers();
-
             });
         }
     }

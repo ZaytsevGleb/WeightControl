@@ -12,10 +12,6 @@ namespace WeightControl.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(250);
-            //test
-            /* builder.HasIndex(x => x.Name).IsUnique();
-               builder.Property(x => x.Type).IsRequired();
-               builder.Property(x => x.Unit).IsRequired();*/
         }
     }
 }

@@ -1,105 +1,112 @@
-using System.Diagnostics;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using WeightControl.Application.Auth.Models;
+using WeightControl.Application.Common.Interfaces;
+using WeightControl.Application.Exceptions;
 using WeightControl.Domain.Entities;
 using WeightControl.Domain.Enums;
-using WeightControl.Application.Common.Interfaces;
-using WeightControl.Application.Auth.Models;
 
 namespace WeightControl.Application.Auth
 {
     public class AuthService : IAuthService
     {
-        private readonly IUsersRepository usersRepository;
+        private readonly IRepository<User> userRepository;
+        private readonly IRepository<Role> roleRepository;
+        private readonly IValidator<LoginDto> loginValidator;
+        private readonly IValidator<RegisterDto> registerValidator;
+        private readonly IJwtTokenGenerator jwtTokenGenerator;
 
-        public AuthService(IUsersRepository usersRepository)
+        public AuthService(
+            IRepository<User> userRepository,
+            IRepository<Role> roleRepository,
+            IValidator<LoginDto> loginValidator,
+            IValidator<RegisterDto> registerValidator,
+            IJwtTokenGenerator jwtTokenGenerator)
         {
-            this.usersRepository = usersRepository;
+            this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
+            this.loginValidator = loginValidator;
+            this.registerValidator = registerValidator;
+            this.jwtTokenGenerator = jwtTokenGenerator;
         }
-        public LoginResultDto Login(string login, string password, string email)
+
+        public async Task<LoginResultDto> LoginAsync(LoginDto loginDto)
         {
-            var user = usersRepository.GetByLogin(login);
+            var validResult = loginValidator.Validate(loginDto);
+            if (!validResult.IsValid)
+            {
+                throw new BadRequestException(validResult.ToString());
+            }
+
+            var user = await userRepository.FirstAsync(
+                x => x.Email == loginDto.Email,
+                x => x.Include(x => x.Roles));
+
             if (user == null)
             {
-                return new LoginResultDto()
+                return new LoginResultDto
                 {
                     Succeded = false,
                     Error = LoginError.UserNotFound
                 };
             }
 
-            if (user.Password != password)
+            if (user.Password != loginDto.Password)
             {
-                return new LoginResultDto()
+                return new LoginResultDto
                 {
                     Succeded = false,
                     Error = LoginError.IncorrectPassword
                 };
             }
 
-            return new LoginResultDto()
+            var token = jwtTokenGenerator.GenerateToken(user);
+
+            return new LoginResultDto
             {
-                Succeded = true
+                Succeded = true,
+                Token = token
             };
         }
 
-        public RegisterResultDto Register(string login, string email, string password)
+        public async Task<RegisterResultDto> RegisterAsync(RegisterDto registerDto)
         {
-            if (string.IsNullOrEmpty(login) && string.IsNullOrEmpty(email) && string.IsNullOrEmpty(password))
+            var validResult = registerValidator.Validate(registerDto);
+            if (!validResult.IsValid)
             {
-                return new RegisterResultDto()
-                {
-                    Succeded = false,
-                    Error = RegisterError.AllFieldsAreNullOrEmpty
-                };
+                throw new BadRequestException(validResult.ToString());
             }
 
-            if (string.IsNullOrEmpty(password))
-            {
-                return new RegisterResultDto()
-                {
-                    Succeded = false,
-                    Error = RegisterError.PasswordIsNullOrEmpty
-                };
-            }
-
-            if (string.IsNullOrEmpty(email))
-            {
-                return new RegisterResultDto()
-                {
-                    Succeded = false,
-                    Error = RegisterError.EmailIsNullOrEmpty
-                };
-            }
-
-            if (string.IsNullOrEmpty(login))
-            {
-                return new RegisterResultDto()
-                {
-                    Succeded = false,
-                    Error = RegisterError.LoginIsNullOrEmpty
-                };
-            }
-
-            var user = usersRepository.GetByLogin(login);
+            var user = await userRepository.FirstAsync(x => x.Email == registerDto.Email);
             if (user != null)
             {
-                return new RegisterResultDto()
+                return new RegisterResultDto
                 {
                     Succeded = false,
                     Error = RegisterError.SuchUserAlreadyExists
                 };
             }
 
-            user = new User()
-            {
-                Login = login,
-                Password = password,
-                Email = email
-            };
-            usersRepository.Create(user);
+            var userRole = await roleRepository.FirstAsync(x => x.Name == "user");
 
-            return new RegisterResultDto()
+            user = new User
             {
-                Succeded = true
+                Email = registerDto.Email,
+                Name = registerDto.Name,
+                Password = registerDto.Password,
+                Roles = new List<Role> { userRole }
+            };
+
+            await userRepository.CreateAsync(user);
+
+            var token = jwtTokenGenerator.GenerateToken(user);
+
+            return new RegisterResultDto
+            {
+                Succeded = true,
+                Token = token
             };
         }
     }

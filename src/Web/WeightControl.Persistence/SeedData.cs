@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using WeightControl.Domain.Entities;
 
 namespace WeightControl.Persistence
@@ -7,13 +8,10 @@ namespace WeightControl.Persistence
     {
         public static void AddSeedData(this ApplicationDBContext dbContext)
         {
-            if(dbContext.Products.Any()) 
+            if (!dbContext.Products.Any())
             {
-                return; 
-            }
-
-            var products = new[]
-            {
+                var products = new[]
+                {
                 new Product {Name = "Tea", Calories = 20, Type = 0, Unit = 0},
                 new Product {Name = "Cake", Calories = 269, Type = 5, Unit = 1},
                 new Product {Name = "Coffe", Calories = 100, Type = 1, Unit = 0},
@@ -44,10 +42,29 @@ namespace WeightControl.Persistence
                 new Product {Name = "Mandarin", Calories = 50, Type = 4, Unit = 1},
                 new Product {Name = "Beans", Calories = 123, Type = 3, Unit = 1},
                 new Product {Name = "Cherry", Calories = 50, Type = 8, Unit = 1}
-            };
-                    
-            dbContext.AddRange(products);
-            dbContext.SaveChanges();
+                };
+
+                dbContext.AddRange(products);
+                dbContext.SaveChanges();
+            }
+
+            if (dbContext.Users.Any())
+            {
+                return;
+            }
+            else
+            {
+                var roles = new List<Role> { new Role { Name = "user" }, new Role { Name = "admin" } };
+
+                var users = new[]
+                {
+                    new User{Email = "gzaytsev2000@gmail.com", Name = "Zaytsev Gleb", Password = "qwerty", Roles = roles},
+                    new User{Email = "testUser@mail.com", Name = "TestUser", Password = "test", Roles = new List<Role>{ roles[0] } }
+                };
+
+                dbContext.AddRange(users);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WeightControl.Application.Auth;
 using WeightControl.Application.Auth.Models;
+using WeightControl.Application.Common.Models;
 
 namespace WeightControl.Api.Controllers
 {
@@ -16,28 +19,22 @@ namespace WeightControl.Api.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult Login(LoginDto loginDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResultDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
+        public async Task<ActionResult> LoginAsync(LoginDto loginDto)
         {
-            var loginResult = authService.Login(loginDto.Login, loginDto.Password, loginDto.Email);
-            var loginResultDto = new LoginResultDto()
-            {
-                Succeded = loginResult.Succeded,
-                Error = loginResult.Error
-            };
-
+            var loginResultDto = await authService.LoginAsync(loginDto);
             return Ok(loginResultDto);
         }
 
         [HttpPost("register")]
-        public ActionResult Register(RegisterDto registerDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RegisterResultDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
+        public async Task<ActionResult> RegisterAsync(RegisterDto registerDto)
         {
-            var registerResult = authService.Register(registerDto.Login, registerDto.Email, registerDto.Password);
-            var registerResultDto = new RegisterResultDto()
-            {
-                Succeded = registerResult.Succeded,
-                Error = registerResult.Error
-            };
-
+            var registerResultDto = await authService.RegisterAsync(registerDto);
             return Ok(registerResultDto);
         }
     }

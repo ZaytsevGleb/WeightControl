@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using WeightControl.Application.Auth;
+using WeightControl.Application.Auth.Models;
+using WeightControl.Application.Auth.Validators;
 using WeightControl.Application.Products;
 using WeightControl.Application.Products.Models;
 using WeightControl.Domain.Entities;
@@ -15,8 +17,11 @@ namespace WeightControl.Application
             services.AddScoped<IAuthService, AuthService>();
 
             services.AddAutoMapper(typeof(Product), typeof(ProductDto));
+
             services.AddScoped<IValidator<ProductDto>, ProductDtoValidator>();
-            
+            services.AddScoped<IValidator<LoginDto>, LoginDtoValidator>();
+            services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
+
             return services;
         }
     }
