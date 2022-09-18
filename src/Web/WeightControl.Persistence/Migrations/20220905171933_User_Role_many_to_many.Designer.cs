@@ -10,7 +10,7 @@ using WeightControl.Persistence;
 
 namespace WeightControl.Persistence.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20220905171933_User_Role_many_to_many")]
     partial class User_Role_many_to_many
     {

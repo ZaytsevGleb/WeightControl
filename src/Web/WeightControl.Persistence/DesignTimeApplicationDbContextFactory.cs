@@ -4,18 +4,18 @@ using Microsoft.Extensions.Configuration;
 
 namespace WeightControl.Persistence
 {
-    public class DesignTimeApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDBContext>
+    public class DesignTimeApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
     {
-        public ApplicationDBContext CreateDbContext(string[] args)
+        public ApplicationDbContext CreateDbContext(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var options = new DbContextOptionsBuilder<ApplicationDBContext>();
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>();
             options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
 
-            return new ApplicationDBContext(options.Options);
+            return new ApplicationDbContext(options.Options);
         }
     }
 }
