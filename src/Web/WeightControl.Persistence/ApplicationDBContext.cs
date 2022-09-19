@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WeightControl.Application.Common.Interfaces;
 using WeightControl.Domain.Entities;
 
 namespace WeightControl.Persistence
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDBContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
@@ -15,7 +14,7 @@ namespace WeightControl.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDBContext).Assembly);
         }
     }
 }

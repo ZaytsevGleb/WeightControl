@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using WeightControl.Application.Common.Interfaces;
 using WeightControl.Persistence;
 
 namespace WeightControl.Api
@@ -17,7 +16,7 @@ namespace WeightControl.Api
             try
             {
                 using var scope = host.Services.CreateScope();
-                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
                 dbContext.Database.Migrate();
                 dbContext.AddSeedData();
             }

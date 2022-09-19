@@ -18,12 +18,12 @@ namespace WeightControl.Application.Products
         private readonly ICurrentUserService currentUserService;
 
         public ProductsService(
-            IRepository<Product> repository,
+            IRepository<Product> productsRepository,
             IValidator<ProductDto> validator,
             IMapper mapper,
             ICurrentUserService currentUserService)
         {
-            this.repository = repository;
+            this.repository = productsRepository;
             this.validator = validator;
             this.mapper = mapper;
             this.currentUserService = currentUserService;

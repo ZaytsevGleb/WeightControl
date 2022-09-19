@@ -8,7 +8,7 @@ using WeightControl.Persistence;
 
 namespace WeightControl.Persistence.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(ApplicationDBContext))]
     [Migration("20220802130627_Init")]
     partial class Init
     {

@@ -10,16 +10,13 @@ namespace WeightControl.Persistence
     {
         public static IServiceCollection AddPersistenceDependensies(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationDBContext>(options =>
             {
                 options.EnableSensitiveDataLogging();
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-
-            services.AddScoped<IApplicationDbContext>(provider => 
-                provider.GetRequiredService<ApplicationDbContext>());
 
             return services;
         }

@@ -6,7 +6,7 @@ namespace WeightControl.Persistence
 {
     public static class SeedData
     {
-        public static void AddSeedData(this ApplicationDbContext dbContext)
+        public static void AddSeedData(this ApplicationDBContext dbContext)
         {
             if (!dbContext.Products.Any())
             {
