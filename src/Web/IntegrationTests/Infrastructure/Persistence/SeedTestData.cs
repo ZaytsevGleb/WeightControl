@@ -1,4 +1,5 @@
-﻿using WeightControl.Domain.Entities;
+﻿using System.Collections.Generic;
+using WeightControl.Domain.Entities;
 
 namespace WeightControl.IntegrationTests.Infrastructure.Persistence
 {

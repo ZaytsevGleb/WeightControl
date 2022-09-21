@@ -1,8 +1,10 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using Xunit;
 using SeedTestData = WeightControl.IntegrationTests.Infrastructure.Persistence.SeedTestData;
 
-namespace WeightControl.IntegrationTests
+namespace WeightControl.IntegrationTests.Tests.Products
 {
     public class ProductsControllerTest : TestingWebAppFactory
     {
@@ -20,7 +22,7 @@ namespace WeightControl.IntegrationTests
             // Assert
             Assert.Equal(HttpStatusCode.OK, (HttpStatusCode)response.StatusCode);
             var products = response.Result.ToList();
-            Assert.Equal(expectedProducts.Count, products.Count);
+            Assert.Equal(expectedProducts.Count(), products.Count);
             Assert.Equal(expectedProducts[0].Name, products[0].Name);
         }
 

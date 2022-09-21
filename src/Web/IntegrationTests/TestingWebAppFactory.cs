@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
+using System.Threading.Tasks;
 using WeightControl.Api;
 using WeightControl.Application.Common.Interfaces;
 using WeightControl.IntegrationTests.Infrastructure.Persistence;
@@ -15,8 +17,8 @@ namespace WeightControl.IntegrationTests
 {
     public abstract class TestingWebAppFactory : IAsyncLifetime
     {
-        private DbConnection? dbConnection;
-        private IServiceScope? dbScope;
+        private DbConnection dbConnection;
+        private IServiceScope dbScope;
         private WebApplicationFactory<Startup> application;
 
 

@@ -50,7 +50,7 @@ namespace WeightControl.Api
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateLifetime = true,
+                    ValidateLifetime = false,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = authOption.Issuer,
                     ValidAudience = authOption.Audience,
