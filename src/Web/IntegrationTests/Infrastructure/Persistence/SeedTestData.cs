@@ -1,6 +1,6 @@
 ﻿using WeightControl.Domain.Entities;
 
-namespace IntegrationTests.Infrastructure.Persistence
+namespace WeightControl.IntegrationTests.Infrastructure.Persistence
 {
     public static class SeedTestData
     {

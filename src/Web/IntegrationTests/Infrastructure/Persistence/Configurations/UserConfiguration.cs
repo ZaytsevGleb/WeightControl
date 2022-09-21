@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WeightControl.Domain.Entities;
 
-namespace IntegrationTests.Infrastructure.Persistence.Configurations
+namespace WeightControl.IntegrationTests.Infrastructure.Persistence.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

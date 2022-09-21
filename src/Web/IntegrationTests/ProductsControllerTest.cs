@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using Xunit;
-using SeedTestData = IntegrationTests.Infrastructure.Persistence.SeedTestData;
+using SeedTestData = WeightControl.IntegrationTests.Infrastructure.Persistence.SeedTestData;
 
-namespace IntegrationTests
+namespace WeightControl.IntegrationTests
 {
     public class ProductsControllerTest : TestingWebAppFactory
     {

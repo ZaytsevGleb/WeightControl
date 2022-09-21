@@ -1,5 +1,4 @@
 ﻿using IntegrationTests.Client;
-using IntegrationTests.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +8,10 @@ using System.Data;
 using System.Data.Common;
 using WeightControl.Api;
 using WeightControl.Application.Common.Interfaces;
+using WeightControl.IntegrationTests.Infrastructure.Persistence;
 using Xunit;
 
-namespace IntegrationTests
+namespace WeightControl.IntegrationTests
 {
     public abstract class TestingWebAppFactory : IAsyncLifetime
     {
@@ -32,9 +32,9 @@ namespace IntegrationTests
                     {
                         // Remove SqlServer DbContext
                         services
-                            .RemoveAll(typeof(WeightControl.Persistence.ApplicationDbContext))
+                            .RemoveAll(typeof(Persistence.ApplicationDbContext))
                             .RemoveAll(typeof(IApplicationDbContext))
-                            .Remove(services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<WeightControl.Persistence.ApplicationDbContext>)));
+                            .Remove(services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<Persistence.ApplicationDbContext>)));
 
                         // Add Sqlite DbContext
                         services.AddDbContext<ApplicationDbContext>(options =>

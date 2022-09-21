@@ -2,7 +2,7 @@
 using WeightControl.Application.Common.Interfaces;
 using WeightControl.Domain.Entities;
 
-namespace IntegrationTests.Infrastructure.Persistence
+namespace WeightControl.IntegrationTests.Infrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
