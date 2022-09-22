@@ -22,12 +22,12 @@ namespace WeightControl.IntegrationTests.Tests.Products
             // Assert
             Assert.Equal(HttpStatusCode.OK, (HttpStatusCode)response.StatusCode);
             var products = response.Result.ToList();
-            Assert.Equal(expectedProducts.Count(), products.Count);
+            Assert.Equal(expectedProducts.Count, products.Count);
             Assert.Equal(expectedProducts[0].Name, products[0].Name);
         }
 
         [Fact]
-        public async Task GetProducts_ShouldtReturn400BadRequest()
+        public async Task FindAsync_ShouldReturnProductStartWithTAnd200OK()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
