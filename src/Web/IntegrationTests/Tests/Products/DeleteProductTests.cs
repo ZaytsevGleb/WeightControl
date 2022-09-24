@@ -26,7 +26,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public async Task DeleteAsync_ShouldReturn400BadRequest(int id)
+        public async Task DeleteAsync_ShouldReturnNotValidExceptionMessageAnd400BadRequest(int id)
         {
             // Arrange //Act
             var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.DeleteProductAsync(id));
@@ -37,7 +37,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         }
 
         [Fact]
-        public async Task DeleteAsync_ShouldReturn404NotFound()
+        public async Task DeleteAsync_ShouldReturnNotFoundExceptionMessageAnd404NotFound()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();

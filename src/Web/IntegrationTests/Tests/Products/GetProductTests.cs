@@ -31,7 +31,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public async Task GetAsync_ShouldReturnNullAnd400BadRequest(int id )
+        public async Task GetAsync_ShouldReturnNotValidExeptionMessageAnd400BadRequest(int id )
         {
             // Arrange //Act
             var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.GetProductAsync(id));
@@ -42,7 +42,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         }
 
         [Fact]
-        public async Task GetAsync_ShouldReturn404NotFound()
+        public async Task GetAsync_ShouldReturnNotFoundExeptionMessageAnd404NotFound()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();

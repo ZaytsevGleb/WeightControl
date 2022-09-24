@@ -24,6 +24,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
             var products = response.Result.ToList();
             Assert.Equal(expectedProducts.Count, products.Count);
             Assert.Equal(expectedProducts[0].Name, products[0].Name);
+            Assert.Equal(expectedProducts[1].Name, products[1].Name);
         }
 
         [Fact]

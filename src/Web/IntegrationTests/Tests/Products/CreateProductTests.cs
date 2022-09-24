@@ -25,6 +25,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
 
             // Assert
             Assert.Equal(HttpStatusCode.Created, (HttpStatusCode)response.StatusCode);
+
             var product = response.Result;
             Assert.Equal(productDto.Name, product.Name);
             Assert.Equal(expectedProducts.Count + 1, product.Id);
@@ -41,7 +42,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         }
 
         [Fact]
-        public async Task CreateProduct_ShouldReturnProductIsAlreadyExist400BadRequest()
+        public async Task CreateProduct_ShouldReturnProductIsAlreadyExistMessageAnd400BadRequest()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
