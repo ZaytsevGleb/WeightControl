@@ -113,7 +113,7 @@ namespace WeightControl.Application.Products
         {
             if (id <= 0)
             {
-                throw new BadRequestException($"Id: {id} is not valid");
+                throw new BadRequestException($"Id: {id} not valid");
             }
 
             var product = await repository.GetAsync(id);

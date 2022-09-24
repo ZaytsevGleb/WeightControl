@@ -1,18 +1,15 @@
 ﻿using IntegrationTests.Client;
-using System;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
-using WeightControl.Application.Exceptions;
 using WeightControl.IntegrationTests.Infrastructure.Persistence;
 using Xunit;
 
 namespace WeightControl.IntegrationTests.Tests.Products
 {
-    public class GetProductTests : TestingWebAppFactory
+    public class DeleteProductTests : TestingWebAppFactory
     {
         [Fact]
-        public async Task GetAsync_ShouldReturnProductAnd200OK()
+        public async Task DeleteAsync_ShouldReturn204NoContent()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -20,21 +17,19 @@ namespace WeightControl.IntegrationTests.Tests.Products
             await DbContext.SaveChangesAsync();
 
             // Act
-            var response = await ApiClient.GetProductAsync(1);
+            var response = await Assert.ThrowsAsync<ApiException>(() => ApiClient.DeleteProductAsync(1));
 
             // Assert
-            Assert.Equal(HttpStatusCode.OK, (HttpStatusCode)response.StatusCode);
-            var product = response.Result;
-            Assert.Equal(expectedProducts[0].Name, product.Name);
+            Assert.Equal(HttpStatusCode.NoContent, (HttpStatusCode)response.StatusCode);
         }
 
         [Theory]
         [InlineData(0)]
         [InlineData(-1)]
-        public async Task GetAsync_ShouldReturnNullAnd400BadRequest(int id )
+        public async Task DeleteAsync_ShouldReturn400BadRequest(int id)
         {
             // Arrange //Act
-            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.GetProductAsync(id));
+            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.DeleteProductAsync(id));
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, (HttpStatusCode)exception.StatusCode);
@@ -42,7 +37,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         }
 
         [Fact]
-        public async Task GetAsync_ShouldReturn404NotFound()
+        public async Task DeleteAsync_ShouldReturn404NotFound()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -52,7 +47,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
             int id = 3;
 
             // Act
-            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.GetProductAsync(id));
+            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.DeleteProductAsync(id));
 
             // Assert  
             Assert.Equal(HttpStatusCode.NotFound, (HttpStatusCode)exception.StatusCode);

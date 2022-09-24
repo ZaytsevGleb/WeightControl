@@ -26,6 +26,7 @@ namespace WeightControl.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
         public async Task<ActionResult<ProductDto>> GetAsync(int id)
         {
