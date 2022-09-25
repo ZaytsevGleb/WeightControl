@@ -1,0 +1,126 @@
+a, p{
+  padding: 0;
+  margin: 0;
+}
+*{
+  font-family: 'Ubuntu', sans-serif;
+}
+.login__page{
+  grid-area: login-page;
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template: 1fr 2.5fr 1fr / 1.4fr 1fr 1.4fr;
+}
+
+.login__window{
+  display: grid;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  height: 100%;
+  grid-template: 1fr 3fr 1fr / 1fr 5fr 1fr;
+  border-radius: 20px;
+  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.login__header{
+  display: grid;
+  grid-column: 1/4;
+  grid-row: 1/1;
+  justify-items: center;
+  align-items: center;
+  background-color: #64D36F;
+  border-radius: 20px 20px 0 0;
+}
+
+.login__header h2{
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-weight: bold;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.login__body{
+  display: grid;
+  grid-row: 2/3;
+  grid-column: 2/3;
+  grid-template: 1fr 1fr 1fr 1fr 1fr 1fr / 1fr;
+  row-gap: 10px;
+}
+
+.login__body input{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 20px;
+  background-color: #ebebeb;
+  text-indent: 10px;
+  color: #1b3815;
+}
+
+input::-webkit-input-placeholder { color: #1b3815;}
+input:-moz-placeholder { color: #1b3815;}
+input::-moz-placeholder { color: #1b3815;}
+input:-ms-input-placeholder { color: #1b3815;}
+
+input:active, :hover, :focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+.input__email{
+  display: grid;
+  grid-row: 2/3;
+}
+
+.input__password{
+  display: grid;
+  grid-row: 3/4;
+}
+
+.login__body button{
+  align-items: center;
+  color: white;
+  font-weight: bold;
+}
+
+.button__login{
+  display: grid;
+  grid-row: 5/6;
+  background-color: #64D36F;
+  border-radius: 20px;
+  border: none;
+}
+
+button:hover{
+  background-color: #1b3815;
+  transition: all 0.5s;
+}
+
+.login__footer{
+  display: grid;
+  grid-column: 2/3;
+  grid-row: 3/3;
+  justify-content: center;
+}
+
+.login__footer p{
+  display: grid;
+  align-items: end;
+  color: #999;
+}
+
+.login__footer a{
+  text-align: center;
+  color: #64D36F;
+}
+
+.login__footer a:hover{
+  text-decoration: none;
+  color: #1b3815;
+  transition: all 0.5s;
+}
+

@@ -19,6 +19,8 @@ import { FormsModule } from '@angular/forms';
 import { AmountDialogComponent } from './components/body/meals-page/amount-dialog/amount-dialog.component';
 import { ApiClient, API_BASE_URL } from './clients/api.client';
 import { environment } from 'src/environments/environment';
+import { LoginPageComponent } from './components/body/login-page/login-page.component';
+import { RegisterPageComponent } from './components/body/register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { environment } from 'src/environments/environment';
     HelpPageComponent,
     MealsPartComponent,
     ProductsPartComponent,
-    AmountDialogComponent
+    AmountDialogComponent,
+    LoginPageComponent,
+    RegisterPageComponent
   ],
   entryComponents: [
     AmountDialogComponent,

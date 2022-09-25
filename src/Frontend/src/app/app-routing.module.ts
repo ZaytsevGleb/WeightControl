@@ -5,6 +5,8 @@ import { MealsPageComponent } from './components/body/meals-page/meals-page.comp
 import { GoalsPageComponent } from './components/body/goals-page/goals-page.component';
 import { SettingsPageComponent } from './components/body/settings-page/settings-page.component';
 import { HelpPageComponent } from './components/body/help-page/help-page.component';
+import {LoginPageComponent} from "./components/body/login-page/login-page.component";
+import {RegisterPageComponent} from "./components/body/register-page/register-page.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/meals', pathMatch: 'full' },
@@ -13,6 +15,8 @@ const routes: Routes = [
   {path: 'goals', component: GoalsPageComponent},
   {path: 'settings', component: SettingsPageComponent},
   {path: 'help', component: HelpPageComponent},
+  {path: 'login', component:LoginPageComponent},
+  {path: 'register', component: RegisterPageComponent}
 ];
 
 @NgModule({
