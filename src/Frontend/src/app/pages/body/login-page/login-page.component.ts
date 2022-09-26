@@ -12,4 +12,10 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  loginButtonText:string = "LOGIN";
+
+  loginClick(){
+
+  }
+
 }

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductsPageComponent } from './components/body/products-page/products-page.component';
-import { MealsPageComponent } from './components/body/meals-page/meals-page.component';
-import { GoalsPageComponent } from './components/body/goals-page/goals-page.component';
-import { SettingsPageComponent } from './components/body/settings-page/settings-page.component';
-import { HelpPageComponent } from './components/body/help-page/help-page.component';
-import {LoginPageComponent} from "./components/body/login-page/login-page.component";
-import {RegisterPageComponent} from "./components/body/register-page/register-page.component";
+import { ProductsPageComponent } from './pages/body/products-page/products-page.component';
+import { MealsPageComponent } from './pages/body/meals-page/meals-page.component';
+import { GoalsPageComponent } from './pages/body/goals-page/goals-page.component';
+import { SettingsPageComponent } from './pages/body/settings-page/settings-page.component';
+import { HelpPageComponent } from './pages/body/help-page/help-page.component';
+import {LoginPageComponent} from "./pages/body/login-page/login-page.component";
+import {RegisterPageComponent} from "./pages/body/register-page/register-page.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/meals', pathMatch: 'full' },
