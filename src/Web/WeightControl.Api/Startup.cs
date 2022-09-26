@@ -115,7 +115,7 @@ namespace WeightControl.Api
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseRouting();
-            app.UseCors(builder => builder.WithMethods("POST"));
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

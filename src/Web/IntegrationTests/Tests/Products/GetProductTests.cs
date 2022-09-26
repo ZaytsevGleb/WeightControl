@@ -9,7 +9,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
     public class GetProductTests : TestingWebAppFactory
     {
         [Fact]
-        public async Task GetAsync_ShouldReturnProductAnd200OK()
+        public async Task Get_ShouldReturnOK()
         {
             // Arrange
             var products = SeedTestData.GetProducts();
@@ -28,7 +28,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         }
 
         [Fact]
-        public async Task GetAsync_ShouldReturnNotValidExeptionMessageAnd400BadRequest()
+        public async Task Get_ShouldReturnBadRequest_IfIdNotValid()
         {
             // Arrange //Act
             var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.GetProductAsync(0));
@@ -38,16 +38,16 @@ namespace WeightControl.IntegrationTests.Tests.Products
         }
 
         [Fact]
-        public async Task GetAsync_ShouldReturnNotFoundExeptionMessageAnd404NotFound()
+        public async Task Get_ShouldReturnNotFound_IfThereIsNoProduct()
         {
             // Arrange
             DbContext.Products.AddRange(SeedTestData.GetProducts());
             await DbContext.SaveChangesAsync();
 
-            int netExistedId = 100;
+            int notExistedId = 100;
 
             // Act
-            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.GetProductAsync(netExistedId));
+            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.GetProductAsync(notExistedId));
 
             // Assert  
             Assert.Equal(HttpStatusCode.NotFound, (HttpStatusCode)exception.StatusCode);

@@ -11,7 +11,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
     public class CreateProductTests : TestingWebAppFactory
     {
         [Fact]
-        public async Task CreateProduct_ShouldReturnCreatedProductAnd201Created()
+        public async Task Create_ShouldReturnCreated()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -32,7 +32,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         }
 
         [Fact]
-        public async Task CreateProduct_ShouldReturnNotValidAnd400BadRequest()
+        public async Task Create_ShouldReturnBadRequest_IfProductNotValid()
         {
             // Arrange Act
             var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.CreateProductAsync(null));
@@ -52,9 +52,10 @@ namespace WeightControl.IntegrationTests.Tests.Products
             var productDto = new ProductDto { Name = "Tea", Calories = 20, Type = 1, Unit = 1 };
 
             // Act
-            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.CreateProductAsync(productDto));
+            var task = ApiClient.CreateProductAsync(productDto);    
 
             // Assert
+            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => task);
             Assert.Equal(HttpStatusCode.BadRequest, (HttpStatusCode)exception.StatusCode);
         }
     }

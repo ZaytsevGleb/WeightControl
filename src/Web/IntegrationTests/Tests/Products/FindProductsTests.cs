@@ -9,7 +9,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
     public class ProductsControllerTest : TestingWebAppFactory
     {
         [Fact]
-        public async Task FindAsync_ShouldReturnAllProductsAnd200OK()
+        public async Task Find_ShouldReturnAllProductsAndOK()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -28,7 +28,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         }
 
         [Fact]
-        public async Task FindAsync_ShouldReturnProductStartWithTAnd200OK()
+        public async Task Find_ShouldReturnProductStartWithTAndOK()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();

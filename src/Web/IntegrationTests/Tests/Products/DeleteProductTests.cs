@@ -9,7 +9,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
     public class DeleteProductTests : TestingWebAppFactory
     {
         [Fact]
-        public async Task DeleteAsync_ShouldReturnNoContent()
+        public async Task Delete_ShouldReturnNoContent()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -17,14 +17,15 @@ namespace WeightControl.IntegrationTests.Tests.Products
             await DbContext.SaveChangesAsync();
 
             // Act
-            var response = await Assert.ThrowsAsync<ApiException>(() => ApiClient.DeleteProductAsync(1));
+            var task = ApiClient.DeleteProductAsync(1);
 
             // Assert
+            var response = await Assert.ThrowsAsync<ApiException>(() => task);
             Assert.Equal(HttpStatusCode.NoContent, (HttpStatusCode)response.StatusCode);
         }
 
         [Fact]
-        public async Task DeleteAsync_ShouldReturnBadRequest()
+        public async Task Delete_ShouldReturnBadRequest_IfIdNorValid()
         {
             // Act
             var task = ApiClient.DeleteProductAsync(0);
@@ -42,12 +43,13 @@ namespace WeightControl.IntegrationTests.Tests.Products
             DbContext.Products.AddRange(expectedProducts);
             await DbContext.SaveChangesAsync();
 
-            int id = 3;
+            int notExistedId = 100;
 
             // Act
-            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.DeleteProductAsync(id));
+            var task = ApiClient.DeleteProductAsync(notExistedId);
 
             // Assert  
+            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => task);
             Assert.Equal(HttpStatusCode.NotFound, (HttpStatusCode)exception.StatusCode);
         }
     }

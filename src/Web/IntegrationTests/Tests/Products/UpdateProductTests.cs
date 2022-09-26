@@ -1,7 +1,6 @@
 ﻿using IntegrationTests.Client;
 using System.Net;
 using System.Threading.Tasks;
-using WeightControl.Domain.Entities;
 using WeightControl.IntegrationTests.Infrastructure.Persistence;
 using Xunit;
 
@@ -10,7 +9,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
     public class UpdateProductTests : TestingWebAppFactory
     {
         [Fact]
-        public async Task UpdateProduct_ShouldReturnUpdatedProductAnd200OK()
+        public async Task Update_ShouldReturnOK()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -20,7 +19,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
             var productDto = new ProductDto { Id = 1, Name = "Green Tea", Calories = 200, Type = 3, Unit = 1 };
 
             // Act
-            var response = await ApiClient.UpdateProductAsync(1, productDto);
+            var response = await ApiClient.UpdateProductAsync(productDto.Id, productDto);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, (HttpStatusCode)response.StatusCode);
@@ -28,28 +27,26 @@ namespace WeightControl.IntegrationTests.Tests.Products
             Assert.Equal(response.Result.ToString(), productDto.ToString());
         }
 
-      /*  [Fact]
-        public async Task UpdateProduct_ShouldReturnSameIdErrorMessageAnd400BadRequest()
+        [Fact]
+        public async Task Update_ShouldReturnBadRequest_IfIdNotTheSame()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
             DbContext.Products.AddRange(expectedProducts);
             await DbContext.SaveChangesAsync();
-
-            var id = 2;
 
             var productDto = new ProductDto { Id = 1, Name = "Green Tea", Calories = 200, Type = 3, Unit = 1 };
 
             // Act
-            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.UpdateProductAsync(id, productDto));
+            var task = ApiClient.UpdateProductAsync(2, productDto);
 
             // Assert
+            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => task);
             Assert.Equal(HttpStatusCode.BadRequest, (HttpStatusCode)exception.StatusCode);
-            Assert.Equal($"Id: {id} and product id: {productDto.Id} must be the same", exception.Result.Description);
-        }*/
+        }
 
         [Fact]
-        public async Task UpdateProduct_ShouldReturnNotValidAnd400BadRequest()
+        public async Task Update_ShouldReturBadRequest_IfProductNotValid()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -57,29 +54,30 @@ namespace WeightControl.IntegrationTests.Tests.Products
             await DbContext.SaveChangesAsync();
 
             // Act
-            var exception = Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.UpdateProductAsync(1, new ProductDto {Id = 1 }));
+            var task = ApiClient.UpdateProductAsync(1, new ProductDto { });
 
             // Assert
+            var exception = Assert.ThrowsAsync<ApiException<ErrorDto>>(() => task);
             Assert.Equal(HttpStatusCode.BadRequest, (HttpStatusCode)exception.Result.StatusCode);
         }
 
         [Fact]
-        public async Task UpdateProduct_ShouldReturnNotFoundExceptionMessageAnd404NotFound()
+        public async Task Update_ShouldReturnNotFound_IfThereIsNoProduct()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
             DbContext.Products.AddRange(expectedProducts);
             await DbContext.SaveChangesAsync();
 
-            var id = 3;
-            var productDto = new ProductDto { Id = id, Name = "Green Tea", Calories = 200, Type = 3, Unit = 1 };
+            int notExistedId = 100;
+            var productDto = new ProductDto { Id = notExistedId, Name = "Green Tea", Calories = 200, Type = 3, Unit = 1 };
 
             // Act
+            var task = ApiClient.UpdateProductAsync(notExistedId, productDto);
 
-            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.UpdateProductAsync(id, productDto));
             // Assert
+            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => task);
             Assert.Equal(HttpStatusCode.NotFound, (HttpStatusCode)exception.StatusCode);
-            Assert.Equal($"Product with id: {id} not found", exception.Result.Description);
         }
     }
 }
