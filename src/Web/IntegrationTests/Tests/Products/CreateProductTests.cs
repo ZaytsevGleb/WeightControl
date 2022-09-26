@@ -42,7 +42,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
         }
 
         [Fact]
-        public async Task CreateProduct_ShouldReturnProductIsAlreadyExistMessageAnd400BadRequest()
+        public async Task Create_ShouldReturnBadRequest_IfProductIsAlreadyExist()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -56,7 +56,6 @@ namespace WeightControl.IntegrationTests.Tests.Products
 
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, (HttpStatusCode)exception.StatusCode);
-            Assert.Equal($"Product with name: {productDto.Name} already exists.", exception.Result.Description);
         }
     }
 }

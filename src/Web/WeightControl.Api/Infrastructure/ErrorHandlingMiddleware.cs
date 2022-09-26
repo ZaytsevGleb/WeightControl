@@ -28,7 +28,7 @@ namespace WeightControl.Api.Infrastructure
             catch (BadRequestException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await context.Response.WriteAsJsonAsync(new ErrorDto { Description = ex.Message });
+                await context.Response.WriteAsJsonAsync(new ErrorDto { Description = ex.Description });
             }
         }
     }

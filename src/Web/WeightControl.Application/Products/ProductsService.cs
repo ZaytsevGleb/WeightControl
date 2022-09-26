@@ -63,7 +63,7 @@ namespace WeightControl.Application.Products
             var result = validator.Validate(productDto);
             if (!result.IsValid)
             {
-                throw new BadRequestException(result.ToString());
+                throw new BadRequestException(result);
             }
 
             var products = await repository.FindAsync(x => x.Name == productDto.Name);

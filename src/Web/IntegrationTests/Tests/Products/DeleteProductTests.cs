@@ -9,7 +9,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
     public class DeleteProductTests : TestingWebAppFactory
     {
         [Fact]
-        public async Task DeleteAsync_ShouldReturn204NoContent()
+        public async Task DeleteAsync_ShouldReturnNoContent()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -23,21 +23,19 @@ namespace WeightControl.IntegrationTests.Tests.Products
             Assert.Equal(HttpStatusCode.NoContent, (HttpStatusCode)response.StatusCode);
         }
 
-        [Theory]
-        [InlineData(0)]
-        [InlineData(-1)]
-        public async Task DeleteAsync_ShouldReturnNotValidExceptionMessageAnd400BadRequest(int id)
+        [Fact]
+        public async Task DeleteAsync_ShouldReturnBadRequest()
         {
-            // Arrange //Act
-            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => ApiClient.DeleteProductAsync(id));
+            // Act
+            var task = ApiClient.DeleteProductAsync(0);
 
             // Assert
+            var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => task);
             Assert.Equal(HttpStatusCode.BadRequest, (HttpStatusCode)exception.StatusCode);
-            Assert.Equal($"Id: {id} not valid", exception.Result.Description);
         }
 
         [Fact]
-        public async Task DeleteAsync_ShouldReturnNotFoundExceptionMessageAnd404NotFound()
+        public async Task Delete_ShouldReturnNotFound_IfThereIsNoProduct()
         {
             // Arrange
             var expectedProducts = SeedTestData.GetProducts();
@@ -51,7 +49,6 @@ namespace WeightControl.IntegrationTests.Tests.Products
 
             // Assert  
             Assert.Equal(HttpStatusCode.NotFound, (HttpStatusCode)exception.StatusCode);
-            Assert.Equal($"Product with id: {id} not found", exception.Result.Description);
         }
     }
 }
