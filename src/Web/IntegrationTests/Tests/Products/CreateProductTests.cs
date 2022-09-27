@@ -1,7 +1,6 @@
 ﻿using IntegrationTests.Client;
 using System.Net;
 using System.Threading.Tasks;
-using WeightControl.Application.Products.Models;
 using WeightControl.IntegrationTests.Infrastructure.Persistence;
 using Xunit;
 using ProductDto = IntegrationTests.Client.ProductDto;
@@ -52,7 +51,7 @@ namespace WeightControl.IntegrationTests.Tests.Products
             var productDto = new ProductDto { Name = "Tea", Calories = 20, Type = 1, Unit = 1 };
 
             // Act
-            var task = ApiClient.CreateProductAsync(productDto);    
+            var task = ApiClient.CreateProductAsync(productDto);
 
             // Assert
             var exception = await Assert.ThrowsAsync<ApiException<ErrorDto>>(() => task);
