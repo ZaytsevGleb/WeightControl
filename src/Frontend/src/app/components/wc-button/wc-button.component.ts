@@ -13,6 +13,12 @@ export class WcButtonComponent implements OnInit {
   @Input()
   label?: string;
 
+  @Input()
+  disabled?:boolean;
+
+  @Input()
+  color?: 'primary' | 'accent' | 'warn' | null;
+
   //Output
   @Output()
   buttonClick = new EventEmitter<void>();

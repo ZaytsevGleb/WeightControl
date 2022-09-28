@@ -3,6 +3,7 @@ import {WcButtonComponent} from "./wc-button.component";
 import {moduleMetadata} from "@storybook/angular";
 import {MatButtonModule} from "@angular/material/button";
 
+
 export default {
   title: 'Components/Button',
   component: WcButtonComponent,
@@ -22,6 +23,8 @@ const Template: Story<WcButtonComponent> = args => ({
   template: `
     <div style="display: flex;">
         <wc-button
+            [disabled]="[disabled]"
+            [color]="color"
             [label]="label"
             (buttonClick)="buttonClick()">
         </wc-button>
@@ -30,5 +33,8 @@ const Template: Story<WcButtonComponent> = args => ({
 
 export const Primary = Template.bind({})
 Primary.args = {
-  label: "asd"
+  label: "Button",
+  color:'primary',
+  disabled:false
+
 };

@@ -19,7 +19,6 @@ import { FormsModule } from '@angular/forms';
 import { AmountDialogComponent } from './pages/body/meals-page/amount-dialog/amount-dialog.component';
 import { ApiClient, API_BASE_URL } from './clients/api.client';
 import { environment } from 'src/environments/environment';
-import { LoginPageComponent } from './pages/body/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/body/register-page/register-page.component';
 import {WcComponentsModule} from "./components/wc-components.module";
 import {LoginPageModule} from "./pages/body/login-page/login-page.module";
@@ -51,7 +50,8 @@ import {LoginPageModule} from "./pages/body/login-page/login-page.module";
     FormsModule,
     HttpClientModule,
     WcComponentsModule,
-    LoginPageModule
+    LoginPageModule,
+    WcComponentsModule
   ],
   providers: [
     ApiClient,

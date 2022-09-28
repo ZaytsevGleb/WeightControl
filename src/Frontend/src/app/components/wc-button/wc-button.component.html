@@ -1,7 +1,8 @@
 <button
-  mat-button
-  color="accent"
+  mat-raised-button
+  [color]="color"
   (click)="onClick()"
+  [disabled]="disabled"
 >
   {{label}}
 </button>
