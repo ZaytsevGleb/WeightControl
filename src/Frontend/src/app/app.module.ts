@@ -51,7 +51,7 @@ import {LoginPageModule} from "./pages/body/login-page/login-page.module";
     HttpClientModule,
     WcComponentsModule,
     LoginPageModule,
-    WcComponentsModule
+    WcComponentsModule,
   ],
   providers: [
     ApiClient,

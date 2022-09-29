@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'wc-button',
-  templateUrl: './wc-button.component.html',
-  styleUrls: ['./wc-button.component.scss']
+  selector: 'wc-button-basic',
+  templateUrl: './wc-button-basic.component.html',
+  styleUrls: ['./wc-button-basic.component.scss']
 })
-export class WcButtonComponent implements OnInit {
+export class WcButtonBasicComponent implements OnInit {
 
   constructor() { }
 

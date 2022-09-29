@@ -1,10 +1,10 @@
 import {NgModule} from "@angular/core";
-import { WcButtonModule } from "src/app/components/wc-button";
+import { WcButtonRaisedModule } from "src/app/components/wc-buttons/wc-button-raised";
 import {LoginPageComponent} from "./login-page.component";
 
 @NgModule({
   declarations:[LoginPageComponent],
-  imports:[WcButtonModule],
+  imports:[WcButtonRaisedModule],
   exports:[LoginPageComponent]
 })
 

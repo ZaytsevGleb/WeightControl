@@ -6,7 +6,8 @@ import {MatInputModule} from "@angular/material/input";
 @NgModule({
   imports:[MatButtonModule, MatFormFieldModule, MatInputModule],
   exports:[MatButtonModule, MatFormFieldModule, MatInputModule],
-  declarations: []
+  declarations: [
+  ]
 })
 
 export class WcComponentsModule {}
