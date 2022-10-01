@@ -19,7 +19,7 @@ namespace WeightControl.Application.Auth
         private readonly IJwtTokenGenerator jwtTokenGenerator;
 
         public AuthService(
-            IRepository<User> userRepository,
+            IRepository<User> userRepository,   
             IRepository<Role> roleRepository,
             IValidator<LoginDto> loginValidator,
             IValidator<RegisterDto> registerValidator,

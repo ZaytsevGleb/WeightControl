@@ -12,10 +12,10 @@ namespace WeightControl.Persistence.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
-        private readonly ApplicationDBContext context;
+        private readonly IApplicationDbContext context;
         private readonly DbSet<TEntity> entities;
 
-        public Repository(ApplicationDBContext context)
+        public Repository(IApplicationDbContext context)
         {
             this.context = context;
             entities = context.Set<TEntity>();

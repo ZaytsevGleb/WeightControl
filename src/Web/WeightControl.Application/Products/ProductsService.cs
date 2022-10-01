@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +18,12 @@ namespace WeightControl.Application.Products
         private readonly ICurrentUserService currentUserService;
 
         public ProductsService(
-            IRepository<Product> productsRepository,
+            IRepository<Product> repository,
             IValidator<ProductDto> validator,
             IMapper mapper,
             ICurrentUserService currentUserService)
         {
-            this.repository = productsRepository;
+            this.repository = repository;
             this.validator = validator;
             this.mapper = mapper;
             this.currentUserService = currentUserService;
@@ -63,7 +63,7 @@ namespace WeightControl.Application.Products
             var result = validator.Validate(productDto);
             if (!result.IsValid)
             {
-                throw new BadRequestException(result.ToString());
+                throw new BadRequestException(result);
             }
 
             var products = await repository.FindAsync(x => x.Name == productDto.Name);
@@ -90,7 +90,7 @@ namespace WeightControl.Application.Products
             var result = validator.Validate(productDto);
             if (!result.IsValid)
             {
-                throw new BadRequestException(result.ToString());
+                throw new BadRequestException(result);
             }
 
             var product = await repository.GetAsync(productDto.Id);
@@ -113,7 +113,7 @@ namespace WeightControl.Application.Products
         {
             if (id <= 0)
             {
-                throw new BadRequestException($"Id: {id} is not valid");
+                throw new BadRequestException($"Id: {id} not valid");
             }
 
             var product = await repository.GetAsync(id);

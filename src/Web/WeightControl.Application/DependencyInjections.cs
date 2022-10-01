@@ -13,6 +13,8 @@ namespace WeightControl.Application
     {
         public static IServiceCollection AddApplicationDependensies(this IServiceCollection services)
         {
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
+
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<IAuthService, AuthService>();
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WeightControl.Application.Common.Models;
 using WeightControl.Application.Products;
@@ -10,7 +11,7 @@ using WeightControl.Application.Products.Models;
 namespace WeightControl.Api.Controllers
 {
     [ApiController]
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/products")]
     [Produces("application/json")]
     public class ProductsController : ControllerBase
@@ -26,6 +27,7 @@ namespace WeightControl.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorDto))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorDto))]
         public async Task<ActionResult<ProductDto>> GetAsync(int id)
         {
@@ -67,7 +69,7 @@ namespace WeightControl.Api.Controllers
         public async Task<ActionResult<ProductDto>> UpdateAsync(int id, ProductDto productDto)
         {
             if (id != productDto.Id)
-                return BadRequest($"Id: {id} and product id: {productDto.Id} must be the same");
+                return BadRequest(new ErrorDto { Description = JsonSerializer.Serialize($"Id: {id} and product id: {productDto.Id} must be the same") });
 
             productDto = await productsService.UpdateAsync(productDto);
             return Ok(productDto);
