@@ -8,12 +8,11 @@
       <div class="login__body">
         <input type="email" class="input__email" placeholder="Email" >
         <input type="password" class="input__password" placeholder="Password">
-        <div style="display: flex;">
           <wc-button-raised
             [label]="loginButtonText"
+            color="primary"
             (buttonClick)="loginClick()">
           </wc-button-raised>
-        </div>
       </div>
       <div class="login__footer">
         <p>Don't have an account?</p>

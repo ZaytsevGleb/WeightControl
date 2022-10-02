@@ -81,23 +81,13 @@ input:active, :hover, :focus {
   grid-row: 3/4;
 }
 
-.login__body button{
-  align-items: center;
-  color: white;
-  font-weight: bold;
-}
 
-.button__login{
+wc-button-raised{
   display: grid;
   grid-row: 5/6;
   background-color: #64D36F;
   border-radius: 20px;
   border: none;
-}
-
-button:hover{
-  background-color: #1b3815;
-  transition: all 0.5s;
 }
 
 .login__footer{

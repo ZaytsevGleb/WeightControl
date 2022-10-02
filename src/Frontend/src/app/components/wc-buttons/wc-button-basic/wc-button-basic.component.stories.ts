@@ -35,4 +35,5 @@ Default.args = {
   label: "Button",
   color:'primary',
   disabled:false,
+
 };

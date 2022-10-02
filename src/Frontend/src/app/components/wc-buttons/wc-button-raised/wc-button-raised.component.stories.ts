@@ -20,7 +20,7 @@ export default {
 const Template: Story<WcButtonRaisedComponent> = args => ({
   props: args,
   template: `
-    <div style="display: flex;">
+    <div style="display: grid;">
         <wc-button-raised
             [disabled]="[disabled]"
             [color]="color"

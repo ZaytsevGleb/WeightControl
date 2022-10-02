@@ -1,0 +1,16 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill" [color]="color">
+    <mat-label>{{label}}</mat-label>
+    <input *ngIf="type=='email'" [type]="type" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+           [placeholder]="placeholder" [value]="value">
+    <input *ngIf="type=='password'" [type]="type" matInput [formControl]="passwordFormControl"
+           [errorStateMatcher]="matcher"
+           [placeholder]="placeholder" [value]="value">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      {{validError}}
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      {{label}} is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</form>

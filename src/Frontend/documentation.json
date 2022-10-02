@@ -2474,6 +2474,69 @@
             ]
         },
         {
+            "name": "MyErrorStateMatcher",
+            "id": "class-MyErrorStateMatcher-f3a492fef91575a2a040a1885a95df711815b3771f9e8f7b3a665a213b060ae9433e47a19b328c82628d0f8b829b5de6c8e4ed5c658c8e06d37d6d5819f2c82f",
+            "file": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "class",
+            "sourceCode": "import { Component, Input} from '@angular/core';\nimport {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';\nimport {ErrorStateMatcher} from '@angular/material/core';\n\nexport class MyErrorStateMatcher implements ErrorStateMatcher {\n  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {\n    const isSubmitted = form && form.submitted;\n    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));\n  }\n}\n\n@Component({\n  selector: 'wc-input-email',\n  templateUrl: './wc-input-email.component.html',\n  styleUrls: ['./wc-input-email.component.scss']\n})\nexport class WcInputEmailComponent{\n\n  constructor() { }\n\n  @Input()\n  label!: string;\n\n  @Input()\n  value!: string;\n\n  @Input()\n  placeholder!: string;\n\n  emailFormControl = new FormControl('', [Validators.required, Validators.email]);\n  matcher = new MyErrorStateMatcher();\n}\n",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "isErrorState",
+                    "args": [
+                        {
+                            "name": "control",
+                            "type": "FormControl | null",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "form",
+                            "type": "FormGroupDirective | NgForm | null",
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 6,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "jsdoctags": [
+                        {
+                            "name": "control",
+                            "type": "FormControl | null",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "form",
+                            "type": "FormGroupDirective | NgForm | null",
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "ErrorStateMatcher"
+            ]
+        },
+        {
             "name": "ProblemDetails",
             "id": "class-ProblemDetails-1723f7703f9e49054130505d1324bae147cd6fe271c990f5f05b2fb1f80d5c1471d464c311e56e20b4cb5413edbe1fed97a9db3fd21e480d0cef702d2c3530ab",
             "file": "src/app/clients/api.client.ts",
@@ -3991,7 +4054,7 @@
         },
         {
             "name": "LoginPageComponent",
-            "id": "component-LoginPageComponent-9f2506f8c097bd8f61de6bdab87c3350f88af2fbb4cc6b11e7582df7bdb376849ccb63923a02be5b7142cac11ee87cf91836426121faac313ab5570bf213ea6c",
+            "id": "component-LoginPageComponent-286a2320f0c09c482a1f875ba4afdcff290ace82ad5dab15f112741e188f996773b729257f05bee7823f3c8010cb54d6cc8f6ccaeae2cc1903496430e8afafcc",
             "file": "src/app/pages/body/login-page/login-page.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -4011,6 +4074,16 @@
             "outputsClass": [],
             "propertiesClass": [
                 {
+                    "name": "label",
+                    "defaultValue": "\"Email\"",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
+                },
+                {
                     "name": "loginButtonText",
                     "defaultValue": "\"LOGIN\"",
                     "deprecated": false,
@@ -4018,7 +4091,27 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 15
+                    "line": 19
+                },
+                {
+                    "name": "placeholder",
+                    "defaultValue": "\"Ex. pat@example.com\"",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 17
+                },
+                {
+                    "name": "value",
+                    "defaultValue": "\"\"",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 16
                 }
             ],
             "methodsClass": [
@@ -4028,7 +4121,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 17,
+                    "line": 21,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -4050,7 +4143,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-login-page',\r\n  templateUrl: './login-page.component.html',\r\n  styleUrls: ['./login-page.component.scss']\r\n})\r\nexport class LoginPageComponent implements OnInit {\r\n\r\n  constructor() { }\r\n\r\n  ngOnInit(): void {\r\n  }\r\n\r\n  loginButtonText:string = \"LOGIN\";\r\n\r\n  loginClick(){\r\n\r\n  }\r\n\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-login-page',\r\n  templateUrl: './login-page.component.html',\r\n  styleUrls: ['./login-page.component.scss']\r\n})\r\nexport class LoginPageComponent implements OnInit {\r\n\r\n  constructor() { }\r\n\r\n  ngOnInit(): void {\r\n  }\r\n\r\n  label: string = \"Email\";\r\n  value: string = \"\";\r\n  placeholder:string = \"Ex. pat@example.com\";\r\n\r\n  loginButtonText:string = \"LOGIN\";\r\n\r\n  loginClick(){\r\n\r\n  }\r\n\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -4070,7 +4163,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"login__page\">\r\n  <div class=\"login__window\">\r\n      <div class=\"login__header\">\r\n        <h2>\r\n          Login\r\n        </h2>\r\n      </div>\r\n      <div class=\"login__body\">\r\n        <input type=\"email\" class=\"input__email\" placeholder=\"Email\" >\r\n        <input type=\"password\" class=\"input__password\" placeholder=\"Password\">\r\n        <div style=\"display: flex;\">\r\n          <wc-button-raised\r\n            [label]=\"loginButtonText\"\r\n            (buttonClick)=\"loginClick()\">\r\n          </wc-button-raised>\r\n        </div>\r\n      </div>\r\n      <div class=\"login__footer\">\r\n        <p>Don't have an account?</p>\r\n        <a routerLink=\"/register\">Register now</a>\r\n      </div>\r\n  </div>\r\n</div>\r\n"
+            "templateData": "<div class=\"login__page\">\r\n  <div class=\"login__window\">\r\n      <div class=\"login__header\">\r\n        <h2>\r\n          Login\r\n        </h2>\r\n      </div>\r\n      <div class=\"login__body\">\r\n        <input type=\"email\" class=\"input__email\" placeholder=\"Email\" >\r\n        <input type=\"password\" class=\"input__password\" placeholder=\"Password\">\r\n        <wc-input-email\r\n        [placeholder]=\"placeholder\"\r\n        [value]=\"value\"\r\n        [label]=\"label\">\r\n\r\n        </wc-input-email>\r\n        <div style=\"display: flex;\">\r\n          <wc-button-raised\r\n            [label]=\"loginButtonText\"\r\n            (buttonClick)=\"loginClick()\">\r\n          </wc-button-raised>\r\n        </div>\r\n      </div>\r\n      <div class=\"login__footer\">\r\n        <p>Don't have an account?</p>\r\n        <a routerLink=\"/register\">Register now</a>\r\n      </div>\r\n  </div>\r\n</div>\r\n"
         },
         {
             "name": "MealsPageComponent",
@@ -5623,7 +5716,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<button\n  mat-fab\n  [disabled]=\"disabled\"\n  [color]=\"color\">\n  <mat-icon>{{icon}}</mat-icon>\n</button>\n"
+            "templateData": "<button\r\n  mat-fab\r\n  [disabled]=\"disabled\"\r\n  [color]=\"color\">\r\n  <mat-icon>{{icon}}</mat-icon>\r\n</button>\r\n"
         },
         {
             "name": "WcButtonRaisedComponent",
@@ -5838,29 +5931,29 @@
             "templateData": "<button\n  mat-stroked-button\n  [color]=\"color\"\n  (click)=\"onClick()\"\n  [disabled]=\"disabled\">\n  {{label}}\n</button>\n"
         },
         {
-            "name": "WcInputComponent",
-            "id": "component-WcInputComponent-076dd3bf4940b0599d0fb005ab70f798d9b33b4abbac1d7933c0572982869e0444f5828ba8c62a13cd5e805703ef431cb6e487c2b56aecb8bdcd69705d446dea",
-            "file": "src/app/components/wc-input/wc-input.component.ts",
+            "name": "WcInputEmailComponent",
+            "id": "component-WcInputEmailComponent-f3a492fef91575a2a040a1885a95df711815b3771f9e8f7b3a665a213b060ae9433e47a19b328c82628d0f8b829b5de6c8e4ed5c658c8e06d37d6d5819f2c82f",
+            "file": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "wc-input",
+            "selector": "wc-input-email",
             "styleUrls": [
-                "./wc-input.component.scss"
+                "./wc-input-email.component.scss"
             ],
             "styles": [],
             "templateUrl": [
-                "./wc-input.component.html"
+                "./wc-input-email.component.html"
             ],
             "viewProviders": [],
             "inputsClass": [
                 {
-                    "name": "header",
+                    "name": "label",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 11,
+                    "line": 22,
                     "type": "string",
                     "decorators": []
                 },
@@ -5868,7 +5961,7 @@
                     "name": "placeholder",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 17,
+                    "line": 28,
                     "type": "string",
                     "decorators": []
                 },
@@ -5876,25 +5969,35 @@
                     "name": "value",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "line": 14,
+                    "line": 25,
                     "type": "string",
                     "decorators": []
                 }
             ],
             "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
+            "propertiesClass": [
                 {
-                    "name": "ngOnInit",
-                    "args": [],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 21,
+                    "name": "emailFormControl",
+                    "defaultValue": "new FormControl('', [Validators.required, Validators.email])",
                     "deprecated": false,
-                    "deprecationMessage": ""
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30
+                },
+                {
+                    "name": "matcher",
+                    "defaultValue": "new MyErrorStateMatcher()",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 31
                 }
             ],
+            "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
@@ -5902,12 +6005,12 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {Component, Input, OnInit} from '@angular/core';\n\n@Component({\n  selector: 'wc-input',\n  templateUrl: './wc-input.component.html',\n  styleUrls: ['./wc-input.component.scss']\n})\nexport class WcInputComponent implements OnInit {\n\n  @Input()\n  header?: string;\n\n  @Input()\n  value?: string;\n\n  @Input()\n  placeholder?: string;\n\n  constructor() { }\n\n  ngOnInit(): void {\n  }\n\n}\n",
+            "sourceCode": "import { Component, Input} from '@angular/core';\nimport {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';\nimport {ErrorStateMatcher} from '@angular/material/core';\n\nexport class MyErrorStateMatcher implements ErrorStateMatcher {\n  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {\n    const isSubmitted = form && form.submitted;\n    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));\n  }\n}\n\n@Component({\n  selector: 'wc-input-email',\n  templateUrl: './wc-input-email.component.html',\n  styleUrls: ['./wc-input-email.component.scss']\n})\nexport class WcInputEmailComponent{\n\n  constructor() { }\n\n  @Input()\n  label!: string;\n\n  @Input()\n  value!: string;\n\n  @Input()\n  placeholder!: string;\n\n  emailFormControl = new FormControl('', [Validators.required, Validators.email]);\n  matcher = new MyErrorStateMatcher();\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "",
-                    "styleUrl": "./wc-input.component.scss"
+                    "data": ".example-form {\r\n  min-width: 150px;\r\n  max-width: 500px;\r\n  width: 100%;\r\n}\r\n\r\n.example-full-width {\r\n  width: 100%;\r\n}\r\n",
+                    "styleUrl": "./wc-input-email.component.scss"
                 }
             ],
             "stylesData": "",
@@ -5919,10 +6022,80 @@
                 "args": [],
                 "line": 17
             },
-            "implements": [
-                "OnInit"
+            "templateData": "<form class=\"example-form\">\n  <mat-form-field class=\"example-full-width\" appearance=\"fill\">\n    <mat-label>{{label}}</mat-label>\n    <input type=\"email\" matInput [formControl]=\"emailFormControl\" [errorStateMatcher]=\"matcher\"\n           [placeholder]=\"placeholder\">\n    <mat-error *ngIf=\"emailFormControl.hasError('email') && !emailFormControl.hasError('required')\">\n      Please enter a valid email address\n    </mat-error>\n    <mat-error *ngIf=\"emailFormControl.hasError('required')\">\n      Email is <strong>required</strong>\n    </mat-error>\n  </mat-form-field>\n</form>\n"
+        },
+        {
+            "name": "WcInputSearchComponent",
+            "id": "component-WcInputSearchComponent-c0c2e987606bce78a4c9d0c3745cdaec9780016e6284f15df5b735614dc92a26a3c2f88239d8a195b7d920dd56b5bed0b848c7eabbc595d8270d6a62e832b6ea",
+            "file": "src/app/components/wc-inputs/wc-input-search/wc-input-search.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "wc-input-search",
+            "styleUrls": [
+                "./wc-input-search.component.scss"
             ],
-            "templateData": "<mat-form-field class=\"example-full-width\" appearance=\"fill\">\n  <mat-label>{{header}}</mat-label>\n  <input matInput [placeholder]=\"placeholder\" [value]=\"value\">\n</mat-form-field>\n"
+            "styles": [],
+            "templateUrl": [
+                "./wc-input-search.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "label",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 13,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "placeholder",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 19,
+                    "type": "string",
+                    "decorators": []
+                },
+                {
+                    "name": "value",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 16,
+                    "type": "string",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {Component, Input} from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'wc-input-search',\r\n  templateUrl: './wc-input-search.component.html',\r\n  styleUrls: ['./wc-input-search.component.scss']\r\n})\r\nexport class WcInputSearchComponent {\r\n\r\n  constructor() {}\r\n\r\n  @Input()\r\n  label?: string;\r\n\r\n  @Input()\r\n  value?: string;\r\n\r\n  @Input()\r\n  placeholder?: string;\r\n}\r\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./wc-input-search.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [],
+                "line": 8
+            },
+            "templateData": "<mat-form-field class=\"example-full-width\" appearance=\"fill\">\r\n  <mat-label>{{label}}</mat-label>\r\n  <input matInput [placeholder]=\"placeholder\" [value]=\"value\">\r\n</mat-form-field>\r\n"
         }
     ],
     "modules": [
@@ -6055,13 +6228,13 @@
         },
         {
             "name": "LoginPageModule",
-            "id": "module-LoginPageModule-a492bcd1373d5b748184dedfaad898cfedf885f7949be071518d45c7d4b18600af3154366834c7e22b8913e50cf869036f81c70df501946f78793a98846409e3",
+            "id": "module-LoginPageModule-0be031e7e55b32aeb60292c5a6f809a92af772620e0df37403e72c729c6a916891921bc5822a59c9288c871a1c4ffc9d4afa6d4e820e942beaff23a6f6b68a48",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
             "file": "src/app/pages/body/login-page/login-page.module.ts",
             "methods": [],
-            "sourceCode": "import {NgModule} from \"@angular/core\";\r\nimport { WcButtonRaisedModule } from \"src/app/components/wc-buttons/wc-button-raised\";\r\nimport {LoginPageComponent} from \"./login-page.component\";\r\n\r\n@NgModule({\r\n  declarations:[LoginPageComponent],\r\n  imports:[WcButtonRaisedModule],\r\n  exports:[LoginPageComponent]\r\n})\r\n\r\nexport class LoginPageModule {}\r\n",
+            "sourceCode": "import {NgModule} from \"@angular/core\";\r\nimport { WcButtonRaisedModule } from \"src/app/components/wc-buttons/wc-button-raised\";\r\nimport {LoginPageComponent} from \"./login-page.component\";\r\nimport {WcInputEmailModule} from \"../../../components/wc-inputs/wc-input-email\";\r\n\r\n@NgModule({\r\n  declarations:[LoginPageComponent],\r\n    imports: [WcButtonRaisedModule, WcInputEmailModule],\r\n  exports:[LoginPageComponent]\r\n})\r\n\r\nexport class LoginPageModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -6080,6 +6253,9 @@
                     "elements": [
                         {
                             "name": "WcButtonRaisedModule"
+                        },
+                        {
+                            "name": "WcInputEmailModule"
                         }
                     ]
                 },
@@ -6314,14 +6490,14 @@
             ]
         },
         {
-            "name": "WcInputModule",
-            "id": "module-WcInputModule-dda8a387a684db132c61a641f252071adfc34c45cf4eacdb75a4cf34c3ba8fd6e0b91b4e2fe88f1f8a5621fa3a00d149412f0d140add51bcf5eaf8e56ace050a",
+            "name": "WcInputEmailModule",
+            "id": "module-WcInputEmailModule-e7ce2670a20d5b8334a111e371efda2d279a69f67331f5dccd0f365867f7b75549984e518435b8bb6387946ed9a0ae4b4b935277979f6c0c9f74964cad5521f9",
             "description": "",
             "deprecationMessage": "",
             "deprecated": false,
-            "file": "src/app/components/wc-input/wc-input.module.ts",
+            "file": "src/app/components/wc-inputs/wc-input-email/wc-input-email.module.ts",
             "methods": [],
-            "sourceCode": "import {NgModule} from \"@angular/core\";\r\nimport {WcInputComponent} from \"./wc-input.component\";\r\nimport {MatInputModule} from \"@angular/material/input\";\r\n\r\n@NgModule({\r\n  declarations:[WcInputComponent],\r\n  imports: [ MatInputModule],\r\n  exports: [WcInputComponent]\r\n})\r\n\r\nexport class WcInputModule {}\r\n",
+            "sourceCode": "import {NgModule} from \"@angular/core\";\r\nimport {BrowserModule} from '@angular/platform-browser';\r\nimport {BrowserAnimationsModule} from '@angular/platform-browser/animations';\r\nimport {WcInputEmailComponent} from \"./wc-input-email.component\";\r\nimport {MatInputModule} from \"@angular/material/input\";\r\nimport {FormsModule, ReactiveFormsModule} from '@angular/forms';\r\nimport {MatNativeDateModule} from '@angular/material/core';\r\n\r\n@NgModule({\r\n  declarations:[WcInputEmailComponent],\r\n  imports:[\r\n    MatInputModule,\r\n    BrowserAnimationsModule,\r\n    BrowserModule,\r\n    FormsModule,\r\n    MatNativeDateModule,\r\n    ReactiveFormsModule\r\n  ],\r\n  exports:[WcInputEmailComponent]\r\n})\r\n\r\nexport class WcInputEmailModule {}\r\n",
             "children": [
                 {
                     "type": "providers",
@@ -6331,7 +6507,7 @@
                     "type": "declarations",
                     "elements": [
                         {
-                            "name": "WcInputComponent"
+                            "name": "WcInputEmailComponent"
                         }
                     ]
                 },
@@ -6343,7 +6519,51 @@
                     "type": "exports",
                     "elements": [
                         {
-                            "name": "WcInputComponent"
+                            "name": "WcInputEmailComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "WcInputSearchModule",
+            "id": "module-WcInputSearchModule-aabc0164fb19ad5efd0ed015180723048b098ce6a328d3d74ffd1bccdd879745161c88376a1cc1ef9e168b00e4f5710b629a2ac78400103bf567abdf6b0ffec3",
+            "description": "",
+            "deprecationMessage": "",
+            "deprecated": false,
+            "file": "src/app/components/wc-inputs/wc-input-search/wc-input-search.module.ts",
+            "methods": [],
+            "sourceCode": "import {NgModule} from \"@angular/core\";\r\nimport {WcInputSearchComponent} from \"./wc-input-search.component\";\r\nimport {MatInputModule} from \"@angular/material/input\";\r\nimport {BrowserModule} from '@angular/platform-browser';\r\nimport {BrowserAnimationsModule} from '@angular/platform-browser/animations';\r\nimport {FormsModule, ReactiveFormsModule} from '@angular/forms';\r\nimport {MatNativeDateModule} from '@angular/material/core';\r\n\r\n\r\n@NgModule({\r\n  declarations:[WcInputSearchComponent],\r\n  imports: [\r\n    MatInputModule,\r\n    BrowserModule,\r\n    BrowserAnimationsModule,\r\n    FormsModule,\r\n    ReactiveFormsModule,\r\n    MatNativeDateModule,\r\n  ],\r\n  exports: [WcInputSearchComponent]\r\n})\r\n\r\nexport class WcInputSearchModule {}\r\n",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "WcInputSearchComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "WcInputSearchComponent"
                         }
                     ]
                 },
@@ -6371,16 +6591,6 @@
                 "defaultValue": "new InjectionToken<string>('API_BASE_URL')"
             },
             {
-                "name": "Basic",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/components/wc-input/wc-input.component.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
                 "name": "context",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -6394,7 +6604,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/components/wc-buttons/wc-button-basic/wc-button-basic.component.stories.ts",
+                "file": "src/app/components/wc-buttons/wc-button-stroked/wc-button-stroked.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -6404,7 +6614,7 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/components/wc-buttons/wc-button-stroked/wc-button-stroked.component.stories.ts",
+                "file": "src/app/components/wc-buttons/wc-button-basic/wc-button-basic.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -6425,6 +6635,16 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/components/wc-buttons/wc-button-raised/wc-button-raised.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Email",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
@@ -6520,6 +6740,16 @@
                 "type": "literal type"
             },
             {
+                "name": "Search",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/wc-inputs/wc-input-search/wc-input-search.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "Secondary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -6573,11 +6803,11 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/components/wc-input/wc-input.component.stories.ts",
+                "file": "src/app/components/wc-buttons/wc-button-stroked/wc-button-stroked.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
-                "type": "Story<WcInputComponent>",
-                "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n  <div style=\"display: flex;\">\r\n    <wc-input\r\n        [header]=\"header\"\r\n        [value]=\"value\"\r\n        [placeholder]=\"placeholder\">\r\n  </wc-input>\r\n  </div>`\r\n})"
+                "type": "Story<WcButtonStrokedComponent>",
+                "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n    <div style=\"display: flex;\">\r\n        <wc-button-stroked\r\n            [disabled]=\"[disabled]\"\r\n            [color]=\"color\"\r\n            [label]=\"label\"\r\n            (buttonClick)=\"buttonClick()\">\r\n        </wc-button-stroked>\r\n    </div>`\r\n})"
             },
             {
                 "name": "Template",
@@ -6588,16 +6818,6 @@
                 "deprecationMessage": "",
                 "type": "Story<WcButtonBasicComponent>",
                 "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n    <div style=\"display: flex;\">\r\n        <wc-button-basic\r\n            [disabled]=\"[disabled]\"\r\n            [color]=\"color\"\r\n            [label]=\"label\"\r\n            (buttonClick)=\"buttonClick()\">\r\n        </wc-button-basic>\r\n    </div>`\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/app/components/wc-buttons/wc-button-stroked/wc-button-stroked.component.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story<WcButtonStrokedComponent>",
-                "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n    <div style=\"display: flex;\">\r\n        <wc-button-stroked\r\n            [disabled]=\"[disabled]\"\r\n            [color]=\"color\"\r\n            [label]=\"label\"\r\n            (buttonClick)=\"buttonClick()\">\r\n        </wc-button-stroked>\r\n    </div>`\r\n})"
             },
             {
                 "name": "Template",
@@ -6618,6 +6838,26 @@
                 "deprecationMessage": "",
                 "type": "Story<WcButtonRaisedComponent>",
                 "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n    <div style=\"display: flex;\">\r\n        <wc-button-raised\r\n            [disabled]=\"[disabled]\"\r\n            [color]=\"color\"\r\n            [label]=\"label\"\r\n            (buttonClick)=\"buttonClick()\">\r\n        </wc-button-raised>\r\n    </div>`\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<WcInputEmailComponent>",
+                "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n  <div style=\"display: flex;\">\r\n    <wc-input-email\r\n        [label]=\"label\"\r\n        [value]=\"value\"\r\n        [placeholder]=\"placeholder\">\r\n  </wc-input-email>\r\n  </div>`\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/components/wc-inputs/wc-input-search/wc-input-search.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story<WcInputSearchComponent>",
+                "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n  <div style=\"display: flex;\">\r\n    <wc-input-search\r\n        [label]=\"label\"\r\n        [value]=\"value\"\r\n        [placeholder]=\"placeholder\">\r\n  </wc-input-search>\r\n  </div>`\r\n})"
             }
         ],
         "functions": [
@@ -6927,28 +7167,6 @@
                     "defaultValue": "new InjectionToken<string>('API_BASE_URL')"
                 }
             ],
-            "src/app/components/wc-input/wc-input.component.stories.ts": [
-                {
-                    "name": "Basic",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/wc-input/wc-input.component.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/wc-input/wc-input.component.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<WcInputComponent>",
-                    "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n  <div style=\"display: flex;\">\r\n    <wc-input\r\n        [header]=\"header\"\r\n        [value]=\"value\"\r\n        [placeholder]=\"placeholder\">\r\n  </wc-input>\r\n  </div>`\r\n})"
-                }
-            ],
             "src/test.ts": [
                 {
                     "name": "context",
@@ -6968,28 +7186,6 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "literal type"
-                }
-            ],
-            "src/app/components/wc-buttons/wc-button-basic/wc-button-basic.component.stories.ts": [
-                {
-                    "name": "Default",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/wc-buttons/wc-button-basic/wc-button-basic.component.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "defaultValue": "Template.bind({})"
-                },
-                {
-                    "name": "Template",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/app/components/wc-buttons/wc-button-basic/wc-button-basic.component.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "Story<WcButtonBasicComponent>",
-                    "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n    <div style=\"display: flex;\">\r\n        <wc-button-basic\r\n            [disabled]=\"[disabled]\"\r\n            [color]=\"color\"\r\n            [label]=\"label\"\r\n            (buttonClick)=\"buttonClick()\">\r\n        </wc-button-basic>\r\n    </div>`\r\n})"
                 }
             ],
             "src/app/components/wc-buttons/wc-button-stroked/wc-button-stroked.component.stories.ts": [
@@ -7012,6 +7208,28 @@
                     "deprecationMessage": "",
                     "type": "Story<WcButtonStrokedComponent>",
                     "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n    <div style=\"display: flex;\">\r\n        <wc-button-stroked\r\n            [disabled]=\"[disabled]\"\r\n            [color]=\"color\"\r\n            [label]=\"label\"\r\n            (buttonClick)=\"buttonClick()\">\r\n        </wc-button-stroked>\r\n    </div>`\r\n})"
+                }
+            ],
+            "src/app/components/wc-buttons/wc-button-basic/wc-button-basic.component.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/wc-buttons/wc-button-basic/wc-button-basic.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/wc-buttons/wc-button-basic/wc-button-basic.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<WcButtonBasicComponent>",
+                    "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n    <div style=\"display: flex;\">\r\n        <wc-button-basic\r\n            [disabled]=\"[disabled]\"\r\n            [color]=\"color\"\r\n            [label]=\"label\"\r\n            (buttonClick)=\"buttonClick()\">\r\n        </wc-button-basic>\r\n    </div>`\r\n})"
                 }
             ],
             "src/app/components/wc-buttons/wc-button-fab/wc-button-fab.component.stories.ts": [
@@ -7056,6 +7274,28 @@
                     "deprecationMessage": "",
                     "type": "Story<WcButtonRaisedComponent>",
                     "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n    <div style=\"display: flex;\">\r\n        <wc-button-raised\r\n            [disabled]=\"[disabled]\"\r\n            [color]=\"color\"\r\n            [label]=\"label\"\r\n            (buttonClick)=\"buttonClick()\">\r\n        </wc-button-raised>\r\n    </div>`\r\n})"
+                }
+            ],
+            "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.stories.ts": [
+                {
+                    "name": "Email",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<WcInputEmailComponent>",
+                    "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n  <div style=\"display: flex;\">\r\n    <wc-input-email\r\n        [label]=\"label\"\r\n        [value]=\"value\"\r\n        [placeholder]=\"placeholder\">\r\n  </wc-input-email>\r\n  </div>`\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -7196,6 +7436,28 @@
                     "deprecationMessage": "",
                     "type": "Story<Page>",
                     "defaultValue": "(args: Page) => ({\r\n  props: args,\r\n})"
+                }
+            ],
+            "src/app/components/wc-inputs/wc-input-search/wc-input-search.component.stories.ts": [
+                {
+                    "name": "Search",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/wc-inputs/wc-input-search/wc-input-search.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/components/wc-inputs/wc-input-search/wc-input-search.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story<WcInputSearchComponent>",
+                    "defaultValue": "args => ({\r\n  props: args,\r\n  template: `\r\n  <div style=\"display: flex;\">\r\n    <wc-input-search\r\n        [label]=\"label\"\r\n        [value]=\"value\"\r\n        [placeholder]=\"placeholder\">\r\n  </wc-input-search>\r\n  </div>`\r\n})"
                 }
             ]
         },
@@ -7854,17 +8116,17 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/components/wc-input/wc-input.component.stories.ts",
+                "filePath": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Basic",
+                "name": "Email",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
             },
             {
-                "filePath": "src/app/components/wc-input/wc-input.component.stories.ts",
+                "filePath": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -7874,12 +8136,50 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/components/wc-input/wc-input.component.ts",
+                "filePath": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "WcInputComponent",
+                "name": "WcInputEmailComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coverageCount": "0/7",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/wc-inputs/wc-input-email/wc-input-email.component.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "MyErrorStateMatcher",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/wc-inputs/wc-input-search/wc-input-search.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Search",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/wc-inputs/wc-input-search/wc-input-search.component.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/wc-inputs/wc-input-search/wc-input-search.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "WcInputSearchComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
                 "status": "low"
             },
             {
@@ -7942,7 +8242,7 @@
                 "linktype": "component",
                 "name": "LoginPageComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/5",
+                "coverageCount": "0/8",
                 "status": "low"
             },
             {
