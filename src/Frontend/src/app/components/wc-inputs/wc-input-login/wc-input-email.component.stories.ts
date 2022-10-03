@@ -1,14 +1,15 @@
 import {Meta, Story} from "@storybook/angular/types-6-0";
-import {WcInputSearchComponent} from "./wc-input-search.component";
+import {WcInputEmailComponent} from "./wc-input-email.component";
 import {moduleMetadata} from "@storybook/angular";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
 
+
 export default {
-  title: "Components/InputSearch",
-  component: WcInputSearchComponent,
+  title: "Components/InputEmail",
+  component: WcInputEmailComponent,
   decorators: [
     moduleMetadata({
       imports: [
@@ -16,32 +17,34 @@ export default {
         BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-      ]
+      ],
     })
   ],
-  argTypes: {},
-} as Meta<WcInputSearchComponent>;
+  argTypes: {
+    emailFormControl: {table: { disable: true}},
+    matcher: {table: {disable: true}}
+  },
+} as Meta<WcInputEmailComponent>;
 
-const Template: Story<WcInputSearchComponent> = args => ({
+const Template: Story<WcInputEmailComponent> = args => ({
   props: args,
   template: `
-  <div style="display: flex;">
-    <wc-input-search
-        [label]="label"
+  <div style="display: grid;">
+    <wc-input-email
         [value]="value"
         [placeholder]="placeholder"
+        [validError]="validError"
         [color]="color"
         [appearance]="appearance">
-
-  </wc-input-search>
+  </wc-input-email>
   </div>`
 })
 
-export const Search = Template.bind({});
-Search.args = {
-  label: "Favorite food",
-  placeholder: "Ex. Pizza",
-  value: "Sushi",
+export const Email = Template.bind({});
+Email.args = {
+  placeholder: "Ex. pat@example.com",
+  value: "",
+  validError: "Please enter a valid email address",
   color: "primary",
   appearance: "fill"
 }

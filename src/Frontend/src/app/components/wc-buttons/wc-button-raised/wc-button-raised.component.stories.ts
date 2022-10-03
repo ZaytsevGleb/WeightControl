@@ -9,18 +9,18 @@ export default {
   component: WcButtonRaisedComponent,
   decorators: [
     moduleMetadata({
-      imports:[MatButtonModule]
+      imports: [MatButtonModule]
     })
   ],
   argTypes: {
-    buttonClick: {action:'buttonClick'}
+    buttonClick: {action: 'buttonClick'}
   },
 } as Meta<WcButtonRaisedComponent>;
 
 const Template: Story<WcButtonRaisedComponent> = args => ({
   props: args,
   template: `
-    <div style="display: grid;">
+    <div style="display: flex;">
         <wc-button-raised
             [disabled]="[disabled]"
             [color]="color"
@@ -30,9 +30,9 @@ const Template: Story<WcButtonRaisedComponent> = args => ({
     </div>`
 })
 
-export const Default = Template.bind({})
-Default.args = {
+export const Raised = Template.bind({})
+Raised.args = {
   label: "Button",
-  color:'primary',
-  disabled:false
+  color: 'primary',
+  disabled: false
 };

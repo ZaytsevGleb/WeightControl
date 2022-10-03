@@ -30,8 +30,8 @@ const Template: Story<WcButtonBasicComponent> = args => ({
     </div>`
 })
 
-export const Default = Template.bind({})
-Default.args = {
+export const Basic = Template.bind({})
+Basic.args = {
   label: "Button",
   color:'primary',
   disabled:false,

@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
-import {WcButtonFabComponent} from "./wc-button-fab.component";
+import {WcButtonMiniFabComponent} from "./wc-button-mini-fab.component";
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
-  declarations: [WcButtonFabComponent],
+  declarations: [WcButtonMiniFabComponent],
   imports: [MatButtonModule, MatIconModule],
-  exports: [WcButtonFabComponent]
+  exports: [WcButtonMiniFabComponent]
 })
 
-export class WcButtonFabModule {
+export class WcButtonMiniFabModule {
 }

@@ -30,8 +30,8 @@ const Template: Story<WcButtonStrokedComponent> = args => ({
     </div>`
 })
 
-export const Default = Template.bind({})
-Default.args = {
+export const Stroked = Template.bind({})
+Stroked.args = {
   label: "Button",
   color:'primary',
   disabled:false

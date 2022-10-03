@@ -7,14 +7,15 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class WcButtonRaisedComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   //Inputs
   @Input()
   label?: string;
 
   @Input()
-  disabled?:boolean;
+  disabled?: boolean;
 
   @Input()
   color?: 'primary' | 'accent' | 'warn' | null;
@@ -26,7 +27,7 @@ export class WcButtonRaisedComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClick(){
+  onClick() {
     this.buttonClick.emit();
   }
 }

@@ -1,20 +1,20 @@
 import {NgModule} from "@angular/core";
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {WcInputLoginComponent} from "./wc-input-login.component";
+import {WcInputEmailComponent} from "./wc-input-email.component";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
-  declarations: [WcInputLoginComponent],
+  declarations: [WcInputEmailComponent],
   imports: [
     MatInputModule,
     BrowserAnimationsModule,
     BrowserModule,
     ReactiveFormsModule
   ],
-  exports: [WcInputLoginComponent]
+  exports: [WcInputEmailComponent]
 })
 
-export class WcInputLoginModule {
+export class WcInputEmailModule {
 }

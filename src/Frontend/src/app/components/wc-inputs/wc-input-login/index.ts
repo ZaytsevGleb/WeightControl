@@ -1,2 +1,2 @@
-export * from "./wc-input-login.component";
-export * from "./wc-input-login.module";
+export * from "./wc-input-email.component";
+export * from "./wc-input-email.module";

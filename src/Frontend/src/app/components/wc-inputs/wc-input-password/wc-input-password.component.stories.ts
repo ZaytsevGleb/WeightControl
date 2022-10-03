@@ -1,15 +1,14 @@
 import {Meta, Story} from "@storybook/angular/types-6-0";
-import {WcInputLoginComponent} from "./wc-input-login.component";
+import {WcInputPasswordComponent} from "./wc-input-password.component";
 import {moduleMetadata} from "@storybook/angular";
 import {MatInputModule} from "@angular/material/input";
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
 
-
 export default {
-  title: "Components/InputAccount",
-  component: WcInputLoginComponent,
+  title: "Components/InputPassword",
+  component: WcInputPasswordComponent,
   decorators: [
     moduleMetadata({
       imports: [
@@ -20,40 +19,29 @@ export default {
       ],
     })
   ],
-  argTypes: {},
-} as Meta<WcInputLoginComponent>;
+  argTypes: {
+    passwordFormControl: {table: { disable: true}},
+    matcher: {table: {disable: true}}
+  },
+} as Meta<WcInputPasswordComponent>;
 
-const Template: Story<WcInputLoginComponent> = args => ({
+const Template: Story<WcInputPasswordComponent> = args => ({
   props: args,
   template: `
   <div style="display: grid;">
-    <wc-input-login
-        [label]="label"
+    <wc-input-password
         [value]="value"
-        [placeholder]="placeholder"
-        [validError]="validError"
         [color]="color"
-        [type]="type">
-
-  </wc-input-login>
+        [validError]="validError"
+        [appearance]="appearance">
+  </wc-input-password>
   </div>`
 })
 
-export const Email = Template.bind({});
-Email.args = {
-  label: "Email",
-  placeholder: "Ex. pat@example.com",
-  value: "",
-  validError: "Please enter a valid email address",
-  color: "primary",
-  type: "email",
-}
-
 export const Password = Template.bind({});
 Password.args = {
-  label: "Password",
-  color: "primary",
-  type: "password",
   value: "",
+  color: "primary",
+  validError: "Minimum length 5 characters",
+  appearance: "fill"
 }
-

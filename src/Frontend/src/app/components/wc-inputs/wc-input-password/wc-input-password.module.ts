@@ -1,20 +1,19 @@
 import {NgModule} from "@angular/core";
-import {WcInputSearchComponent} from "./wc-input-search.component";
-import {MatInputModule} from "@angular/material/input";
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {WcInputPasswordComponent} from "./wc-input-password.component";
+import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
-  declarations: [WcInputSearchComponent],
+  declarations: [WcInputPasswordComponent],
   imports: [
     MatInputModule,
     BrowserAnimationsModule,
     BrowserModule,
     ReactiveFormsModule
   ],
-  exports: [WcInputSearchComponent]
+  exports: [WcInputPasswordComponent]
 })
 
-export class WcInputSearchModule {
-}
+export class WcInputPasswordModule {}

@@ -1,27 +1,24 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
+export class EmailErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
-
 }
 
 @Component({
-  selector: 'wc-input-login',
-  templateUrl: './wc-input-login.component.html',
-  styleUrls: ['./wc-input-login.component.scss']
+  selector: 'wc-input-email',
+  templateUrl: './wc-input-email.component.html',
+  styleUrls: ['./wc-input-email.component.scss']
 })
-export class WcInputLoginComponent {
+export class WcInputEmailComponent implements OnInit {
 
   constructor() {
   }
 
-  @Input()
-  label!: string;
 
   @Input()
   value!: string;
@@ -33,18 +30,18 @@ export class WcInputLoginComponent {
   validError!: string;
 
   @Input()
-  type!: 'password' | 'email';
+  color!: 'primary' | 'accent' | 'warn';
 
   @Input()
-  color!: 'primary' | 'accent' | 'warn' | null;
-
+  appearance!: 'fill' | 'legacy' | 'standard' | 'outline';
 
   @Input()
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   @Input()
-  passwordFormControl = new FormControl('', [Validators.required]);
+  matcher = new EmailErrorStateMatcher();
 
-  @Input()
-  matcher = new MyErrorStateMatcher();
+  ngOnInit(): void {
+  }
+
 }

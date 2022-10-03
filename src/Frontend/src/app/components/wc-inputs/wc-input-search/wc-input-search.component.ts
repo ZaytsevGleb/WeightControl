@@ -20,5 +20,8 @@ export class WcInputSearchComponent {
   placeholder!: string;
 
   @Input()
-  color!: 'primary' | 'accent' | 'warn' | null;
+  appearance!: 'fill' | 'legacy' | 'standard' | 'outline';
+
+  @Input()
+  color!: 'primary' | 'accent' | 'warn';
 }
