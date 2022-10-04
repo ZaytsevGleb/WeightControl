@@ -25,16 +25,13 @@ export default {
 const Template: Story<WcInputSearchComponent> = args => ({
   props: args,
   template: `
-  <div style="display: flex;">
     <wc-input-search
         [label]="label"
         [value]="value"
         [placeholder]="placeholder"
         [color]="color"
         [appearance]="appearance">
-
-  </wc-input-search>
-  </div>`
+    </wc-input-search>`
 })
 
 export const Search = Template.bind({});

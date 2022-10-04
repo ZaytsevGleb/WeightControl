@@ -1,22 +1,39 @@
 <div class="login__page">
   <div class="login__window">
-      <div class="login__header">
-        <h2>
-          Login
-        </h2>
+    <div class="login__header">
+      <h2>
+        Login
+      </h2>
+    </div>
+    <div class="login__body">
+      <div class="body__inputs">
+        <wc-input-email
+          [value]="emailValue"
+          [placeholder]="emailPlaceholder"
+          [validError]="emailValidError"
+          color="primary"
+          appearance="legacy">
+        </wc-input-email>
+
+        <wc-input-password
+          appearance="legacy"
+          color="primary"
+          [validError]="passwordValidError"
+          [value]="passwordValue">
+
+        </wc-input-password>
       </div>
-      <div class="login__body">
-        <input type="email" class="input__email" placeholder="Email" >
-        <input type="password" class="input__password" placeholder="Password">
-          <wc-button-raised
-            [label]="loginButtonText"
-            color="primary"
-            (buttonClick)="loginClick()">
-          </wc-button-raised>
+      <div class="body__buttons">
+        <wc-button-raised
+          [label]="loginButtonText"
+          color="primary"
+          (buttonClick)="loginClick()">
+        </wc-button-raised>
       </div>
-      <div class="login__footer">
-        <p>Don't have an account?</p>
-        <a routerLink="/register">Register now</a>
-      </div>
+    </div>
+    <div class="login__footer">
+      <p>Don't have an account?</p>
+      <a routerLink="/register">Register now</a>
+    </div>
   </div>
 </div>

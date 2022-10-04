@@ -20,7 +20,7 @@ export default {
     })
   ],
   argTypes: {
-    passwordFormControl: {table: { disable: true}},
+    passwordFormControl: {table: {disable: true}},
     matcher: {table: {disable: true}}
   },
 } as Meta<WcInputPasswordComponent>;
@@ -28,14 +28,12 @@ export default {
 const Template: Story<WcInputPasswordComponent> = args => ({
   props: args,
   template: `
-  <div style="display: grid;">
     <wc-input-password
         [value]="value"
         [color]="color"
         [validError]="validError"
         [appearance]="appearance">
-  </wc-input-password>
-  </div>`
+    </wc-input-password>`
 })
 
 export const Password = Template.bind({});

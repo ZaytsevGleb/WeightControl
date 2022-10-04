@@ -21,7 +21,7 @@ export default {
     })
   ],
   argTypes: {
-    emailFormControl: {table: { disable: true}},
+    emailFormControl: {table: {disable: true}},
     matcher: {table: {disable: true}}
   },
 } as Meta<WcInputEmailComponent>;
@@ -29,15 +29,14 @@ export default {
 const Template: Story<WcInputEmailComponent> = args => ({
   props: args,
   template: `
-  <div style="display: grid;">
     <wc-input-email
         [value]="value"
         [placeholder]="placeholder"
         [validError]="validError"
         [color]="color"
         [appearance]="appearance">
-  </wc-input-email>
-  </div>`
+    </wc-input-email>
+  `
 })
 
 export const Email = Template.bind({});
