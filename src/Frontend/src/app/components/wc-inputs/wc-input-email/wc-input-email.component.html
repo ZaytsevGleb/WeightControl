@@ -1,7 +1,7 @@
 <form class="form-email">
   <mat-form-field class="full-width-email" hideRequiredMarker [appearance]="appearance" [color]="color">
     <mat-label>Email</mat-label>
-    <input matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
            [placeholder]="placeholder" [value]="value">
     <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
       {{validError}}

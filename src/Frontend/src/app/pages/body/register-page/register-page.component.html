@@ -1,1 +1,46 @@
-<p>register works!</p>
+<div class="register__page">
+  <div class="register__window">
+    <div class="register__header">
+      <h2>
+        Register
+      </h2>
+    </div>
+    <div class="register__body">
+      <div class="body__inputs">
+        <wc-input-name
+          [value]="nameValue"
+          [placeholder]="namePlaceholder"
+          [validError]="nameValidError"
+          color="primary"
+          appearance="legacy">
+        </wc-input-name>
+
+        <wc-input-email
+          [value]="emailValue"
+          [placeholder]="emailPlaceholder"
+          [validError]="emailValidError"
+          color="primary"
+          appearance="legacy">
+        </wc-input-email>
+
+        <wc-input-password
+          appearance="legacy"
+          color="primary"
+          [validError]="passwordValidError"
+          [value]="passwordValue">
+        </wc-input-password>
+      </div>
+      <div class="body__buttons">
+        <wc-button-raised
+        [label]="registerButtonText"
+        color="primary"
+        (buttonClick)="registerClick()">
+        </wc-button-raised>
+      </div>
+    </div>
+    <div class="register__footer">
+      <p>Do you have an account?</p>
+      <a routerLink="/login">Login now</a>
+    </div>
+  </div>
+</div>
