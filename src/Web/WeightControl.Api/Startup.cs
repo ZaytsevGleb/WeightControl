@@ -50,7 +50,7 @@ namespace WeightControl.Api
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateLifetime = true,
+                    ValidateLifetime = false,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = authOption.Issuer,
                     ValidAudience = authOption.Audience,
@@ -115,7 +115,7 @@ namespace WeightControl.Api
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseRouting();
-            app.UseCors(builder => builder.WithMethods("POST"));
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
