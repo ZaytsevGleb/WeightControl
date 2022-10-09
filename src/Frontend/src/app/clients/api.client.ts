@@ -27,11 +27,11 @@ export class ApiClient {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     login(body: LoginDto | undefined): Observable<LoginResultDto> {
-        let url_ = this.baseUrl + "/api/auth/login-page";
+        let url_ = this.baseUrl + "/api/auth/login";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -97,11 +97,11 @@ export class ApiClient {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     register(body: RegisterDto | undefined): Observable<RegisterResultDto> {
-        let url_ = this.baseUrl + "/api/auth/register-page";
+        let url_ = this.baseUrl + "/api/auth/register";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -249,7 +249,7 @@ export class ApiClient {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateProduct(id: number, body: ProductDto | undefined): Observable<ProductDto> {
@@ -425,7 +425,7 @@ export class ApiClient {
     }
 
     /**
-     * @param name (optional)
+     * @param name (optional) 
      * @return Success
      */
     find(name: string | undefined): Observable<ProductDto[]> {
@@ -502,7 +502,7 @@ export class ApiClient {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Created
      */
     createProduct(body: ProductDto | undefined): Observable<ProductDto> {

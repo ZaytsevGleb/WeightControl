@@ -4,11 +4,12 @@ import {LoginPageComponent} from "./login-page.component";
 import {WcInputEmailModule} from "../../../components/wc-inputs/wc-input-email";
 import {RouterLinkWithHref} from "@angular/router";
 import {WcInputPasswordModule} from "../../../components/wc-inputs/wc-input-password";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [LoginPageComponent],
-  imports: [WcButtonRaisedModule, WcInputEmailModule, RouterLinkWithHref, WcInputPasswordModule],
+  imports: [WcButtonRaisedModule, WcInputEmailModule, RouterLinkWithHref, WcInputPasswordModule, ReactiveFormsModule],
   exports: [LoginPageComponent]
 })
 
