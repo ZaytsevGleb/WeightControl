@@ -8,6 +8,7 @@
     <div class="register__body">
       <div class="body__inputs">
         <wc-input-name
+          [nameFormControl]="nameFormControl"
           [value]="nameValue"
           [placeholder]="namePlaceholder"
           [validError]="nameValidError"
@@ -16,6 +17,7 @@
         </wc-input-name>
 
         <wc-input-email
+          [emailFormControl]="emailFormControl"
           [value]="emailValue"
           [placeholder]="emailPlaceholder"
           [validError]="emailValidError"
@@ -24,6 +26,7 @@
         </wc-input-email>
 
         <wc-input-password
+          [passwordFormControl]="passwordFormControl"
           appearance="legacy"
           color="primary"
           [validError]="passwordValidError"
@@ -32,9 +35,10 @@
       </div>
       <div class="body__buttons">
         <wc-button-raised
-        [label]="registerButtonText"
-        color="primary"
-        (buttonClick)="registerClick()">
+          [disabled]="form.invalid && form.touched"
+          [label]="registerButtonText"
+          color="primary"
+          (buttonClick)="registerClick()">
         </wc-button-raised>
       </div>
     </div>

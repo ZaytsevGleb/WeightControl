@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../services/auth.service";
 import {Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-page',
@@ -27,6 +27,14 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       email: this.emailFormControl,
       password: this.passwordFormControl
+    })
+    this.route.queryParams.subscribe((params: Params) =>{
+      if(params['registered']){
+
+      }
+      else if (params['accessDenied']){
+
+      }
     })
   }
 

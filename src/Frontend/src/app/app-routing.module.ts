@@ -9,7 +9,7 @@ import {LoginPageComponent} from "./pages/body/login-page/login-page.component";
 import {RegisterPageComponent} from "./pages/body/register-page/register-page.component";
 
 const routes: Routes = [
-  {path: '', redirectTo: '/meals', pathMatch: 'full' },
+  {path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'products', component: ProductsPageComponent},
   {path: 'meals', component: MealsPageComponent},
   {path: 'goals', component: GoalsPageComponent},

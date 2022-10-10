@@ -22,6 +22,8 @@ import {environment} from 'src/environments/environment';
 import {RegisterPageModule} from "./pages/body/register-page/register-page.module";
 import {WcComponentsModule} from "./components/wc-components.module";
 import {LoginPageModule} from "./pages/body/login-page/login-page.module";
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { SiteLayoutComponent } from './layouts/site-layout/site-layout.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import {LoginPageModule} from "./pages/body/login-page/login-page.module";
     MealsPartComponent,
     ProductsPartComponent,
     AmountDialogComponent,
+    AuthLayoutComponent,
+    SiteLayoutComponent,
   ],
   entryComponents: [
     AmountDialogComponent,
