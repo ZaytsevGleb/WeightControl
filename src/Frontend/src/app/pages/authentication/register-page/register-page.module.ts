@@ -13,5 +13,5 @@ import {WcInputNameModule} from "../../../components/wc-inputs/wc-input-name";
   exports: [RegisterPageComponent]
 })
 
-export class RegisterPageModule{
+export class RegisterPageModule {
 }

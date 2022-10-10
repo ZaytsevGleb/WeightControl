@@ -1,79 +1,74 @@
 .meals__part {
-    grid-area: meals-part;
-    display: grid;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-    grid-template-rows: 1fr 13fr;
+  grid-area: meals-part;
+  display: grid;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  grid-template-rows: 1fr 13fr;
 }
 
 .mealspart__header {
-    display: grid;
-    grid-template: 1fr / 2fr 1fr 1fr;
-    align-items: center;
+  display: grid;
+  grid-template: 1fr / 2fr 1fr 1fr;
+  align-items: center;
 }
 
 .mealspart__header h2 {
-    font-size: 0.9vw;
-    margin: 0px;
-    padding: 5px 10px;
-    background-color: #D9D9D9;
-    border: 1px solid #64D36F;
+  font-size: 0.9vw;
+  margin: 0;
+  padding: 5px 10px;
+  background-color: #D9D9D9;
+  border: 1px solid #64D36F;
 }
 
 .mealspart__calories {
-    display: grid;
-    grid-column: 2/3;
-    justify-content: end;
+  display: grid;
+  grid-column: 2/3;
+  justify-content: end;
 }
-
 
 .mealspart__date {
-    display: grid;
-    grid-column: 3/3;
-    justify-content: end;
-    padding-right: 20px;
+  display: grid;
+  grid-column: 3/3;
+  justify-content: end;
+  padding-right: 20px;
 }
 
-// MEALS
-// .meals {}
-
 .meals h3 {
-    margin: 0px;
+  margin: 0;
 }
 
 .mealspart__list {
-    margin: 20px;
-    padding: 0px;
+  margin: 20px;
+  padding: 0;
 }
 
 .mealpart__header {
-    margin-top: 20px;
-    margin-bottom: 5px;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr 7fr;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 7fr;
 }
 
 .mealspart__button {
-    display: grid;
-    grid-column: 2/3;
-    justify-items: center;
+  display: grid;
+  grid-column: 2/3;
+  justify-items: center;
 }
 
 .mealpart__header h3 {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .mealpart__main {
-    display: grid;
+  display: grid;
 }
 
 .mealpart__info {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding: 7px;
-    padding-left: 20px;
-    margin-bottom: 10px;
-    background-color: #D9D9D9;
-    border: 1px solid #64D36F;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 7px 7px 7px 20px;
+  margin-bottom: 10px;
+  background-color: #D9D9D9;
+  border: 1px solid #64D36F;
 }

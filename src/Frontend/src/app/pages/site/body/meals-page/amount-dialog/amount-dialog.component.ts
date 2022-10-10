@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewContainerRef } from '@angular/core';
 @Component({
   selector: 'app-amount-dialog',
   templateUrl: './amount-dialog.component.html',
@@ -18,8 +18,8 @@ export class AmountDialogComponent implements OnInit {
   title = 'Enter the amount of food';
   @Output() close = new EventEmitter();
   @Output() accept = new EventEmitter();
-  
-  constructor(public containerRef: ViewContainerRef) { 
+
+  constructor(public containerRef: ViewContainerRef) {
     containerRef.clear();
   }
 

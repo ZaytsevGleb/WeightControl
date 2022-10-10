@@ -28,11 +28,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       email: this.emailFormControl,
       password: this.passwordFormControl
     })
-    this.route.queryParams.subscribe((params: Params) =>{
-      if(params['registered']){
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['registered']) {
 
-      }
-      else if (params['accessDenied']){
+      } else if (params['accessDenied']) {
 
       }
     })

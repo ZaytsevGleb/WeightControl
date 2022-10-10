@@ -5,7 +5,7 @@ import { AmountDialogComponent } from '../amount-dialog/amount-dialog.component'
 import { ViewContainerRef } from '@angular/core';
 import { MealsController } from 'src/app/services/meals.controller';
 import { TypeOfMeal } from 'src/app/models/meal';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-products-part',
@@ -25,7 +25,7 @@ export class ProductsPartComponent implements OnInit, OnDestroy {
 
   private readonly productService: ProductsService;
   private readonly mealsController: MealsController;
- 
+
   constructor(productService: ProductsService, mealsController: MealsController) {
     this.productService = productService;
     this.mealsController = mealsController;
@@ -68,37 +68,29 @@ export class ProductsPartComponent implements OnInit, OnDestroy {
     this.targetTypeOfMeal = type;
     this.isFocused = true;
   }
-  //Всё что идёт ниже в идеале переделать нормально
+
   showProductUnit(unit: number): string{
     switch (unit) {
       case 0:
         return "Milliliters"
-        break;
       case 1:
         return "Gram"
-        break;
       case 2:
         return "Pieces"
-        break;
       default:
         return "";
-        break;
     }
   }
   setAmount(unit: number): number{
     switch (unit) {
       case 0:
         return 100
-        break;
       case 1:
         return 100
-        break;
       case 2:
         return 1
-        break;
       default:
         return 0;
-        break;
     }
   }
 }
