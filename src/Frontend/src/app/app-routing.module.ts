@@ -9,26 +9,26 @@ import {LoginPageComponent} from "./pages/authentication/login-page/login-page.c
 import {RegisterPageComponent} from "./pages/authentication/register-page/register-page.component";
 import {SiteLayoutComponent} from "./layouts/site-layout/site-layout.component";
 import {AuthLayoutComponent} from "./layouts/auth-layout/auth-layout.component";
+import {AuthGuard} from "./services/auth.guard";
 
 const routes: Routes = [
-  {
-    path: '', component: SiteLayoutComponent, children: [
-      {path: '', redirectTo: '/login', pathMatch: 'full'},
-      {path: 'products', component: ProductsPageComponent},
-      {path: 'meals', component: MealsPageComponent},
-      {path: 'goals', component: GoalsPageComponent},
-      {path: 'settings', component: SettingsPageComponent},
-      {path: 'help', component: HelpPageComponent},
-
-    ]
-  },
   {
     path: '', component: AuthLayoutComponent, children: [
       {path: 'login', component: LoginPageComponent},
       {path: 'register', component: RegisterPageComponent}
     ]
+  },
+  {
+    path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [
+      {path: '', redirectTo: '/login', pathMatch: 'full'},
+      {path: 'products', component: ProductsPageComponent},
+      {path: 'meals', component: MealsPageComponent},
+      {path: 'goals', component: GoalsPageComponent},
+      {path: 'settings', component: SettingsPageComponent},
+      {path: 'help', component: HelpPageComponent}
+    ]
   }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
