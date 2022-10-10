@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './pages/site/header/header.component';
@@ -24,6 +24,7 @@ import {WcComponentsModule} from "./components/wc-components.module";
 import {LoginPageModule} from "./pages/authentication/login-page/login-page.module";
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { SiteLayoutComponent } from './layouts/site-layout/site-layout.component';
+import {TokenInterceptor} from "./token.interceptor";
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { SiteLayoutComponent } from './layouts/site-layout/site-layout.component
   ],
   providers: [
     ApiClient,
+    {provide: HTTP_INTERCEPTORS, multi: true, useClass: TokenInterceptor},
     {provide: API_BASE_URL, useValue: environment.apiUrl}
   ],
   bootstrap: [AppComponent]

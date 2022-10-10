@@ -9,7 +9,7 @@ import {LoginPageComponent} from "./pages/authentication/login-page/login-page.c
 import {RegisterPageComponent} from "./pages/authentication/register-page/register-page.component";
 import {SiteLayoutComponent} from "./layouts/site-layout/site-layout.component";
 import {AuthLayoutComponent} from "./layouts/auth-layout/auth-layout.component";
-import {AuthGuard} from "./services/auth.guard";
+import {AppAuthGuard} from "./app-auth.guard";
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: '', component: SiteLayoutComponent, canActivate: [AuthGuard], children: [
+    path: '', component: SiteLayoutComponent, canActivate: [AppAuthGuard], children: [
       {path: '', redirectTo: '/login', pathMatch: 'full'},
       {path: 'products', component: ProductsPageComponent},
       {path: 'meals', component: MealsPageComponent},
