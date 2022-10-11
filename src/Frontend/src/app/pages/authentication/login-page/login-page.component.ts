@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../services/auth.service";
-import {Subscription} from "rxjs";
+import {Subscription, tap} from "rxjs";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login-page',
@@ -12,15 +13,18 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 export class LoginPageComponent implements OnInit, OnDestroy {
 
   private authService: AuthService
+
   form!: FormGroup;
   aSub!: Subscription;
   router!: Router;
   route!: ActivatedRoute;
+  snackBar!: MatSnackBar;
 
-  constructor(authService: AuthService, router: Router, route: ActivatedRoute) {
+  constructor(authService: AuthService, router: Router, route: ActivatedRoute, snackBar: MatSnackBar) {
     this.authService = authService;
     this.router = router;
     this.route = route;
+    this.snackBar = snackBar;
   }
 
   ngOnInit(): void {
@@ -55,9 +59,31 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   loginButtonText: string = "LOGIN";
 
   loginClick() {
-    this.aSub = this.authService.login(this.form.value).subscribe({
-      next: () => this.router.navigate(['/meals']),
-      error: (err) => console.log(err),
+    this.aSub = this.authService.login(this.form.value)
+      .pipe(tap((res: any) => this.openSnackBar(res?.error)))
+      .subscribe({
+        next: () => this.router.navigate(['/meals']),
+      })
+  }
+
+  openSnackBar(error: number) {
+    let message: string;
+    switch (error) {
+      case 0:
+        message = "User not found";
+        break;
+      case 1:
+        message = "Incorrect password";
+        break;
+      default:
+        message = "Successfully"
+        break;
+    }
+
+    this.snackBar.open(message, 'Accept', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 2000,
     })
   }
 }

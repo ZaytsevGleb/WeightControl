@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Subscription} from "rxjs";
+import {Subscription, tap} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-register-page',
@@ -12,15 +13,18 @@ import {AuthService} from "../../../services/auth.service";
 export class RegisterPageComponent implements OnInit, OnDestroy {
 
   private authService: AuthService
+
   form!: FormGroup;
   aSub!: Subscription;
   router!: Router;
   route!: ActivatedRoute;
+  snackBar!: MatSnackBar;
 
-  constructor(authService: AuthService, router: Router, route: ActivatedRoute) {
+  constructor(authService: AuthService, router: Router, route: ActivatedRoute, snackBar: MatSnackBar) {
     this.authService = authService;
     this.router = router;
     this.route = route;
+    this.snackBar = snackBar;
   }
 
   ngOnInit(): void {
@@ -55,11 +59,30 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
 
   registerClick() {
-    this.aSub = this.authService.register(this.form.value).subscribe({
-      next: () => this.router.navigate(['/login'], {
-        queryParams: {registered: true}
-      }),
-      error: (err) => console.log(err)
+    this.aSub = this.authService.register(this.form.value)
+      .pipe(tap((res: any) => this.openSnackBar(res.error)))
+      .subscribe({
+        next: () => this.router.navigate(['/login'], {
+          queryParams: {registered: true}
+        }),
+      })
+  }
+
+  openSnackBar(error: number) {
+    let message: string;
+    switch (error) {
+      case 3:
+        message = "Such user already exists";
+        break;
+      default:
+        message = "Successfully"
+        break;
+    }
+
+    this.snackBar.open(message, 'Accept', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 2000,
     })
   }
 }

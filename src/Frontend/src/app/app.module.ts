@@ -22,9 +22,10 @@ import {environment} from 'src/environments/environment';
 import {RegisterPageModule} from "./pages/authentication/register-page/register-page.module";
 import {WcComponentsModule} from "./components/wc-components.module";
 import {LoginPageModule} from "./pages/authentication/login-page/login-page.module";
-import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { SiteLayoutComponent } from './layouts/site-layout/site-layout.component';
+import {AuthLayoutComponent} from './layouts/auth-layout/auth-layout.component';
+import {SiteLayoutComponent} from './layouts/site-layout/site-layout.component';
 import {TokenInterceptor} from "./token.interceptor";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {TokenInterceptor} from "./token.interceptor";
     WcComponentsModule,
     LoginPageModule,
     WcComponentsModule,
-    RegisterPageModule
+    RegisterPageModule,
+    MatSnackBarModule
   ],
   providers: [
     ApiClient,
