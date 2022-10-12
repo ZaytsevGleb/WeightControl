@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../services/auth.service";
-import {Subscription, tap} from "rxjs";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
@@ -32,13 +32,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       email: this.emailFormControl,
       password: this.passwordFormControl
     })
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params['registered']) {
-
-      } else if (params['accessDenied']) {
-
-      }
-    })
   }
 
   ngOnDestroy() {
@@ -60,9 +53,13 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   loginClick() {
     this.aSub = this.authService.login(this.form.value)
-      .pipe(tap((res: any) => this.openSnackBar(res?.error)))
-      .subscribe({
-        next: () => this.router.navigate(['/meals']),
+      .subscribe(res => {
+        if (res.token != null) {
+          this.openSnackBar(res.error!)
+          this.router.navigate(['/meals'])
+        } else {
+          this.openSnackBar(res.error!)
+        }
       })
   }
 

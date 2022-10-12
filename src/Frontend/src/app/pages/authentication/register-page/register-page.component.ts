@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Subscription, tap} from "rxjs";
+import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -60,13 +60,16 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
   registerClick() {
     this.aSub = this.authService.register(this.form.value)
-      .pipe(tap((res: any) => this.openSnackBar(res.error)))
-      .subscribe({
-        next: () => this.router.navigate(['/login'], {
-          queryParams: {registered: true}
-        }),
+      .subscribe(res => {
+        if (res.token != null) {
+          this.openSnackBar(res.error!)
+          this.router.navigate(['/login'])
+        } else {
+          this.openSnackBar(res.error!)
+        }
       })
   }
+
 
   openSnackBar(error: number) {
     let message: string;

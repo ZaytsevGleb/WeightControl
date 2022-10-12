@@ -14,13 +14,14 @@ import {AppAuthGuard} from "./app-auth.guard";
 const routes: Routes = [
   {
     path: '', component: AuthLayoutComponent, children: [
+      {path: '', redirectTo: '/login', pathMatch: 'full'},
       {path: 'login', component: LoginPageComponent},
       {path: 'register', component: RegisterPageComponent}
     ]
   },
   {
     path: '', component: SiteLayoutComponent, canActivate: [AppAuthGuard], children: [
-      {path: '', redirectTo: '/login', pathMatch: 'full'},
+      {path: '', redirectTo: '/meals', pathMatch: 'full'},
       {path: 'products', component: ProductsPageComponent},
       {path: 'meals', component: MealsPageComponent},
       {path: 'goals', component: GoalsPageComponent},

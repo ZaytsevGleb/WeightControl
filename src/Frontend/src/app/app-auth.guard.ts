@@ -18,13 +18,10 @@ export class AppAuthGuard implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/meals'])
       return of(true)
     } else {
-      this.router.navigate(['/login'], {
-        queryParams: {
-          accessDenied: true
-        }
-      })
+      this.router.navigate(['/login'])
       return of(false)
     }
   }
