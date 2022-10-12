@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../services/auth.service";
 import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {SnackbarService} from "../../../services/snackbar.service";
 
 @Component({
   selector: 'app-login-page',
@@ -18,13 +18,18 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   aSub!: Subscription;
   router!: Router;
   route!: ActivatedRoute;
-  snackBar!: MatSnackBar;
+  snackBarService!: SnackbarService;
 
-  constructor(authService: AuthService, router: Router, route: ActivatedRoute, snackBar: MatSnackBar) {
+  constructor(
+    authService: AuthService,
+    router: Router,
+    route: ActivatedRoute,
+    snackBarService: SnackbarService)
+  {
     this.authService = authService;
     this.router = router;
     this.route = route;
-    this.snackBar = snackBar;
+    this.snackBarService = snackBarService;
   }
 
   ngOnInit(): void {
@@ -55,32 +60,11 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.aSub = this.authService.login(this.form.value)
       .subscribe(res => {
         if (res.token != null) {
-          this.openSnackBar(res.error!)
+          this.snackBarService.openLoginSnackBar(res.error!)
           this.router.navigate(['/meals'])
         } else {
-          this.openSnackBar(res.error!)
+          this.snackBarService.openLoginSnackBar(res.error!)
         }
       })
-  }
-
-  openSnackBar(error: number) {
-    let message: string;
-    switch (error) {
-      case 0:
-        message = "User not found";
-        break;
-      case 1:
-        message = "Incorrect password";
-        break;
-      default:
-        message = "Successfully"
-        break;
-    }
-
-    this.snackBar.open(message, 'Accept', {
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      duration: 2000,
-    })
   }
 }
