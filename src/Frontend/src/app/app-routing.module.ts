@@ -9,11 +9,12 @@ import {LoginPageComponent} from "./pages/authentication/login-page/login-page.c
 import {RegisterPageComponent} from "./pages/authentication/register-page/register-page.component";
 import {SiteLayoutComponent} from "./layouts/site-layout/site-layout.component";
 import {AuthLayoutComponent} from "./layouts/auth-layout/auth-layout.component";
-import {AppAuthGuard} from "./app-auth.guard";
+import {AppAuthGuard} from "./guards/app-auth.guard";
+import {AppLogginAuthGuard} from "./guards/app-loggin-auth.guard";
 
 const routes: Routes = [
   {
-    path: '', component: AuthLayoutComponent, children: [
+    path: '', component: AuthLayoutComponent, canActivate:[AppLogginAuthGuard], children: [
       {path: '', redirectTo: '/login', pathMatch: 'full'},
       {path: 'login', component: LoginPageComponent},
       {path: 'register', component: RegisterPageComponent}

@@ -1,12 +1,12 @@
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {Injectable} from "@angular/core";
-import {AuthService} from "./services/auth.service";
+import {AuthService} from "../services/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppAuthGuard implements CanActivate, CanActivateChild {
+export class AppLogginAuthGuard implements CanActivate, CanActivateChild {
 
   private authService: AuthService;
   private router: Router
@@ -19,10 +19,9 @@ export class AppAuthGuard implements CanActivate, CanActivateChild {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     if (this.authService.isAuthenticated()) {
       this.router.navigate(['/meals'])
-      return of(true)
-    } else {
-      this.router.navigate(['/login'])
       return of(false)
+    } else {
+      return of(true)
     }
   }
 
