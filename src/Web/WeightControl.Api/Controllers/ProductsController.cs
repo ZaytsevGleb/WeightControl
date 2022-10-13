@@ -11,7 +11,7 @@ using WeightControl.Application.Products.Models;
 namespace WeightControl.Api.Controllers
 {
     [ApiController]
-    [AllowAnonymous]
+    [Authorize]
     [Route("api/products")]
     [Produces("application/json")]
     public class ProductsController : ControllerBase
