@@ -6,7 +6,7 @@ namespace WeightControl.Application.Auth.Models
     {
         public bool Succeded { get; set; }
 
-        public RegisterError Error { get; set; }
+        public RegisterError? Error { get; set; }
         public string Token { get; set; }
     }
 }
