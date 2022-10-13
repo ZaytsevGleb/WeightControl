@@ -17,9 +17,12 @@ export class SnackbarService {
     let message: string;
     switch (error) {
       case 0:
-        message = "User not found";
+        message = "Response error";
         break;
       case 1:
+        message = "User not found";
+        break;
+      case 2:
         message = "Incorrect password";
         break;
       default:
@@ -32,7 +35,10 @@ export class SnackbarService {
   openRegisterSnackBar(error: number) {
     let message: string;
     switch (error) {
-      case 3:
+      case 0:
+        message = "Response error";
+        break;
+      case 1:
         message = "Such user already exists";
         break;
       default:
