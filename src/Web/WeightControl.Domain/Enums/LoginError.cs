@@ -2,7 +2,8 @@ namespace WeightControl.Domain.Enums
 {
     public enum LoginError
     {
-        UserNotFound = 0,
-        IncorrectPassword = 1
+        None = 0,
+        UserNotFound = 1,
+        IncorrectPassword = 2
     }
 }
