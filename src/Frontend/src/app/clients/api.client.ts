@@ -30,7 +30,7 @@ export class ApiClient {
      * @param body (optional) 
      * @return Success
      */
-    login(body: LoginDto | undefined): Observable<void> {
+    login(body: LoginDto | undefined): Observable<LoginResultDto> {
         let url_ = this.baseUrl + "/api/auth/login";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -42,6 +42,7 @@ export class ApiClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "text/plain"
             })
         };
 
@@ -52,14 +53,14 @@ export class ApiClient {
                 try {
                     return this.processLogin(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<LoginResultDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<LoginResultDto>;
         }));
     }
 
-    protected processLogin(response: HttpResponseBase): Observable<void> {
+    protected processLogin(response: HttpResponseBase): Observable<LoginResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -68,7 +69,24 @@ export class ApiClient {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = LoginResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ErrorDto.fromJS(resultData400);
+            return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = ErrorDto.fromJS(resultData500);
+            return throwException("Server Error", status, _responseText, _headers, result500);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -82,7 +100,7 @@ export class ApiClient {
      * @param body (optional) 
      * @return Success
      */
-    register(body: RegisterDto | undefined): Observable<void> {
+    register(body: RegisterDto | undefined): Observable<RegisterResultDto> {
         let url_ = this.baseUrl + "/api/auth/register";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -94,6 +112,7 @@ export class ApiClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "text/plain"
             })
         };
 
@@ -104,14 +123,14 @@ export class ApiClient {
                 try {
                     return this.processRegister(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<RegisterResultDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<RegisterResultDto>;
         }));
     }
 
-    protected processRegister(response: HttpResponseBase): Observable<void> {
+    protected processRegister(response: HttpResponseBase): Observable<RegisterResultDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -120,7 +139,24 @@ export class ApiClient {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = RegisterResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ErrorDto.fromJS(resultData400);
+            return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            let resultData500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result500 = ErrorDto.fromJS(resultData500);
+            return throwException("Server Error", status, _responseText, _headers, result500);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -182,6 +218,20 @@ export class ApiClient {
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result400 = ErrorDto.fromJS(resultData400);
             return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = ErrorDto.fromJS(resultData404);
+            return throwException("Not Found", status, _responseText, _headers, result404);
             }));
         } else if (status === 500) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -255,6 +305,20 @@ export class ApiClient {
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result400 = ErrorDto.fromJS(resultData400);
             return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 403) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result403: any = null;
+            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result403 = ProblemDetails.fromJS(resultData403);
+            return throwException("Forbidden", status, _responseText, _headers, result403);
             }));
         } else if (status === 404) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -330,6 +394,13 @@ export class ApiClient {
             let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result400 = ErrorDto.fromJS(resultData400);
             return throwException("Bad Request", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 403) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result403: any = null;
+            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result403 = ProblemDetails.fromJS(resultData403);
+            return throwException("Forbidden", status, _responseText, _headers, result403);
             }));
         } else if (status === 404) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -408,6 +479,13 @@ export class ApiClient {
             }
             return _observableOf(result200);
             }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
         } else if (status === 500) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result500: any = null;
@@ -478,6 +556,20 @@ export class ApiClient {
             result400 = ErrorDto.fromJS(resultData400);
             return throwException("Bad Request", status, _responseText, _headers, result400);
             }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            let resultData401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result401 = ProblemDetails.fromJS(resultData401);
+            return throwException("Unauthorized", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 403) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result403: any = null;
+            let resultData403 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result403 = ProblemDetails.fromJS(resultData403);
+            return throwException("Forbidden", status, _responseText, _headers, result403);
+            }));
         } else if (status === 500) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result500: any = null;
@@ -531,9 +623,8 @@ export interface IErrorDto {
 }
 
 export class LoginDto implements ILoginDto {
-    login?: string | undefined;
-    password?: string | undefined;
     email?: string | undefined;
+    password?: string | undefined;
 
     constructor(data?: ILoginDto) {
         if (data) {
@@ -546,9 +637,8 @@ export class LoginDto implements ILoginDto {
 
     init(_data?: any) {
         if (_data) {
-            this.login = _data["login"];
-            this.password = _data["password"];
             this.email = _data["email"];
+            this.password = _data["password"];
         }
     }
 
@@ -561,17 +651,116 @@ export class LoginDto implements ILoginDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["login"] = this.login;
-        data["password"] = this.password;
         data["email"] = this.email;
+        data["password"] = this.password;
         return data;
     }
 }
 
 export interface ILoginDto {
-    login?: string | undefined;
-    password?: string | undefined;
     email?: string | undefined;
+    password?: string | undefined;
+}
+
+export enum LoginError {
+    _0 = 0,
+    _1 = 1,
+}
+
+export class LoginResultDto implements ILoginResultDto {
+    succeded?: boolean;
+    error?: LoginError;
+    token?: string | undefined;
+
+    constructor(data?: ILoginResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.succeded = _data["succeded"];
+            this.error = _data["error"];
+            this.token = _data["token"];
+        }
+    }
+
+    static fromJS(data: any): LoginResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LoginResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["succeded"] = this.succeded;
+        data["error"] = this.error;
+        data["token"] = this.token;
+        return data;
+    }
+}
+
+export interface ILoginResultDto {
+    succeded?: boolean;
+    error?: LoginError;
+    token?: string | undefined;
+}
+
+export class ProblemDetails implements IProblemDetails {
+    type?: string | undefined;
+    title?: string | undefined;
+    status?: number | undefined;
+    detail?: string | undefined;
+    instance?: string | undefined;
+
+    constructor(data?: IProblemDetails) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.type = _data["type"];
+            this.title = _data["title"];
+            this.status = _data["status"];
+            this.detail = _data["detail"];
+            this.instance = _data["instance"];
+        }
+    }
+
+    static fromJS(data: any): ProblemDetails {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProblemDetails();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["type"] = this.type;
+        data["title"] = this.title;
+        data["status"] = this.status;
+        data["detail"] = this.detail;
+        data["instance"] = this.instance;
+        return data;
+    }
+}
+
+export interface IProblemDetails {
+    type?: string | undefined;
+    title?: string | undefined;
+    status?: number | undefined;
+    detail?: string | undefined;
+    instance?: string | undefined;
 }
 
 export class ProductDto implements IProductDto {
@@ -627,7 +816,7 @@ export interface IProductDto {
 }
 
 export class RegisterDto implements IRegisterDto {
-    login?: string | undefined;
+    name?: string | undefined;
     email?: string | undefined;
     password?: string | undefined;
 
@@ -642,7 +831,7 @@ export class RegisterDto implements IRegisterDto {
 
     init(_data?: any) {
         if (_data) {
-            this.login = _data["login"];
+            this.name = _data["name"];
             this.email = _data["email"];
             this.password = _data["password"];
         }
@@ -657,7 +846,7 @@ export class RegisterDto implements IRegisterDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["login"] = this.login;
+        data["name"] = this.name;
         data["email"] = this.email;
         data["password"] = this.password;
         return data;
@@ -665,9 +854,60 @@ export class RegisterDto implements IRegisterDto {
 }
 
 export interface IRegisterDto {
-    login?: string | undefined;
+    name?: string | undefined;
     email?: string | undefined;
     password?: string | undefined;
+}
+
+export enum RegisterError {
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+}
+
+export class RegisterResultDto implements IRegisterResultDto {
+    succeded?: boolean;
+    error?: RegisterError;
+    token?: string | undefined;
+
+    constructor(data?: IRegisterResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.succeded = _data["succeded"];
+            this.error = _data["error"];
+            this.token = _data["token"];
+        }
+    }
+
+    static fromJS(data: any): RegisterResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RegisterResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["succeded"] = this.succeded;
+        data["error"] = this.error;
+        data["token"] = this.token;
+        return data;
+    }
+}
+
+export interface IRegisterResultDto {
+    succeded?: boolean;
+    error?: RegisterError;
+    token?: string | undefined;
 }
 
 export class ApiException extends Error {

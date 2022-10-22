@@ -1,0 +1,13 @@
+.grid-container {
+  display: grid;
+  min-height: 100vh;
+  grid-template-areas: ". . . . ."
+                       ". . . . ."
+                    ". . content . ."
+                       ". . . . ."
+                       ". . . . .";
+  grid-template-columns: 1fr 5px 6fr 5px 1fr;
+  grid-template-rows: minmax(54px, auto) 5px 2fr 5px minmax(80px, auto);
+}
+
+.content { grid-area: content;}

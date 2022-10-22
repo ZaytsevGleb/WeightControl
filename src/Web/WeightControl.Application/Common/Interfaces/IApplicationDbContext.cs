@@ -11,6 +11,6 @@ namespace WeightControl.Application.Common.Interfaces
         DbSet<Product> Products { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
